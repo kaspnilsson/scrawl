@@ -7,6 +7,8 @@ import { dashboard } from '../lib/routes'
 import { ApiError, User } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { prefersDarkMode } from '../lib/colorTheme'
+import ScrawlDark from '../components/icons/ScrawlDark'
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -61,21 +63,21 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-">
+    <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-12">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-merriweather text-stone-900">
+        <h2 className="flex flex-col items-center gap-8 mt-6 text-3xl text-center font-merriweather text-primary-900">
           <Scrawl size={48} />
           Sign in to your account
         </h2>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10">
+        <div className="px-4 py-8 shadow bg-onDark sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleMagicLink}>
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-stone-700 font-merriweather"
+                className="block text-sm font-medium text-primary-700 font-merriweather"
               >
                 Email address
               </label>
@@ -88,7 +90,7 @@ const Login = () => {
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="block px-3 py-2 w-full rounded-md border shadow-sm appearance-none placeholder-stone-400 border-stone-300 focus:outline-none focus:ring-stone-500 focus:border-stone-500 sm:text-sm"
+                  className="block w-full px-3 py-2 bg-transparent border rounded-md shadow-sm appearance-none placeholder-primary-400 border-primary-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
                 />
               </div>
             </div>
@@ -96,7 +98,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex justify-center px-4 py-2 w-full text-sm font-medium text-white rounded-md border border-transparent shadow-sm bg-stone-600 hover:bg-stone-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-stone-500 disabled:opacity-50"
+                className="flex justify-center w-full px-4 py-2 text-sm font-medium border border-transparent rounded-md shadow-sm text-onDark bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
                 disabled={!(email && isValidEmail(email))}
               >
                 Get a magic link
@@ -106,11 +108,11 @@ const Login = () => {
 
           <div className="mt-6">
             <div className="relative">
-              <div className="flex absolute inset-0 items-center">
-                <div className="w-full border-t border-stone-300" />
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-primary-300" />
               </div>
-              <div className="flex relative justify-center text-sm">
-                <span className="px-2 bg-white text-stone-500">
+              <div className="relative flex justify-center text-sm">
+                <span className="px-2 bg-onDark text-primary-500">
                   Or continue with
                 </span>
               </div>
@@ -118,7 +120,7 @@ const Login = () => {
 
             <div className="flex items-center mt-6">
               <Button
-                className="justify-center items-center w-full"
+                className="items-center justify-center w-full"
                 onClick={() => handleGoogleLogin()}
               >
                 <svg
