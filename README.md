@@ -1,4 +1,4 @@
-# Supabase Authentication
+he# Supabase Authentication
 
 This example shows how to use Supabase Auth on the client and server in both [API Routes](https://nextjs.org/docs/api-routes/introduction) and when using [server-side rendering (SSR)](https://nextjs.org/docs/basic-features/pages#server-side-rendering).
 

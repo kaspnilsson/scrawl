@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 900;
+  src: url('../assets/fonts/Montserrat-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'Merriweather';
+  font-weight: 800;
+  src: url('../assets/fonts/MerriweatherSans-ExtraBold.ttf');
+}
+
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  min-height: 100vh;
+}
