@@ -1,5 +1,8 @@
 import { getUser, withPageAuth } from '@supabase/auth-helpers-nextjs'
+import moment from 'moment'
+import Editor from '../components/Editor'
 import Layout from '../components/Layout'
+import NoteEditor from '../components/NoteEditor'
 import { getRange } from '../lib/dateHelpers'
 
 export const getServerSideProps = withPageAuth({
@@ -20,7 +23,20 @@ const Index = () => {
   )
   return (
     <Layout>
-      <div className="grid items-center justify-center grid-cols-1 p-16">
+      <div className="m-auto prose">
+        <div>
+          <h2 className="!m-0 text-2xl">
+            {moment(new Date()).format('MMMM Do, YYYY')}
+          </h2>
+        </div>
+        <div className="flex items-center w-full">
+          <Editor
+            className="w-full min-h-[400px]"
+            content={'test content'}
+            onUpdate={(content) => null}
+          />
+        </div>
+        {/* <div className="grid items-center justify-center grid-cols-1 p-16">
         {dates.map((d, index) => {
           return (
             <div key={index} className="pt-8">
@@ -30,6 +46,7 @@ const Index = () => {
             </div>
           )
         })}
+      </div> */}
       </div>
     </Layout>
   )

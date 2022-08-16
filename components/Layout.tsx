@@ -9,7 +9,11 @@ const Layout = ({ children }: Props) => {
   return (
     <div className="w-full min-h-screen h-fit">
       <Header></Header>
-      <div className="overflow">{children}</div>
+      <div>
+        <div className="max-w-6xl px-2 py-8 mx-auto overflow md:p-8 xl:p-16">
+          {children}
+        </div>
+      </div>
     </div>
   )
 }

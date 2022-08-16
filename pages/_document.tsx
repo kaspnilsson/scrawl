@@ -1,5 +1,4 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import '../lib/colorTheme'
 // import { GA_TRACKING_ID } from '../utils/gtag'
 
 export default class MyDocument extends Document {
@@ -25,7 +24,7 @@ export default class MyDocument extends Document {
             }}
           /> */}
         </Head>
-        <body className="text-primary-900 bg-backdrop main body">
+        <body className="prose-xs prose sm:prose-sm md:prose-base prose-stone bg-backdrop !max-w-none">
           <Main />
           <NextScript />
         </body>

@@ -7,8 +7,6 @@ import { dashboard } from '../lib/routes'
 import { ApiError, User } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { prefersDarkMode } from '../lib/colorTheme'
-import ScrawlDark from '../components/icons/ScrawlDark'
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext

@@ -1,5 +1,6 @@
 import { initTwThemes } from 'tw-themes'
 
+// Always returns false rn
 export const prefersDarkMode = () =>
   !!(
     typeof window !== 'undefined' &&
@@ -76,10 +77,69 @@ const gen = (primary: string, accent: string) => ({
 })
 
 const themes = {
-  light: { contextColors: gen('stone', 'violet') },
-  dark: { contextColors: { ...gen('stone', 'violet'), border: 'stone-700' } },
-}
-const initialThemeName = 'light' // AI: ENHANCE TO pull from local storage
+  light: {
+    contextColors: {
+      'accent-50': `violet-50`,
+      'accent-100': `violet-100`,
+      'accent-200': `violet-200`,
+      'accent-300': `violet-300`,
+      'accent-400': `violet-400`,
+      'accent-500': `violet-500`,
+      'accent-600': `violet-600`,
+      'accent-700': `violet-700`,
+      'accent-800': `violet-800`,
+      'accent-900': `violet-900`,
 
-const TwThemes = initTwThemes(schema, themes, initialThemeName)
+      'primary-50': `stone-50`,
+      'primary-100': `stone-100`,
+      'primary-200': `stone-200`,
+      'primary-300': `stone-300`,
+      'primary-400': `stone-400`,
+      'primary-500': `stone-500`,
+      'primary-600': `stone-600`,
+      'primary-700': `stone-700`,
+      'primary-800': `stone-800`,
+      'primary-900': `stone-900`,
+
+      onLight: `stone-900`,
+      onDark: 'white',
+
+      border: `stone-300`,
+
+      backdrop: `white`,
+    },
+  },
+  dark: {
+    contextColors: {
+      'accent-900': `violet-50`,
+      'accent-800': `violet-100`,
+      'accent-700': `violet-200`,
+      'accent-600': `violet-300`,
+      'accent-500': `violet-400`,
+      'accent-400': `violet-500`,
+      'accent-300': `violet-600`,
+      'accent-200': `violet-700`,
+      'accent-100': `violet-800`,
+      'accent-50': `violet-900`,
+
+      'primary-900': `stone-50`,
+      'primary-800': `stone-100`,
+      'primary-700': `stone-200`,
+      'primary-600': `stone-300`,
+      'primary-500': `stone-400`,
+      'primary-400': `stone-500`,
+      'primary-300': `stone-600`,
+      'primary-200': `stone-700`,
+      'primary-100': `stone-800`,
+      'primary-50': `stone-900`,
+
+      backdrop: `white`,
+      border: 'stone-700',
+      onLight: 'white',
+      onDark: 'stone-900',
+    },
+  },
+}
+const themeName = prefersDarkMode() ? 'dark' : 'light' // AI: ENHANCE TO pull from local storage
+const TwThemes = initTwThemes(schema, themes, 'light')
 export default TwThemes

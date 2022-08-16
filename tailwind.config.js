@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'media',
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
@@ -31,7 +32,7 @@ module.exports = {
 
         onLight: 'var(--twt-onLight)',
         onDark: 'var(--twt-onDark)',
-        accentBorder: 'var(--twt-accentBorder)',
+        border: 'var(--twt-border)',
         backdrop: 'var(--twt-backdrop)',
       },
     },
@@ -40,5 +41,10 @@ module.exports = {
       merriweather: ['Merriweather', 'ui-sans-serif'],
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/aspect-ratio'),
+    require('@tailwindcss/line-clamp'),
+  ],
 }

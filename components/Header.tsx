@@ -7,21 +7,22 @@ import Scrawl from './icons/Scrawl'
 import Link from './Link'
 import classNames from 'classnames'
 import { useUserContext } from '../contexts/userProfile'
+import Button from './Button'
 
 const Header = () => {
   const { user, logout } = useUserContext()
 
   return (
     <Popover className="sticky top-0 bg-onDark">
-      <div className="border-b border-primary-900">
-        <div className="flex items-center justify-between px-4 py-6 max-w-7xl mx-fauto md:justify-start md:space-x-10 sm:px-6">
+      <div className="border-b border-border">
+        <div className="flex items-center justify-between px-3 py-4 mx-auto max-w-7xl md:justify-start md:space-x-10 sm:px-4">
           <div className="flex justify-start lg:w-0 lg:flex-1">
             <a
               href={login}
-              className="flex items-center gap-3 text-2xl font-merriweather hover:underline"
+              className="flex items-center gap-3 prose no-underline hover:underline"
             >
-              <Scrawl size={40}></Scrawl>
-              Scrawl
+              <Scrawl size={24}></Scrawl>
+              <h3 className="!m-0">Scrawl</h3>
             </a>
           </div>
           <div className="-my-2 -mr-2 md:hidden">
@@ -34,12 +35,12 @@ const Header = () => {
             {user && (
               <Menu as="div" className="relative ml-3">
                 <div>
-                  <Menu.Button className="flex items-center max-w-xs text-sm rounded-full bg-onDark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                  <Menu.Button className="flex items-center max-w-xs text-sm rounded-full bg-onDark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 not-prose">
                     <span className="sr-only">Open user menu</span>
                     {user.avatar_url && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        className="w-10 h-10 border rounded-full border-onLight"
+                        className="w-8 h-8 border rounded-full not-prose border-onLight"
                         src={user.avatar_url}
                         alt="User profile photo"
                       />
@@ -56,7 +57,7 @@ const Header = () => {
                   leaveFrom="transform opacity-100 scale-100"
                   leaveTo="transform opacity-0 scale-95"
                 >
-                  <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right rounded-md shadow-lg bg-onDark ring-1 ring-onLight ring-opacity-5 focus:outline-none">
+                  <Menu.Items className="absolute right-0 w-48 py-1 mt-2 origin-top-right border-0 rounded-md shadow-lg bg-onDark ring-1 ring-onLight ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                       {({ active }) => (
                         <button
@@ -97,10 +98,10 @@ const Header = () => {
               <div className="flex items-center justify-between">
                 <a
                   href={login}
-                  className="flex items-center gap-3 text-2xl font-wide"
+                  className="flex items-center gap-3 prose no-underline hover:underline"
                 >
-                  <Scrawl size={40}></Scrawl>
-                  SCRAWL
+                  <Scrawl size={24}></Scrawl>
+                  <h3 className="!m-0">Scrawl</h3>
                 </a>
                 <div className="-mr-2">
                   <Popover.Button className="inline-flex items-center justify-center p-2 rounded-md bg-onDark text-primary-400 hover:text-primary-500 hover:bg-primary-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500">
@@ -114,23 +115,9 @@ const Header = () => {
               </div>
             </div>
             <div className="px-5 py-6 space-y-6">
-              <div>
-                <a
-                  href="#"
-                  className="flex items-center justify-center w-full px-4 py-2 text-base font-medium border border-transparent rounded-md shadow-sm text-onDark bg-primary-600 hover:bg-primary-700"
-                >
-                  Sign up
-                </a>
-                <p className="mt-6 text-base font-medium text-center text-primary-500">
-                  Existing customer?{' '}
-                  <a
-                    href="#"
-                    className="text-primary-600 hover:text-primary-500"
-                  >
-                    Sign in
-                  </a>
-                </p>
-              </div>
+              <Button className="w-full" onClick={logout}>
+                Sign out
+              </Button>
             </div>
           </div>
         </Popover.Panel>
