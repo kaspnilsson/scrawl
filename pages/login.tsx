@@ -63,7 +63,7 @@ const Login = () => {
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-clash text-primary-900">
+        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-heading text-primary-900">
           <Scrawl size={48} />
           Sign in to your account
         </h2>
@@ -75,7 +75,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-primary-700 font-clash"
+                className="block text-sm font-medium text-primary-700 font-heading"
               >
                 Email address
               </label>
