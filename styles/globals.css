@@ -14,6 +14,12 @@
   src: url('../assets/fonts/MerriweatherSans-ExtraBold.ttf');
 }
 
+@font-face {
+  font-family: 'Clash';
+  font-weight: 600;
+  src: url('../assets/fonts/ClashDisplaySemibold.woff');
+}
+
 html,
 body,
 body > div:first-child,

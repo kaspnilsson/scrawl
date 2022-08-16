@@ -39,6 +39,7 @@ module.exports = {
     fontFamily: {
       wide: ['Montserrat', 'ui-sans-serif'],
       merriweather: ['Merriweather', 'ui-sans-serif'],
+      clash: ['Clash', 'ui-sans-serif'],
     },
   },
   plugins: [
