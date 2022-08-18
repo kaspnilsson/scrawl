@@ -19,7 +19,7 @@ module.exports = {
     require('@tailwindcss/line-clamp'),
     require('daisyui'),
   ],
-  daisyui: {
-    themes: ['light'],
-  },
+  // daisyui: {
+  //   themes: ['wireframe'],
+  // },
 }
