@@ -1,0 +1,26 @@
+<html>
+  <body>
+    <style type="text/css">
+      @media screen {
+        @font-face {
+          font-family: 'Clash Display';
+          font-style: normal;
+          font-weight: 600;
+          src: local('Clash Display'),
+            url('https://fonts.cdnfonts.com/s/65008/ClashDisplaySemibold.woff')
+              format('woff');
+        }
+      }
+      h2 {
+        font-family: 'Clash Display', sans-serif;
+        font-weight: 600;
+      }
+    </style>
+    <div class="m-auto max-w-[65ch]">
+      <h2>Scrawl Magic Link</h2>
+
+      <p>Follow this link to login:</p>
+      <p><a href="{{ .ConfirmationURL }}">Log In</a></p>
+    </div>
+  </body>
+</html>

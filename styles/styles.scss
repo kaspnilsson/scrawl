@@ -2,7 +2,7 @@ html,
 body,
 body > div:first-child,
 div#__next,
-div#__next > div {
+div#__next > div:first-child {
   min-height: 100vh;
 }
 

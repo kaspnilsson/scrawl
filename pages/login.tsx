@@ -1,11 +1,12 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
-import { ApiError, User } from '@supabase/gotrue-js'
+import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
+import toast from 'react-hot-toast'
 
 const makeRedirectUrl = (path: string) =>
   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
@@ -30,18 +31,13 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  console.log(makeRedirectUrl(routes.today))
 
-  const handleSignIn = ({
-    error,
-  }: {
-    user: User | null
-    error: ApiError | null
-  }) => {
+  const handleSignIn = ({ error }: { error: ApiError | null }) => {
     if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
     }
     setLoading(false)
+    return error
   }
 
   const handleGoogleLogin = async () => {
@@ -68,6 +64,11 @@ const Login = () => {
         { redirectTo: makeRedirectUrl(routes.today) }
       )
       .then(handleSignIn)
+      .then((error) => {
+        if (!error) {
+          toast.success('Check your email for a magic link!')
+        }
+      })
   }
 
   return (
@@ -159,7 +160,9 @@ const Login = () => {
             </div>
 
             {error && (
-              <div className="flex items-center mt-6 text-red">{error}</div>
+              <div className="flex items-center p-4 mt-6 rounded-md bg-error text-error-content">
+                {error}
+              </div>
             )}
           </div>
         </div>
