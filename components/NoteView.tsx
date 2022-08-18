@@ -1,7 +1,7 @@
-import { Content, JSONContent } from '@tiptap/core'
+import { Content } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
 import moment, { Moment } from 'moment'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import useSWR from 'swr'
 import { makeNoteKeyFromMoment, postNote } from '../lib/apiHelpers'
 import CalendarWeek from './CalendarWeek'
@@ -30,7 +30,7 @@ const NoteView = ({ date }: Props) => {
       setSaving(true)
       await postNote(noteKey, value)
       setSaving(false)
-    }, 200),
+    }, 500),
     []
   )
 
@@ -56,7 +56,14 @@ const NoteView = ({ date }: Props) => {
                 </>
               )}
             </div>
-            <h1 className="font-heading">{date.format('MMMM Do, YYYY')}</h1>
+            <h1 className="flex items-center gap-2 font-heading">
+              {date.format('MMMM Do, YYYY')}
+              {saving && (
+                <button className="min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit">
+                  Saving...
+                </button>
+              )}
+            </h1>
           </div>
           <div className="flex items-center w-full mt-4">
             <Editor

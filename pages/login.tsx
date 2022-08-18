@@ -1,11 +1,14 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
-import { useRouter } from 'next/router'
 import { ApiError, User } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { routes } from '../lib/routes'
+import { PUBLIC_BASE_URL, routes } from '../lib/routes'
+import classNames from 'classnames'
+
+const makeRedirectUrl = (path: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -14,7 +17,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (res.user) {
     return {
       redirect: {
-        destination: routes.today,
+        destination: makeRedirectUrl(routes.today),
         permanent: false,
       },
     }
@@ -27,18 +30,14 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const router = useRouter()
 
   const handleSignIn = ({
-    user,
     error,
   }: {
     user: User | null
     error: ApiError | null
   }) => {
-    if (user) {
-      router.push(routes.today)
-    } else if (error) {
+    if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
     }
     setLoading(false)
@@ -47,9 +46,12 @@ const Login = () => {
   const handleGoogleLogin = async () => {
     setLoading(true)
     return await supabaseClient.auth
-      .signIn({
-        provider: 'google',
-      })
+      .signIn(
+        {
+          provider: 'google',
+        },
+        { redirectTo: makeRedirectUrl(routes.today) }
+      )
       .then(handleSignIn)
   }
 
@@ -58,9 +60,12 @@ const Login = () => {
     setLoading(true)
 
     await supabaseClient.auth
-      .signIn({
-        email,
-      })
+      .signIn(
+        {
+          email,
+        },
+        { redirectTo: makeRedirectUrl(routes.today) }
+      )
       .then(handleSignIn)
   }
 
@@ -101,7 +106,10 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex justify-center w-full px-4 py-2 btn btn-primary"
+                className={classNames(
+                  'flex justify-center w-full px-4 py-2 btn',
+                  { loading: loading }
+                )}
                 disabled={!(email && isValidEmail(email)) || loading}
               >
                 Get a magic link
@@ -114,7 +122,10 @@ const Login = () => {
 
             <div className="flex items-center mt-6">
               <button
-                className="items-center justify-center w-full btn btn-outline"
+                className={classNames(
+                  'items-center justify-center w-full btn',
+                  { loading: loading }
+                )}
                 disabled={loading}
                 onClick={() => handleGoogleLogin()}
               >

@@ -22,11 +22,10 @@ const LINKS = [
     icon: <BriefcaseIcon className="w-4 h-4" />,
     route: routes.projects,
   },
-  //   { text: 'Log out', icon: <LogoutIcon className="w-4 h-4" /> },
 ]
 
 const Nav = () => {
-  const { user, logout } = useUserContext()
+  const { logout } = useUserContext()
   const router = useRouter()
 
   return (
