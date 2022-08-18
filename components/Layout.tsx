@@ -1,55 +1,67 @@
-import classNames from 'classnames'
-import { ReactNode } from 'react'
-import { useLocalStorage } from 'usehooks-ts'
+import { Transition } from '@headlessui/react'
+import react from 'react'
+// import { useLocalStorage } from 'usehooks-ts'
 import Header from './Header'
 import Nav from './Nav'
 
 interface Props {
-  children: ReactNode
-  rightContent: ReactNode
+  children: react.ReactNode
+  rightContent?: react.ReactNode
+  headerContent?: react.ReactNode
 }
 
-const Layout = ({ children, rightContent }: Props) => {
-  const [rightSidebarEnabled, setRightSidebarEnabled] = useLocalStorage(
-    'rightSidebarEnabled',
+const Layout = ({ children, rightContent, headerContent }: Props) => {
+  const [rightSidebarEnabled, setRightSidebarEnabled] = react.useState(
+    // 'rightSidebarEnabled',
     false
   )
-  const [leftSidebarEnabled, setLeftSidebarEnabled] = useLocalStorage(
-    'leftSidebarEnabled',
+  const [leftSidebarEnabled, setLeftSidebarEnabled] = react.useState(
+    // 'leftSidebarEnabled',
     false
   )
 
   return (
     <div className="flex w-full min-h-screen h-fit">
-      <div
-        className={classNames('not-prose bg-base-200', {
-          hidden: !leftSidebarEnabled,
-          'flex flex-col': leftSidebarEnabled,
-        })}
+      <Transition
+        show={leftSidebarEnabled}
+        enter="transition ease-in-out duration-100 transform"
+        enterFrom="-translate-x-full"
+        enterTo="translate-x-0"
+        leave="transition ease-in-out duration-100 transform"
+        leaveFrom="translate-x-0"
+        leaveTo="-translate-x-full"
+        className="flex flex-col not-prose bg-base-200 w-fit"
       >
         <Nav />
-      </div>
-      <div className="overflow-y-auto w-full">
+      </Transition>
+      <div className="w-full overflow-y-auto">
         <Header
           leftSidebarEnabled={leftSidebarEnabled}
           toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
           rightSidebarEnabled={rightSidebarEnabled}
-          toggleRightSidebar={() =>
-            setRightSidebarEnabled(!rightSidebarEnabled)
+          toggleRightSidebar={
+            rightContent
+              ? () => setRightSidebarEnabled(!rightSidebarEnabled)
+              : undefined
           }
+          headerContent={headerContent}
         />
-        <div className="px-2 py-8 mx-auto max-w-6xl overflow md:p-8 xl:p-16">
+        <div className="max-w-6xl px-2 py-8 mx-auto overflow md:p-8 xl:p-16">
           {children}
         </div>
       </div>
-      <div
-        className={classNames('not-prose bg-base-200', {
-          hidden: !rightSidebarEnabled,
-          'flex flex-col': rightSidebarEnabled,
-        })}
+      <Transition
+        show={rightSidebarEnabled}
+        enter="transition ease-in-out duration-100 transform"
+        enterFrom="-translate-x-full"
+        enterTo="translate-x-0"
+        leave="transition ease-in-out duration-100 transform"
+        leaveFrom="translate-x-0"
+        leaveTo="-translate-x-full"
+        className="flex flex-col not-prose bg-base-200 w-fit"
       >
         {rightContent || ''}
-      </div>
+      </Transition>
     </div>
   )
 }

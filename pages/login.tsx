@@ -2,10 +2,10 @@ import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
 import { useRouter } from 'next/router'
-import { today } from '../lib/routes'
 import { ApiError, User } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
+import { routes } from '../lib/routes'
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
@@ -14,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (res.user) {
     return {
       redirect: {
-        destination: today,
+        destination: routes.today,
         permanent: false,
       },
     }
@@ -37,7 +37,7 @@ const Login = () => {
     error: ApiError | null
   }) => {
     if (user) {
-      router.push(today)
+      router.push(routes.today)
     } else if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
     }
@@ -65,9 +65,9 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12">
+    <div className="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-12">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-heading">
+        <h2 className="flex flex-col items-center gap-8 mt-6 text-3xl text-center font-heading">
           <Scrawl size={48} />
           Sign in to your account
         </h2>
@@ -101,7 +101,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex justify-center px-4 py-2 w-full btn btn-primary"
+                className="flex justify-center w-full px-4 py-2 btn btn-primary"
                 disabled={!(email && isValidEmail(email)) || loading}
               >
                 Get a magic link
@@ -114,7 +114,7 @@ const Login = () => {
 
             <div className="flex items-center mt-6">
               <button
-                className="justify-center items-center w-full btn btn-outline"
+                className="items-center justify-center w-full btn btn-outline"
                 disabled={loading}
                 onClick={() => handleGoogleLogin()}
               >

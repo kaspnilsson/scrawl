@@ -9,7 +9,7 @@ import { useUser } from '@supabase/auth-helpers-react'
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { User } from '../interfaces/userAndProfile'
 import { logoutServerside } from '../lib/apiHelpers'
-import { login } from '../lib/routes'
+import { routes } from '../lib/routes'
 import { useRouter } from 'next/router'
 
 export const UserProfileContext = createContext<Props>({
@@ -59,7 +59,7 @@ const UserProfileProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     await logoutServerside()
     setUser(null)
-    router.push(login)
+    router.push(routes.login)
   }
   const exposed = {
     user,

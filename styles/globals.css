@@ -20,10 +20,9 @@
   src: url('../assets/fonts/ClashDisplaySemibold.woff');
 }
 
-html,
-body,
-body > div:first-child,
-div#__next,
-div#__next > div {
-  min-height: 100vh;
+input[type='checkbox'] {
+  @apply checkbox;
+  @apply checkbox-primary;
+
+  @apply bg-base-200;
 }

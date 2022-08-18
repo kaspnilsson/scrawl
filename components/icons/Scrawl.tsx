@@ -1,4 +1,11 @@
-import { prefersDarkMode } from '../../lib/colorTheme'
+// Always returns false rn
+export const prefersDarkMode = () =>
+  !!(
+    typeof window !== 'undefined' &&
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches &&
+    false
+  )
 
 interface Props {
   size: number

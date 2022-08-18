@@ -2,6 +2,9 @@ import { useEditor, EditorContent, Content } from '@tiptap/react'
 import { Editor } from '@tiptap/core'
 import { Transaction } from 'prosemirror-state'
 import StarterKit from '@tiptap/starter-kit'
+import Placeholder from '@tiptap/extension-placeholder'
+import TaskItem from '@tiptap/extension-task-item'
+import TaskList from '@tiptap/extension-task-list'
 
 interface Props {
   content?: Content
@@ -26,24 +29,38 @@ interface Props {
 const EditorComponent = ({
   content,
   onUpdate,
-  onFocus,
-  onBlur,
+  onFocus = () => null,
+  onBlur = () => null,
   className = '',
 }: Props) => {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content,
-    onUpdate: ({ editor }) => {
-      onUpdate(editor.getJSON())
-    },
-    editorProps: {
-      attributes: {
-        class: 'focus:outline-none',
+  const editor = useEditor(
+    {
+      extensions: [
+        StarterKit,
+        Placeholder.configure({
+          placeholder:
+            'Capture notes, plan daily tasks, or log journal entries.',
+        }),
+        TaskItem.configure({
+          nested: true,
+          // HTMLAttributes: { class: 'checkbox' },
+        }),
+        TaskList,
+      ],
+      content,
+      onUpdate: ({ editor }) => {
+        onUpdate(editor.getJSON())
       },
+      editorProps: {
+        attributes: {
+          class: 'focus:outline-none',
+        },
+      },
+      onFocus,
+      onBlur,
     },
-    // onFocus,
-    // onBlur,
-  })
+    [content]
+  )
 
   return <EditorContent className={className} editor={editor} />
 }

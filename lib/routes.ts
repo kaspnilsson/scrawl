@@ -1,5 +1,11 @@
-export const index = '/'
-export const today = '/notes/today'
-export const projects = '/projects'
-export const calendar = '/calendar'
-export const login = '/login'
+import { Moment } from 'moment'
+
+export const routes = {
+  index: '/',
+  today: '/notes/today',
+  projects: '/projects',
+  calendar: '/calendar',
+  login: '/login',
+  notesForDate: (dateStr: string) => `/notes/${dateStr}`,
+  notesForMoment: (moment: Moment) => `/notes/${moment.format('YYYY-MM-DD')}`,
+}
