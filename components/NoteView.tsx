@@ -61,7 +61,7 @@ const NoteView = ({ date }: Props) => {
               )}
             </div>
             <h1 className="flex flex-wrap items-center gap-2 font-heading">
-              {date.format('MMMM Do, YYYY')}
+              {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
                 onDateSelect={(date) =>
