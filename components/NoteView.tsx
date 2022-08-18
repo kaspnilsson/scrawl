@@ -59,7 +59,7 @@ const NoteView = ({ date }: Props) => {
             <h1 className="flex items-center gap-2 font-heading">
               {date.format('MMMM Do, YYYY')}
               {saving && (
-                <button className="min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit">
+                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit md:flex">
                   Saving...
                 </button>
               )}
