@@ -1,5 +1,6 @@
 import { Transition } from '@headlessui/react'
 import react from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 // import { useLocalStorage } from 'usehooks-ts'
 import Header from './Header'
 import Nav from './Nav'
@@ -11,12 +12,12 @@ interface Props {
 }
 
 const Layout = ({ children, rightContent, headerContent }: Props) => {
-  const [rightSidebarEnabled, setRightSidebarEnabled] = react.useState(
-    // 'rightSidebarEnabled',
+  const [rightSidebarEnabled, setRightSidebarEnabled] = useLocalStorage(
+    'rightSidebarEnabled',
     false
   )
-  const [leftSidebarEnabled, setLeftSidebarEnabled] = react.useState(
-    // 'leftSidebarEnabled',
+  const [leftSidebarEnabled, setLeftSidebarEnabled] = useLocalStorage(
+    'leftSidebarEnabled',
     false
   )
 
