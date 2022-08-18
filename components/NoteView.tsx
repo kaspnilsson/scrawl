@@ -10,12 +10,16 @@ import Layout from './Layout'
 import { debounce } from 'lodash'
 import { Note } from '../interfaces/note'
 import ErrorView from './Error'
+import Datepicker from './Datepicker'
+import { useRouter } from 'next/router'
+import { routes } from '../lib/routes'
 
 interface Props {
   date: Moment
 }
 
 const NoteView = ({ date }: Props) => {
+  const router = useRouter()
   const noteKey = makeNoteKeyFromMoment(date)
 
   const [saving, setSaving] = useState(false)
@@ -56,8 +60,14 @@ const NoteView = ({ date }: Props) => {
                 </>
               )}
             </div>
-            <h1 className="flex items-center gap-2 font-heading">
+            <h1 className="flex flex-wrap items-center gap-2 font-heading">
               {date.format('MMMM Do, YYYY')}
+              <Datepicker
+                selectedDate={date.toDate()}
+                onDateSelect={(date) =>
+                  router.push(routes.notesForMoment(moment(date)))
+                }
+              />
               {saving && (
                 <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit md:flex">
                   Saving...
