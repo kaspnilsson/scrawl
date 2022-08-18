@@ -28,10 +28,10 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: '#a8a29e', // TW stone 400
-          secondary: '#a8a29e', // TW stone 400
-          accent: '#a8a29e', // TW stone 400
-          neutral: '#e7e5e4', // TW stone 300
+          primary: '#d6d3d1', // TW stone 300
+          secondary: '#d6d3d1', // TW stone 300
+          accent: '#d6d3d1', // TW stone 300
+          neutral: '#e7e5e4', // TW stone 200
           'base-100': '#ffffff', // White
           'base-200': '#f5f5f4', // TW stone 100
           'base-300': '#d6d3d1', // TW stone 300
