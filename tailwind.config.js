@@ -28,10 +28,10 @@ module.exports = {
     themes: [
       {
         light: {
-          primary: '#a8a29e', // TW stone 400
-          secondary: '#a8a29e', // TW stone 400
-          accent: '#a8a29e', // TW stone 400
-          neutral: '#e7e5e4', // TW stone 300
+          primary: '#d6d3d1', // TW stone 300
+          secondary: '#d6d3d1', // TW stone 300
+          accent: '#d6d3d1', // TW stone 300
+          neutral: '#e7e5e4', // TW stone 200
           'base-100': '#ffffff', // White
           'base-200': '#f5f5f4', // TW stone 100
           'base-300': '#d6d3d1', // TW stone 300
@@ -40,19 +40,19 @@ module.exports = {
           warning: '#ca8a04', // TW amber 600
           error: '#dc2626', // TW red 600
         },
-        dark: {
-          primary: '#44403c', // TW stone 700
-          secondary: '#44403c', // TW stone 700
-          accent: '#44403c', // TW stone 700
-          neutral: '#292524', // TW stone 800
-          'base-100': '#000000', // Black
-          'base-200': '#1c1917', // TW stone 900
-          'base-300': '#292524', // TW stone 800
-          info: '#57534e', // TW stone 600
-          success: '#16a34a', // TW green 600
-          warning: '#ca8a04', // TW amber 600
-          error: '#dc2626', // TW red 600
-        },
+        // dark: {
+        //   primary: '#44403c', // TW stone 700
+        //   secondary: '#44403c', // TW stone 700
+        //   accent: '#44403c', // TW stone 700
+        //   neutral: '#292524', // TW stone 800
+        //   'base-100': '#000000', // Black
+        //   'base-200': '#1c1917', // TW stone 900
+        //   'base-300': '#292524', // TW stone 800
+        //   info: '#57534e', // TW stone 600
+        //   success: '#16a34a', // TW green 600
+        //   warning: '#ca8a04', // TW amber 600
+        //   error: '#dc2626', // TW red 600
+        // },
       },
     ],
   },
