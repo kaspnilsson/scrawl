@@ -10,4 +10,4 @@ export const routes = {
   notesForMoment: (moment: Moment) => `/notes/${moment.format('YYYY-MM-DD')}`,
 }
 
-export const PUBLIC_BASE_URL = 'https://scrawl.day'
+export const PUBLIC_BASE_URL = 'https://www.scrawl.day'

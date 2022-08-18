@@ -30,6 +30,7 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  console.log(makeRedirectUrl(routes.today))
 
   const handleSignIn = ({
     error,
