@@ -1,4 +1,5 @@
-
-
-export const dashboard = '/app/dashboard'
+export const index = '/'
+export const today = '/notes/today'
+export const projects = '/projects'
+export const calendar = '/calendar'
 export const login = '/login'

@@ -1,7 +1,8 @@
 import { getUser, withPageAuth } from '@supabase/auth-helpers-nextjs'
 import moment from 'moment'
-import Editor from '../components/Editor'
-import Layout from '../components/Layout'
+import Editor from '../../components/Editor'
+import Layout from '../../components/Layout'
+import { getRange } from '../../lib/dateHelpers'
 
 export const getServerSideProps = withPageAuth({
   redirectTo: '/login',
@@ -12,13 +13,13 @@ export const getServerSideProps = withPageAuth({
   },
 })
 
-const Index = () => {
+const Today = () => {
   // One year
-  // const dates = getRange(
-  //   new Date(),
-  //   new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-  //   'days'
-  // )
+  //   const dates = getRange(
+  //     new Date(),
+  //     new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+  //     'days'
+  //   )
   const today = moment(new Date())
   return (
     <Layout rightContent={undefined}>
@@ -53,4 +54,4 @@ const Index = () => {
     </Layout>
   )
 }
-export default Index
+export default Today

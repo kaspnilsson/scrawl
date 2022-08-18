@@ -24,7 +24,7 @@ export default class MyDocument extends Document {
             }}
           /> */}
         </Head>
-        <body className="prose-xs prose sm:prose-sm md:prose-base prose-stone bg-backdrop !max-w-none prose-headings:font-heading">
+        <body>
           <Main />
           <NextScript />
         </body>

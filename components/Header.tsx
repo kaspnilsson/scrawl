@@ -1,33 +1,48 @@
-import { Fragment } from 'react'
-import { Menu, Popover, Transition } from '@headlessui/react'
-import { MenuIcon, XIcon } from '@heroicons/react/solid'
-import { login } from '../lib/routes'
-import Scrawl from './icons/Scrawl'
+import {
+  MenuAlt3Icon,
+  MenuAlt2Icon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/solid'
 // import { useUser } from '@supabase/auth-helpers-react'
-import Link from './Link'
 import classNames from 'classnames'
-import { useUserContext } from '../contexts/userProfile'
-import Button from './Button'
 
 interface Props {
-  toggleSidebar: () => void
-  sidebarEnabled: boolean
+  toggleLeftSidebar: () => void
+  leftSidebarEnabled: boolean
+  toggleRightSidebar: () => void
+  rightSidebarEnabled: boolean
 }
 
-const Header = ({ toggleSidebar, sidebarEnabled }: Props) => {
-  const { user, logout } = useUserContext()
-
+const Header = ({
+  toggleLeftSidebar,
+  leftSidebarEnabled,
+  toggleRightSidebar,
+  rightSidebarEnabled,
+}: Props) => {
   return (
     <div className="sticky top-0 p-3">
       <div className="flex justify-between items-center">
         <button
           className={classNames('btn-square btn btn-sm btn-ghost', {
-            'btn-active': sidebarEnabled,
+            'btn-active': leftSidebarEnabled,
           })}
-          onClick={toggleSidebar}
+          onClick={toggleLeftSidebar}
         >
-          <MenuIcon className="w-6 h-6" />
+          <MenuAlt2Icon className="w-6 h-6" />
         </button>
+        <div className="flex justify-between items-center">
+          <button className={classNames('btn-square btn btn-sm btn-ghost')}>
+            <QuestionMarkCircleIcon className="w-6 h-6" />
+          </button>
+          <button
+            className={classNames('btn-square btn btn-sm btn-ghost', {
+              'btn-active': rightSidebarEnabled,
+            })}
+            onClick={toggleRightSidebar}
+          >
+            <MenuAlt3Icon className="w-6 h-6" />
+          </button>
+        </div>
       </div>
     </div>
   )

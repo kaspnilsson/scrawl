@@ -1,9 +1,8 @@
-import Button from '../components/Button'
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
 import { useRouter } from 'next/router'
-import { dashboard } from '../lib/routes'
+import { today } from '../lib/routes'
 import { ApiError, User } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
@@ -15,7 +14,7 @@ export const getServerSideProps: GetServerSideProps = async (
   if (res.user) {
     return {
       redirect: {
-        destination: '/',
+        destination: today,
         permanent: false,
       },
     }
@@ -27,6 +26,7 @@ export const getServerSideProps: GetServerSideProps = async (
 const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   const handleSignIn = ({
@@ -37,21 +37,25 @@ const Login = () => {
     error: ApiError | null
   }) => {
     if (user) {
-      router.push(dashboard)
+      router.push(today)
     } else if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
     }
+    setLoading(false)
   }
 
-  const handleGoogleLogin = async () =>
-    await supabaseClient.auth
+  const handleGoogleLogin = async () => {
+    setLoading(true)
+    return await supabaseClient.auth
       .signIn({
         provider: 'google',
       })
       .then(handleSignIn)
+  }
 
   const handleMagicLink = async (e: FormEvent) => {
     e.preventDefault()
+    setLoading(true)
 
     await supabaseClient.auth
       .signIn({
@@ -63,7 +67,7 @@ const Login = () => {
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-heading text-primary-900">
+        <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-heading">
           <Scrawl size={48} />
           Sign in to your account
         </h2>
@@ -75,7 +79,7 @@ const Login = () => {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-primary-700 font-heading"
+                className="block text-sm font-medium font-heading"
               >
                 Email address
               </label>
@@ -84,11 +88,12 @@ const Login = () => {
                   id="email"
                   name="email"
                   type="email"
+                  disabled={loading}
                   autoComplete="email"
                   required
                   value={email}
                   onChange={(event) => setEmail(event.target.value)}
-                  className="block px-3 py-2 w-full bg-transparent rounded-md border shadow-sm appearance-none placeholder-primary-400 border-primary-300 focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
+                  className="w-full input input-bordered"
                 />
               </div>
             </div>
@@ -96,8 +101,8 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="flex justify-center px-4 py-2 w-full text-sm font-medium rounded-md border border-transparent shadow-sm text-onDark bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50"
-                disabled={!(email && isValidEmail(email))}
+                className="flex justify-center px-4 py-2 w-full btn btn-primary"
+                disabled={!(email && isValidEmail(email)) || loading}
               >
                 Get a magic link
               </button>
@@ -105,20 +110,12 @@ const Login = () => {
           </form>
 
           <div className="mt-6">
-            <div className="relative">
-              <div className="flex absolute inset-0 items-center">
-                <div className="w-full border-t border-primary-300" />
-              </div>
-              <div className="flex relative justify-center text-sm">
-                <span className="px-2 bg-onDark text-primary-500">
-                  Or continue with
-                </span>
-              </div>
-            </div>
+            <div className="divider">Or continue with</div>
 
             <div className="flex items-center mt-6">
-              <Button
-                className="justify-center items-center w-full"
+              <button
+                className="justify-center items-center w-full btn btn-outline"
+                disabled={loading}
                 onClick={() => handleGoogleLogin()}
               >
                 <svg
@@ -146,7 +143,7 @@ const Login = () => {
                     />
                   </g>
                 </svg>
-              </Button>
+              </button>
             </div>
 
             {error && (
