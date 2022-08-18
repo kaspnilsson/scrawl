@@ -30,7 +30,7 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
         leave="transition ease-in-out duration-100 transform"
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
-        className="flex flex-col not-prose bg-base-200 w-fit"
+        className="flex flex-col border-r not-prose bg-base-200 w-fit border-base-300"
       >
         <Nav />
       </Transition>
