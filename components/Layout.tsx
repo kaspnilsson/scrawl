@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
 import react from 'react'
 import { useLocalStorage } from 'usehooks-ts'
-// import { useLocalStorage } from 'usehooks-ts'
+import BottomNav from './BottomNav'
 import Header from './Header'
 import Nav from './Nav'
 
@@ -31,7 +31,7 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
         leave="transition ease-in-out duration-100 transform"
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
-        className="flex flex-col border-r not-prose bg-base-200 w-fit border-base-300"
+        className="flex flex-col flex-1 border-r not-prose bg-base-200 w-fit border-base-300"
       >
         <Nav />
       </Transition>
@@ -47,8 +47,12 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
           }
           headerContent={headerContent}
         />
-        <div className="max-w-6xl px-2 py-8 mx-auto overflow md:p-8 xl:p-16">
+        <div className="max-w-6xl px-2 py-4 mx-auto overflow md:p-8 xl:p-16">
           {children}
+          <BottomNav
+            leftSidebarEnabled={leftSidebarEnabled}
+            toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
+          />
         </div>
       </div>
       <Transition

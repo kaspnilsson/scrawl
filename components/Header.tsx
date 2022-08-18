@@ -23,19 +23,24 @@ const Header = ({
   headerContent,
 }: Props) => {
   return (
-    <div className="sticky top-0 h-12 px-3 py-1">
-      <div className="flex items-center justify-between">
+    <div className="sticky top-0 flex items-center h-12 px-3 py-1">
+      <div className="flex items-center justify-between w-full">
         <button
-          className={classNames('btn-square btn btn-sm btn-ghost', {
-            'btn-active': leftSidebarEnabled,
-          })}
+          className={classNames(
+            'btn-square btn btn-sm btn-ghost hidden md:flex',
+            {
+              'btn-active': leftSidebarEnabled,
+            }
+          )}
           onClick={toggleLeftSidebar}
         >
           <MenuAlt2Icon className="w-6 h-6" />
         </button>
-        {headerContent}
+        <div className="flex-1">{headerContent}</div>
         <div className="flex items-center justify-between">
-          <button className={classNames('btn-square btn btn-sm btn-ghost')}>
+          <button
+            className={classNames('btn-square btn btn-sm btn-ghost hidden')}
+          >
             <QuestionMarkCircleIcon className="w-6 h-6" />
           </button>
           {toggleRightSidebar && (
