@@ -2,6 +2,7 @@ import { Transition } from '@headlessui/react'
 import react from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import BottomNav from './BottomNav'
+import ErrorView from './Error'
 import Header from './Header'
 import Nav from './Nav'
 
@@ -9,9 +10,17 @@ interface Props {
   children: react.ReactNode
   rightContent?: react.ReactNode
   headerContent?: react.ReactNode
+  loading?: boolean
+  error?: Error
 }
 
-const Layout = ({ children, rightContent, headerContent }: Props) => {
+const Layout = ({
+  children,
+  rightContent,
+  headerContent,
+  loading,
+  error,
+}: Props) => {
   const [rightSidebarEnabled, setRightSidebarEnabled] = useLocalStorage(
     'rightSidebarEnabled',
     false
@@ -47,8 +56,14 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
           }
           headerContent={headerContent}
         />
-        <div className="max-w-6xl px-2 py-4 mx-auto overflow-y-auto md:p-8 xl:px-16">
-          {children}
+        <div className="max-w-6xl px-2 py-4 mx-auto overflow-y-auto sm:p-8 xl:px-16">
+          {loading && (
+            <div className="flex p-16 m-auto loading btn btn-ghost">
+              Loading
+            </div>
+          )}
+          {!loading && error && <ErrorView error={error as Error} />}
+          {!loading && !error && children}
           <BottomNav
             leftSidebarEnabled={leftSidebarEnabled}
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}

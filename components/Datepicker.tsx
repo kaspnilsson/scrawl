@@ -1,4 +1,4 @@
-import { CalendarIcon } from '@heroicons/react/solid'
+import { CalendarIcon } from '@heroicons/react/outline'
 import DatePicker from 'react-datepicker'
 
 interface Props {
@@ -14,9 +14,10 @@ const Datepicker = ({ onDateSelect, selectedDate }: Props) => {
         popperClassName="shadow-lg shadow-base-content/10"
         selected={selectedDate}
         onChange={onDateSelect}
+        todayButton="Today"
         customInput={
           <button className="btn btn-outline btn-sm btn-square">
-            <CalendarIcon className="w-5 h-5" />
+            <CalendarIcon className="w-4 h-4" />
           </button>
         }
       />
@@ -132,7 +133,6 @@ const DatepickerStyles = () => (
       }
 
       .react-datepicker {
-        font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
         font-size: 0.8rem;
         background-color: hsl(var(--b1));
         color: hsl(var(--bc));
@@ -194,16 +194,16 @@ const DatepickerStyles = () => (
 
       .react-datepicker__header {
         text-align: center;
-        background-color: hsl(var(--b1));
+        background: hsl(var(--b2));
         border-bottom: 1px solid hsl(var(--n));
         border-top-left-radius: 0.3rem;
-        padding: 8px 0;
+        padding: 12px 0;
         position: relative;
       }
       .react-datepicker__header--time {
         padding-bottom: 8px;
-        padding-left: 5px;
-        padding-right: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
       }
       .react-datepicker__header--time:not(.react-datepicker__header--time--only) {
         border-top-left-radius: 0;
@@ -277,7 +277,7 @@ const DatepickerStyles = () => (
         top: -4px;
       }
       .react-datepicker__navigation:hover *::before {
-        border-color: hsl(var(--n));
+        border-color: hsl(var(--bc));
       }
 
       .react-datepicker__navigation-icon {
@@ -338,7 +338,7 @@ const DatepickerStyles = () => (
         width: 1.7rem;
         line-height: 1.7rem;
         text-align: center;
-        margin: 0.166rem;
+        padding: 0.2rem;
       }
       .react-datepicker__week-number.react-datepicker__week-number--clickable {
         cursor: pointer;
@@ -354,6 +354,7 @@ const DatepickerStyles = () => (
       }
 
       .react-datepicker__day-names {
+        margin-top: 8px;
         margin-bottom: -8px;
       }
 
@@ -365,7 +366,7 @@ const DatepickerStyles = () => (
         width: 1.7rem;
         line-height: 1.7rem;
         text-align: center;
-        margin: 0.166rem;
+        margin: 0.2rem;
       }
 
       .react-datepicker__month--selected,
@@ -409,7 +410,7 @@ const DatepickerStyles = () => (
       .react-datepicker__quarter-text:hover,
       .react-datepicker__year-text:hover {
         border-radius: 0.3rem;
-        background-color: hsl(var(--b1));
+        background-color: hsl(var(--b2));
       }
       .react-datepicker__day--today,
       .react-datepicker__month-text--today,
@@ -638,6 +639,7 @@ const DatepickerStyles = () => (
       .react-datepicker__month-year-option:hover
         .react-datepicker__navigation--years-upcoming {
         border-bottom-color: hsl(var(--n));
+        background-color: hsl(var(--b3));
       }
       .react-datepicker__year-option:hover
         .react-datepicker__navigation--years-previous,
@@ -646,6 +648,7 @@ const DatepickerStyles = () => (
       .react-datepicker__month-year-option:hover
         .react-datepicker__navigation--years-previous {
         border-top-color: hsl(var(--n));
+        background-color: hsl(var(--b3));
       }
       .react-datepicker__year-option--selected,
       .react-datepicker__month-option--selected,
@@ -684,12 +687,12 @@ const DatepickerStyles = () => (
       }
 
       .react-datepicker__today-button {
-        background: hsl(var(--b1));
+        background: hsl(var(--b2));
         border-top: 1px solid hsl(var(--n));
         cursor: pointer;
         text-align: center;
         font-weight: bold;
-        padding: 5px 0;
+        padding: 12px 0;
         clear: left;
       }
 

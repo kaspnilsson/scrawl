@@ -2,7 +2,7 @@ import {
   MenuAlt3Icon,
   MenuAlt2Icon,
   QuestionMarkCircleIcon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/outline'
 // import { useUser } from '@supabase/auth-helpers-react'
 import classNames from 'classnames'
 import { ReactNode } from 'react'
@@ -23,11 +23,11 @@ const Header = ({
   headerContent,
 }: Props) => {
   return (
-    <div className="sticky top-0 z-10 flex items-center h-12 px-3 py-1 bg-base-100">
+    <div className="sticky top-0 z-10 flex items-center h-12 px-3 py-1 bg-opacity-50 border-b bg-base-100 backdrop-blur-md border-base-300">
       <div className="flex items-center justify-between w-full">
         <button
           className={classNames(
-            'btn-square btn btn-sm btn-ghost hidden md:flex',
+            'btn-square btn btn-sm btn-ghost hidden sm:flex',
             {
               'btn-active': leftSidebarEnabled,
             }

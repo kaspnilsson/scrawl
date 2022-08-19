@@ -7,7 +7,6 @@ import CalendarWeek from './CalendarWeek'
 import Editor from './Editor'
 import Layout from './Layout'
 import { debounce } from 'lodash'
-import ErrorView from './Error'
 import Datepicker from './Datepicker'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
@@ -61,13 +60,13 @@ const NoteView = ({ date }: Props) => {
   }, [noteKey])
 
   return (
-    <Layout headerContent={<CalendarWeek selectedDate={date} />}>
-      {loading && (
-        <div className="flex p-16 m-auto loading btn btn-ghost">Loading</div>
-      )}
-      {error && <ErrorView error={error as Error} />}
+    <Layout
+      headerContent={<CalendarWeek selectedDate={date} />}
+      loading={loading}
+      error={error}
+    >
       {!loading && !error && (
-        <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading">
+        <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
           <div>
             <div className="flex items-center text-sm font-semibold uppercase">
               {date.format('dddd')}
@@ -87,7 +86,7 @@ const NoteView = ({ date }: Props) => {
                 }
               />
               {saving && (
-                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit md:flex">
+                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit sm:flex">
                   Saving...
                 </button>
               )}

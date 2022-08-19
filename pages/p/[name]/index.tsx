@@ -17,7 +17,7 @@ interface Props {
 const ProjectView = ({ name }: Props) => {
   return (
     <Layout>
-      <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading">
+      <div className="m-auto prose prose-headings:m-0 prose-headings:font-heading">
         <div>
           {/* <div className="flex items-center text-sm font-semibold uppercase">
           {date.format('dddd')}

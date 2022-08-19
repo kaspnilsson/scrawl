@@ -3,7 +3,7 @@ import {
   CalendarIcon,
   BriefcaseIcon,
   MenuAlt2Icon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
@@ -31,7 +31,7 @@ const BottomNav = ({ leftSidebarEnabled, toggleLeftSidebar }: Props) => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-4 gap-2 px-1 border-t btm-nav md:hidden border-base-300 btm-nav-sm">
+    <div className="grid grid-cols-4 gap-2 px-1 border-t btm-nav sm:hidden border-base-300 btm-nav-sm">
       <button
         className={classNames('btn btn-sm btn-ghost min-w-0 flex-1', {
           'btn-active': leftSidebarEnabled,

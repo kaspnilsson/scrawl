@@ -1,13 +1,17 @@
-import { Content } from '@tiptap/react'
+import { Content } from '@tiptap/core'
+
+export enum ProjectState {
+  OPEN,
+  CLOSED,
+}
 
 export declare interface Project {
-  id: string
-  name: string // usually the date
-  createdDate: string // Just the date str, to query as keys
-  createdAt: string // ISO string
-  updatedAt: string // ISO string
-  content?: Content
-  issues: string[] // IDs of referenced issues
-  notes: string[] // IDs of referenced notes
+  name: string // unique
   owner: string
+  created_at: string // ISO string
+  updated_at: string // ISO string
+  state: ProjectState
+  description: Content
+  // issues: string[] // IDs of referenced issues
+  // notes: string[] // IDs of referenced notes
 }

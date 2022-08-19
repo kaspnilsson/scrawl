@@ -1,14 +1,17 @@
-import { supabaseServerClient, getUser } from '@supabase/auth-helpers-nextjs'
+import {
+  supabaseServerClient,
+  getUser,
+  withApiAuth,
+} from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(
+export default withApiAuth(async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   const {
     body,
     method,
-    // includeContent = false,
     query: { date },
   } = req
   const { user } = await getUser({ req, res })
@@ -93,4 +96,4 @@ export default async function handler(
   } else {
     res.status(405).end(`Method ${method} Not Allowed`)
   }
-}
+})

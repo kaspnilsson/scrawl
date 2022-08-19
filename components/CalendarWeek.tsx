@@ -36,7 +36,7 @@ const CalendarWeek = ({ selectedDate }: Props) => {
         >
           <button
             className={classNames(
-              'btn not-prose flex flex-col min-w-fit md:btn-block h-fit min-h-0 py-1 px-1 md:px-4 w-full',
+              'btn not-prose flex flex-col min-w-fit sm:btn-block h-fit min-h-0 py-1 px-1 sm:px-4 w-full',
               {
                 'btn-ghost': !b.isSelected,
                 'btn-accent': b.isSelected,

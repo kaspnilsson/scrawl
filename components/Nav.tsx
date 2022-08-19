@@ -3,7 +3,7 @@ import {
   CalendarIcon,
   BriefcaseIcon,
   LogoutIcon,
-} from '@heroicons/react/solid'
+} from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 import { useUserContext } from '../contexts/userProfile'
 import { routes } from '../lib/routes'
@@ -44,10 +44,10 @@ const Nav = () => {
         ))}
         {logout && (
           <li>
-            <button onClick={logout}>
+            <a onClick={logout}>
               <LogoutIcon className="w-4 h-4" />
               Log out
-            </button>
+            </a>
           </li>
         )}
       </ul>
