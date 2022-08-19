@@ -30,7 +30,7 @@ module.exports = {
         light: {
           primary: '#d6d3d1', // TW stone 300
           secondary: '#d6d3d1', // TW stone 300
-          accent: '#d6d3d1', // TW stone 300
+          accent: '#fbbf24', // TW amber 400
           neutral: '#e7e5e4', // TW stone 200
           'base-100': '#ffffff', // White
           'base-200': '#f5f5f4', // TW stone 100
@@ -43,7 +43,7 @@ module.exports = {
         dark: {
           primary: '#44403c', // TW stone 700
           secondary: '#44403c', // TW stone 700
-          accent: '#44403c', // TW stone 700
+          accent: '#fbbf24', // TW amber 400
           neutral: '#292524', // TW stone 800
           'base-100': '#000000', // Black
           'base-200': '#1c1917', // TW stone 900

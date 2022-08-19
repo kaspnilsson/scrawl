@@ -8,7 +8,7 @@ div#__next > div:first-child {
 
 .ProseMirror {
   p.is-editor-empty:first-child::before {
-    color: var(--nc);
+    color: hsl(var(--nc));
     opacity: 0.6;
     content: attr(data-placeholder);
     float: left;
@@ -16,34 +16,59 @@ div#__next > div:first-child {
     pointer-events: none;
   }
 
+  &.ProseMirror-focused {
+    outline: 'none';
+  }
+
+  img.ProseMirror-selectednode {
+    border: 1px solid hsl(var(--n));
+  }
+
+  img[data-loading='true'] {
+    opacity: 0.25;
+  }
+
   ul[data-type='taskList'] {
-    padding: 0;
+    padding-left: 0;
+    li {
+      list-style-type: none;
+      display: flex;
+      align-items: baseline;
+      label {
+        float: left;
+        margin-right: 10px;
+        position: relative;
+        top: 6px;
+        input {
+          display: none;
+        }
+      }
+    }
+
+    button {
+      border-width: 2px;
+      // border-color: hsl(var(--p));
+      border-radius: 8px;
+      height: 1.25rem;
+      width: 1.25rem;
+      min-height: 1.25rem;
+      padding: 0.1rem;
+    }
 
     p {
       margin: 0;
     }
+    li[data-checked='true'] {
+      opacity: 0.7;
 
-    li {
-      display: flex;
-      align-items: flex-start;
-      list-style-type: none;
-
-      > label {
-        align-items: center;
-        display: flex;
-        flex: 0 0 auto;
-        margin-right: 0.5rem;
-        margin-top: 2px;
-        user-select: none;
+      button {
+        opacity: 0.4;
+        background: hsl(var(--a))
+          url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg'\
+          viewBox='0 0 1 1'%3E%3Cpath d='M.04.627L.146.52.43.804.323.91zm.177.177L.854.167.96.273.323.91z'\
+          fill='%23fff'/%3E%3C/svg%3E")
+          no-repeat 100%;
       }
-
-      > div {
-        flex: 1 1 auto;
-      }
-    }
-
-    input[type='checkbox'] {
-      cursor: pointer;
     }
   }
 }

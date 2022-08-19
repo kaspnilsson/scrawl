@@ -81,7 +81,7 @@ const Login = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="px-4 py-8 shadow bg-onDark sm:rounded-lg sm:px-10">
+        <div className="px-4 py-8 shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleMagicLink}>
             <div>
               <label

@@ -15,7 +15,7 @@ const Datepicker = ({ onDateSelect, selectedDate }: Props) => {
         selected={selectedDate}
         onChange={onDateSelect}
         customInput={
-          <button className="btn btn-ghost btn-sm btn-square">
+          <button className="btn btn-outline btn-sm btn-square">
             <CalendarIcon className="w-5 h-5" />
           </button>
         }
@@ -535,8 +535,9 @@ const DatepickerStyles = () => (
       }
 
       .react-datepicker__input-container {
+        align-items: center;
+        display: flex;
         position: relative;
-        display: inline-block;
         width: 100%;
       }
 

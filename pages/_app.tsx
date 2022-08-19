@@ -1,4 +1,5 @@
 import UserProfileProvider from '../contexts/userProfile'
+import 'remixicon/fonts/remixicon.css'
 import './../styles/globals.css'
 import './../styles/styles.scss'
 import { AppProps } from 'next/app'

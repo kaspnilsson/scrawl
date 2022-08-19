@@ -47,7 +47,7 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
           }
           headerContent={headerContent}
         />
-        <div className="max-w-6xl px-2 py-4 mx-auto overflow md:p-8 xl:p-16">
+        <div className="max-w-6xl px-2 py-4 mx-auto overflow md:p-8 xl:px-16">
           {children}
           <BottomNav
             leftSidebarEnabled={leftSidebarEnabled}
