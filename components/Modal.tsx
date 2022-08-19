@@ -1,89 +1,34 @@
-/* This example requires Tailwind CSS v2.0+ */
-import { Fragment } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationIcon, XIcon } from '@heroicons/react/outline'
+import { ReactNode } from 'react'
+import classNames from 'classnames'
 
 interface Props {
   isOpen: boolean
   close: () => void
+  title?: string
+  children: ReactNode
 }
 
-export default function Modal({ isOpen, close }: Props) {
+export default function Modal({ isOpen, close, title, children }: Props) {
   return (
-    <Transition.Root show={isOpen} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={close}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+    <>
+      <input type="checkbox" id="my-modal-4" className="hidden" />
+      <label
+        htmlFor="my-modal-4"
+        className={classNames(
+          'cursor-pointer modal modal-bottom sm:modal-middle',
+          { 'modal-open': isOpen }
+        )}
+        onClick={close}
+      >
+        <label
+          className="relative modal-box"
+          htmlFor=""
+          onClick={(e) => e.stopPropagation()}
         >
-          <div className="fixed inset-0 transition-opacity bg-black bg-opacity-50" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 z-10 overflow-y-auto">
-          <div className="flex items-end justify-center min-h-full p-4 text-center sm:items-center sm:p-0">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-              enterTo="opacity-100 translate-y-0 sm:scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-              <Dialog.Panel className="relative px-4 pt-5 pb-4 overflow-hidden text-left transition-all transform rounded-lg shadow-xl sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
-                <div className="absolute top-0 right-0 hidden pt-4 pr-4 sm:block">
-                  <button
-                    type="button"
-                    className="rounded-md focus:outline-none"
-                    onClick={close}
-                  >
-                    <span className="sr-only">Close</span>
-                    <XIcon className="w-6 h-6" aria-hidden="true" />
-                  </button>
-                </div>
-                <div className="sm:flex sm:items-start">
-                  <div className="flex items-center justify-center flex-shrink-0 w-12 h-12 mx-auto rounded-full sm:mx-0 sm:h-10 sm:w-10">
-                    <ExclamationIcon className="w-6 h-6 " aria-hidden="true" />
-                  </div>
-                  <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <Dialog.Title as="h3" className="text-lg ">
-                      Deactivate account
-                    </Dialog.Title>
-                    <div className="mt-2">
-                      <p className="text-sm ">
-                        Are you sure you want to deactivate your account? All of
-                        your data will be permanently removed from our servers
-                        forever. This action cannot be undone.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center w-full px-4 py-2 text-base border border-transparent rounded-md shadow-sm hover focus:outline-none focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
-                    onClick={close}
-                  >
-                    Deactivate
-                  </button>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center w-full px-4 py-2 mt-3 text-base border rounded-md shadow-sm focus:outline-nonesm:mt-0 sm:w-auto sm:text-sm"
-                    onClick={close}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
-          </div>
-        </div>
-      </Dialog>
-    </Transition.Root>
+          {title && <h3 className="text-lg font-heading">{title}</h3>}
+          {children}
+        </label>
+      </label>
+    </>
   )
 }

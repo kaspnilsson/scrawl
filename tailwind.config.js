@@ -40,19 +40,19 @@ module.exports = {
           warning: '#ca8a04', // TW amber 600
           error: '#dc2626', // TW red 600
         },
-        dark: {
-          primary: '#44403c', // TW stone 700
-          secondary: '#44403c', // TW stone 700
-          accent: '#fbbf24', // TW amber 400
-          neutral: '#292524', // TW stone 800
-          'base-100': '#000000', // Black
-          'base-200': '#0e0d0c', // TW stone that i made up
-          'base-300': '#1c1917', // TW stone 900
-          info: '#57534e', // TW stone 600
-          success: '#16a34a', // TW green 600
-          warning: '#ca8a04', // TW amber 600
-          error: '#dc2626', // TW red 600
-        },
+        // dark: {
+        //   primary: '#44403c', // TW stone 700
+        //   secondary: '#44403c', // TW stone 700
+        //   accent: '#fbbf24', // TW amber 400
+        //   neutral: '#292524', // TW stone 800
+        //   'base-100': '#000000', // Black
+        //   'base-200': '#0e0d0c', // TW stone that i made up
+        //   'base-300': '#1c1917', // TW stone 900
+        //   info: '#57534e', // TW stone 600
+        //   success: '#16a34a', // TW green 600
+        //   warning: '#ca8a04', // TW amber 600
+        //   error: '#dc2626', // TW red 600
+        // },
       },
     ],
   },

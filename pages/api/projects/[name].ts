@@ -12,22 +12,22 @@ export default withApiAuth(async function handler(
   const {
     body,
     method,
-    query: { date },
+    query: { name },
   } = req
   const { user } = await getUser({ req, res })
 
-  if (!date) {
+  if (!name) {
     res.status(400).end('No note UID!')
     return
   }
 
-  const dateStr = date as string
+  const nameStr = name as string
 
   if (method === 'GET') {
     const { data, error } = await supabaseServerClient({ req, res })
-      .from('notes')
+      .from('projects')
       .select('*')
-      .eq('note_date', dateStr)
+      .eq('name', nameStr)
       .eq('owner', user.id)
 
     if (error) {
@@ -35,7 +35,7 @@ export default withApiAuth(async function handler(
       return
     }
 
-    res.status(200).json(data[0] || { content: '', note_date: dateStr })
+    res.status(200).json(data[0] || { description: '', name: nameStr })
   } else if (method === 'POST') {
     if (!user) {
       res.status(403).end('Not logged in!')
@@ -43,21 +43,21 @@ export default withApiAuth(async function handler(
     }
 
     const { data, error } = await supabaseServerClient({ req, res })
-      .from('notes')
+      .from('projects')
       .upsert({
         created_at: new Date(),
         ...JSON.parse(body),
-        note_date: dateStr,
+        name: nameStr,
         owner: user.id,
         updated_at: new Date(),
       })
 
     if (error) {
-      res.status(401).end(`Update failed! ${JSON.stringify(error)}`)
+      res.status(401).end(`Upname failed! ${JSON.stringify(error)}`)
       return
     }
 
-    res.status(200).json(data)
+    res.status(200).json(data[0])
   } else if (method === 'PUT') {
     // if (!user) {
     //   res.status(403).end('Not logged in!')
@@ -68,13 +68,13 @@ export default withApiAuth(async function handler(
     //   res.status(403).end('You do not own this note!')
     //   return
     // }
-    // const note = await prismaClient.note.update({
+    // const note = await prismaClient.note.upname({
     //   where: { uid },
     //   data,
     //   include: { profiles: true },
     // })
     // if (!note) {
-    //   res.status(401).end('Update failed!')
+    //   res.status(401).end('Upname failed!')
     //   return
     // }
     // // TODO if (!includeContent) note.content = null
@@ -91,7 +91,7 @@ export default withApiAuth(async function handler(
     // }
 
     // // Delete things referencing this note first to not violate foriegn key constraints
-    // await prismaClient.notes.deleteMany({ where: { noteId: uid } })
+    // await prismaClient.projects.deleteMany({ where: { noteId: uid } })
     // await prismaClient.note.delete({ where: { uid } })
     res.status(200).end()
   } else {

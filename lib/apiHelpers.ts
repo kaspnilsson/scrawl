@@ -1,5 +1,6 @@
-import { Content } from '@tiptap/core'
 import { Moment } from 'moment'
+import { Note } from '../interfaces/note'
+import { Project } from '../interfaces/project'
 
 export const fetcher = (url: string) =>
   fetch(url)
@@ -21,10 +22,16 @@ export const getProjects = async () =>
 export const getNote = async (dateStr: string) =>
   fetch(`/api/notes/${dateStr}`, { method: 'GET' }).then(handleFetchErrors)
 
-export const postNote = async (dateStr: string, content: Content) =>
+export const postNote = async (dateStr: string, note: Partial<Note>) =>
   fetch(`/api/notes/${dateStr}`, {
     method: 'POST',
-    body: JSON.stringify(content),
+    body: JSON.stringify(note),
+  }).then(handleFetchErrors)
+
+export const postProject = async (name: string, project: Partial<Project>) =>
+  fetch(`/api/projects/${name}`, {
+    method: 'POST',
+    body: JSON.stringify(project),
   }).then(handleFetchErrors)
 
 export const makeNoteKeyFromMoment = (moment: Moment) =>
