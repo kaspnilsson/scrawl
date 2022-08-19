@@ -23,7 +23,7 @@ const Header = ({
   headerContent,
 }: Props) => {
   return (
-    <div className="sticky top-0 flex items-center h-12 px-3 py-1">
+    <div className="sticky top-0 z-10 flex items-center h-12 px-3 py-1 bg-base-100">
       <div className="flex items-center justify-between w-full">
         <button
           className={classNames(

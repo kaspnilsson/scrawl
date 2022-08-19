@@ -61,7 +61,7 @@ const EditorComponent = ({
               },
             }
           },
-        }),
+        }).configure({ HTMLAttributes: { class: 'rounded-xl' } }),
         StarterKit,
         Placeholder.configure({
           placeholder:

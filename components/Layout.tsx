@@ -22,7 +22,7 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
   )
 
   return (
-    <div className="flex w-full min-h-screen h-fit">
+    <div className="flex w-full min-h-screen">
       <Transition
         show={leftSidebarEnabled}
         enter="transition ease-in-out duration-100 transform"
@@ -31,11 +31,11 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
         leave="transition ease-in-out duration-100 transform"
         leaveFrom="translate-x-0"
         leaveTo="-translate-x-full"
-        className="flex flex-col flex-1 border-r not-prose bg-base-200 w-fit border-base-300"
+        className="flex flex-col flex-1 h-screen border-r not-prose bg-base-200 w-fit border-base-300"
       >
         <Nav />
       </Transition>
-      <div className="w-full overflow-y-auto">
+      <div className="w-full max-h-screen min-h-0 overflow-auto">
         <Header
           leftSidebarEnabled={leftSidebarEnabled}
           toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
@@ -47,7 +47,7 @@ const Layout = ({ children, rightContent, headerContent }: Props) => {
           }
           headerContent={headerContent}
         />
-        <div className="max-w-6xl px-2 py-4 mx-auto overflow md:p-8 xl:px-16">
+        <div className="max-w-6xl px-2 py-4 mx-auto overflow-y-auto md:p-8 xl:px-16">
           {children}
           <BottomNav
             leftSidebarEnabled={leftSidebarEnabled}

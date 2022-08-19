@@ -29,7 +29,7 @@ const Nav = () => {
   const router = useRouter()
 
   return (
-    <div className="flex flex-col justify-between h-full gap-2 w-fit">
+    <div className="flex flex-col justify-between h-screen gap-2 w-fit">
       <ul className="flex w-56 p-2 menu menu-compact">
         {LINKS.map(({ text, icon, route }, index) => (
           <li key={index}>

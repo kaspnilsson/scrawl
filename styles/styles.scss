@@ -16,12 +16,16 @@ div#__next > div:first-child {
     pointer-events: none;
   }
 
+  p {
+    margin: 0.5rem 0;
+  }
+
   &.ProseMirror-focused {
     outline: 'none';
   }
 
   img.ProseMirror-selectednode {
-    border: 1px solid hsl(var(--n));
+    outline: 5px solid hsl(var(--a));
   }
 
   img[data-loading='true'] {
