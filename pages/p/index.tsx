@@ -22,7 +22,7 @@ export const getServerSideProps = withPageAuth({
 const ProjectsIndex = () => {
   const [showDialog, setShowDialog] = useState(false)
   const open = () => setShowDialog(true)
-  const close = (shouldFetch?: boolean) => {
+  const close = (project?: Project) => {
     if (shouldFetch) mutate()
     setShowDialog(false)
   }
