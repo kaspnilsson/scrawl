@@ -78,7 +78,7 @@ const ChooseOrCreateProject = ({
           <li>
             <button
               onClick={() => setShowDialog(true)}
-              className="flex items-center gap-2 btn-accent"
+              className="flex items-center gap-2 btn btn-sm btn-accent"
             >
               <PlusIcon className="w-4 h-4" />
               New project
