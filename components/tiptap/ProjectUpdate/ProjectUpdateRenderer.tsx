@@ -23,10 +23,10 @@ const ProjectUpdateWrapper = ({
   }
   return (
     <NodeViewWrapper>
-      <div className="grid grid-cols-1 gap-2 py-4">
+      <div className="grid grid-cols-1 gap-2 py-4 border-t border-b">
         <div
           className="flex items-center justify-between not-prose"
-          contentEditable={false}
+          contentEditable="false"
         >
           <ChooseOrCreateProject
             selectedProjectName={projectName}
@@ -35,7 +35,10 @@ const ProjectUpdateWrapper = ({
           <div>{noteDate}</div>
         </div>
         {projectName && noteDate && (
-          <NodeViewContent className="w-full details-content"></NodeViewContent>
+          <NodeViewContent
+            className="w-full details-content min-h-6 focus:outline-none"
+            contentEditable="true"
+          ></NodeViewContent>
         )}
       </div>
     </NodeViewWrapper>

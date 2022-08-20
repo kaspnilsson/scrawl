@@ -16,7 +16,7 @@ type ExtensionAttrs = { [key in keyof ProjectUpdateAttrs]: Partial<Attribute> }
 
 export const ProjectUpdate = Node.create({
   name: 'projectUpdate',
-  content: 'block+',
+  // content: 'block+',
   group: 'block',
   selectable: true,
   draggable: true,
