@@ -8,7 +8,7 @@ import SimpleEditorComponent from './SimpleEditor'
 
 interface Props {
   isOpen: boolean
-  close: (shouldFetch?: boolean) => void
+  close: (newProject?: Project) => void
   projects?: Project[]
 }
 
@@ -21,16 +21,16 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
     setLoading(true)
     const now = new Date()
     try {
-      await postProject(name, {
+      const proj = (await postProject(name, {
         name,
         description,
         state: ProjectState.OPEN,
         created_at: now.toISOString(),
         updated_at: now.toISOString(),
-      })
+      })) as unknown as Project
       setName('')
       setDescription('')
-      close(true)
+      close(proj)
     } catch (e: unknown) {
     } finally {
       setLoading(false)

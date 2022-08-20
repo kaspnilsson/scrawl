@@ -81,7 +81,7 @@ const SimpleEditorComponent = ({
       editorProps: {
         attributes: {
           class:
-            'textarea textarea-bordered prose prose-stone prose-headings:m-0 prose-headings:font-heading',
+            'textarea textarea-bordered prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full',
         },
       },
       onFocus,

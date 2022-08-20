@@ -34,20 +34,20 @@ const ProjectsIndex = () => {
   return (
     <Layout loading={data === undefined} error={error}>
       <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading">
-        <div className="flex flex-wrap gap-4 justify-between items-center">
-          <h1 className="flex gap-2 items-center pr-8 font-heading">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <h1 className="flex items-center gap-2 pr-8 font-heading">
             Projects
           </h1>
           <button
-            className="flex gap-2 items-center btn btn-outline btn-sm sm:btn-md"
+            className="flex items-center gap-2 btn btn-outline btn-sm sm:btn-md"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />
             Create a project
           </button>
         </div>
-        <div className="flex items-center mt-4 w-full not-prose">
-          <div className="overflow-hidden w-full md:rounded-lg">
+        <div className="flex items-center w-full mt-4 not-prose">
+          <div className="w-full overflow-hidden md:rounded-lg">
             {data?.length && (
               <table
                 className="table min-w-full border-separate table-compactsm:table-normal"

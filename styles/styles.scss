@@ -79,3 +79,7 @@ div#__next > div:first-child {
     }
   }
 }
+
+.collapse-arrow .collapse-title.px-0:after {
+  right: 0.4rem;
+}

@@ -15,6 +15,11 @@ export enum ProjectState {
   CLOSED,
 }
 
+export const STATE_DISPLAY_STRINGS = {
+  [ProjectState.OPEN]: 'Open',
+  [ProjectState.CLOSED]: 'Open',
+}
+
 export declare interface Project {
   name: string // unique
   owner: string

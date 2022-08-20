@@ -5,6 +5,8 @@ import Layout from './Layout'
 import { debounce } from 'lodash'
 import { Project } from '../interfaces/project'
 import SimpleEditorComponent from './SimpleEditor'
+import ProjectStateChip from './ProjectStateChip'
+import AccordionPanel from './AccordionPanel'
 
 interface Props {
   name: string
@@ -38,7 +40,7 @@ const ProjectView = ({ name }: Props) => {
         setError(undefined)
         setLoading(true)
         const res = await fetcher(`/api/projects/${name}`)
-        setProject(res)
+        setProject(res as Project)
       } catch (e: unknown) {
         setError(e as Error)
         setProject(null)
@@ -51,28 +53,29 @@ const ProjectView = ({ name }: Props) => {
 
   return (
     <Layout loading={loading} error={error}>
-      {!loading && !error && (
+      {project && (
         <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
-          <div>
-            <h1 className="flex flex-wrap gap-3 items-center font-heading">
+          <div className="flex flex-wrap items-center w-full gap-3">
+            <h1 className="flex flex-wrap items-center gap-3 font-heading">
               {name}
             </h1>
+            <ProjectStateChip state={project?.state} />
           </div>
-          <div className="flex items-center mt-4 w-full">
-            <div className="w-full form-control">
-              <label className="label">
-                <span className="label-text font-heading">Description</span>
-              </label>
+          <div className="flex flex-col items-center w-full mt-4 space-y-6">
+            <AccordionPanel defaultOpen title="Description" className="w-full">
               <SimpleEditorComponent
+                className=""
                 onUpdate={handleUpdate}
                 content={project?.description || ''}
               />
-            </div>
-            <div className="w-full">
-              <label className="label">
-                <span className="label-text font-heading">Tasks</span>
-              </label>
-            </div>
+            </AccordionPanel>
+            <AccordionPanel defaultOpen title="Tasks" className="w-full">
+              <SimpleEditorComponent
+                className=""
+                onUpdate={handleUpdate}
+                content={project?.description || ''}
+              />
+            </AccordionPanel>
           </div>
         </div>
       )}
