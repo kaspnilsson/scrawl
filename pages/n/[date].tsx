@@ -15,7 +15,5 @@ interface Props {
   date: string
 }
 
-const NotesForDay = ({ date }: Props) => {
-  return <NoteView date={moment(date)} />
-}
+const NotesForDay = ({ date }: Props) => <NoteView date={moment(date)} />
 export default NotesForDay

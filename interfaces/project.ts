@@ -1,5 +1,15 @@
 import { Content } from '@tiptap/core'
 
+/**
+ * A project is a long running concept grouping multiple units of work
+ * together.
+ *
+ * - Projects receive updates over time, and may have a ton of work done on
+ *   them in one day and then none for a while.
+ * - A user should create a different project for every major goal they
+ *   would like to accomplish.
+ */
+
 export enum ProjectState {
   OPEN,
   CLOSED,
@@ -12,6 +22,5 @@ export declare interface Project {
   updated_at: string // ISO string
   state: ProjectState
   description: Content
-  // issues: string[] // IDs of referenced issues
-  // notes: string[] // IDs of referenced notes
+  tasks: string[] // IDs of tasks belonging to this project.
 }

@@ -75,7 +75,9 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
             })}
             value={name}
             onChange={(e) =>
-              setName(e.currentTarget.value.replaceAll(/\s/g, '-'))
+              setName(
+                e.currentTarget.value.replaceAll(/\s/g, '-').toLocaleLowerCase()
+              )
             }
           />
         </div>

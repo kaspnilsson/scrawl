@@ -10,6 +10,7 @@ import { debounce } from 'lodash'
 import Datepicker from './Datepicker'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
+import { Note } from '../interfaces/note'
 
 interface Props {
   date: Moment
@@ -21,7 +22,7 @@ const NoteView = ({ date }: Props) => {
   const router = useRouter()
   const noteKey = makeNoteKeyFromMoment(date)
 
-  const [initialContent, setInitialContent] = useState<Content>('')
+  const [note, setNote] = useState<Note | null>(null)
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<Error>()
@@ -30,9 +31,9 @@ const NoteView = ({ date }: Props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedPostNote = useCallback(
-    debounce(async (value: Content) => {
+    debounce(async (content: Content) => {
       setSaving(true)
-      await postNote(noteKey, value)
+      await postNote(noteKey, { ...note, content })
       setSaving(false)
     }, 500),
     []
@@ -48,10 +49,10 @@ const NoteView = ({ date }: Props) => {
         setError(undefined)
         setLoading(true)
         const res = await fetcher(`/api/notes/${noteKey}`)
-        setInitialContent(res.content || '')
+        setNote(res)
       } catch (e: unknown) {
         setError(e as Error)
-        setInitialContent('')
+        setNote(null)
       } finally {
         setLoading(false)
       }
@@ -72,12 +73,12 @@ const NoteView = ({ date }: Props) => {
               {date.format('dddd')}
               {date.isSame(today) && (
                 <>
-                  <div className="w-2 mx-1">-</div>
+                  <div className="mx-1 w-2">-</div>
                   <span className="">today</span>
                 </>
               )}
             </div>
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
+            <h1 className="flex flex-wrap gap-3 items-center font-heading">
               {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
@@ -86,16 +87,16 @@ const NoteView = ({ date }: Props) => {
                 }
               />
               {saving && (
-                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit sm:flex">
+                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit">
                   Saving...
                 </button>
               )}
             </h1>
           </div>
-          <div className="flex items-center w-full mt-4">
+          <div className="flex items-center mt-4 w-full">
             <Editor
               className="w-full min-h-[400px]"
-              content={initialContent}
+              content={note?.content || ''}
               onUpdate={handleUpdate}
             />
           </div>

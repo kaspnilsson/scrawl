@@ -16,7 +16,7 @@ const Datepicker = ({ onDateSelect, selectedDate }: Props) => {
         onChange={onDateSelect}
         todayButton="Today"
         customInput={
-          <button className="btn btn-outline btn-sm btn-square">
+          <button className="btn btn-accent btn-sm btn-square">
             <CalendarIcon className="w-4 h-4" />
           </button>
         }
@@ -376,8 +376,8 @@ const DatepickerStyles = () => (
       .react-datepicker__quarter--in-selecting-range,
       .react-datepicker__quarter--in-range {
         border-radius: 0.3rem;
-        background-color: hsl(var(--p));
-        color: hsl(var(--b1));
+        background-color: hsl(var(--a));
+        color: hsl(var(--ac));
       }
       .react-datepicker__month--selected:hover,
       .react-datepicker__month--in-selecting-range:hover,
@@ -385,7 +385,7 @@ const DatepickerStyles = () => (
       .react-datepicker__quarter--selected:hover,
       .react-datepicker__quarter--in-selecting-range:hover,
       .react-datepicker__quarter--in-range:hover {
-        background-color: hsl(var(--pf));
+        background-color: hsl(var(--af));
       }
       .react-datepicker__month--disabled,
       .react-datepicker__quarter--disabled {
@@ -457,8 +457,8 @@ const DatepickerStyles = () => (
       .react-datepicker__year-text--in-selecting-range,
       .react-datepicker__year-text--in-range {
         border-radius: 0.3rem;
-        background-color: hsl(var(--p));
-        color: hsl(var(--pc));
+        background-color: hsl(var(--a));
+        color: hsl(var(--ac));
       }
       .react-datepicker__day--selected:hover,
       .react-datepicker__day--in-selecting-range:hover,
@@ -528,11 +528,11 @@ const DatepickerStyles = () => (
       .react-datepicker__quarter-text.react-datepicker__month--in-range:hover,
       .react-datepicker__quarter-text.react-datepicker__quarter--selected:hover,
       .react-datepicker__quarter-text.react-datepicker__quarter--in-range:hover {
-        background-color: hsl(var(--p));
+        background-color: hsl(var(--af));
       }
       .react-datepicker__month-text:hover,
       .react-datepicker__quarter-text:hover {
-        background-color: hsl(var(--b1));
+        background-color: hsl(var(--af));
       }
 
       .react-datepicker__input-container {
@@ -629,7 +629,7 @@ const DatepickerStyles = () => (
       .react-datepicker__year-option:hover,
       .react-datepicker__month-option:hover,
       .react-datepicker__month-year-option:hover {
-        background-color: hsl(var(--nc));
+        background-color: hsl(var(--ac));
         opacity: 0.6;
       }
       .react-datepicker__year-option:hover
@@ -648,7 +648,7 @@ const DatepickerStyles = () => (
       .react-datepicker__month-year-option:hover
         .react-datepicker__navigation--years-previous {
         border-top-color: hsl(var(--n));
-        background-color: hsl(var(--b3));
+        background-color: hsl(var(--ac));
       }
       .react-datepicker__year-option--selected,
       .react-datepicker__month-option--selected,
@@ -694,6 +694,10 @@ const DatepickerStyles = () => (
         font-weight: bold;
         padding: 12px 0;
         clear: left;
+      }
+
+      .react-datepicker__today-button:hover {
+        background: hsl(var(--a));
       }
 
       .react-datepicker__portal {

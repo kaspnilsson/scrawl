@@ -4,7 +4,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended" // Add "prettier" last. This will turn off eslint rules conflicting with prettier. This is not what will format our code.
   ],
-  "plugins": ["simple-import-sort"],
+  "plugins": ["simple-import-sort", "react", "react-hooks", "prettier"],
 
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".jsx"] }],
@@ -13,6 +13,15 @@
     "@typescript-eslint/no-explicit-any": "error",
     // note you must disable the base rule as it can report incorrect errors
     "no-duplicate-imports": "off",
-    "@typescript-eslint/no-duplicate-imports": ["error"]
+    "@typescript-eslint/no-duplicate-imports": ["error"],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      },
+      {
+        "usePrettierrc": true
+      }
+    ]
   }
 }

@@ -1,10 +1,11 @@
 import { Transition } from '@headlessui/react'
 import react from 'react'
-import { useLocalStorage } from 'usehooks-ts'
 import BottomNav from './BottomNav'
 import ErrorView from './Error'
 import Header from './Header'
 import Nav from './Nav'
+import useLocalStorageState from 'use-local-storage-state'
+import { useIsHydrated } from '../contexts/isHydrated'
 
 interface Props {
   children: react.ReactNode
@@ -21,19 +22,21 @@ const Layout = ({
   loading,
   error,
 }: Props) => {
-  const [rightSidebarEnabled, setRightSidebarEnabled] = useLocalStorage(
-    'rightSidebarEnabled',
-    false
-  )
-  const [leftSidebarEnabled, setLeftSidebarEnabled] = useLocalStorage(
+  const isHydrated = useIsHydrated()
+  const [rightSidebarEnabled, setRightSidebarEnabled] =
+    useLocalStorageState<boolean>('rightSidebarEnabled', {
+      defaultValue: false,
+      ssr: true,
+    })
+  const [leftSidebarEnabled, setLeftSidebarEnabled] = useLocalStorageState(
     'leftSidebarEnabled',
-    false
+    { defaultValue: false, ssr: true }
   )
 
   return (
     <div className="flex w-full min-h-screen">
       <Transition
-        show={leftSidebarEnabled}
+        show={isHydrated && leftSidebarEnabled}
         enter="transition ease-in-out duration-100 transform"
         enterFrom="-translate-x-full"
         enterTo="translate-x-0"
@@ -44,7 +47,7 @@ const Layout = ({
       >
         <Nav />
       </Transition>
-      <div className="w-full max-h-screen min-h-0 overflow-auto">
+      <div className="overflow-auto w-full min-h-0 max-h-screen">
         <Header
           leftSidebarEnabled={leftSidebarEnabled}
           toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
@@ -56,7 +59,7 @@ const Layout = ({
           }
           headerContent={headerContent}
         />
-        <div className="max-w-6xl px-2 py-4 mx-auto overflow-y-auto sm:p-8 xl:px-16">
+        <div className="overflow-y-auto px-2 py-4 mx-auto max-w-6xl sm:p-8 xl:px-16">
           {loading && (
             <div className="flex p-16 m-auto loading btn btn-ghost">
               Loading
@@ -71,7 +74,7 @@ const Layout = ({
         </div>
       </div>
       <Transition
-        show={rightSidebarEnabled}
+        show={isHydrated && rightSidebarEnabled}
         enter="transition ease-in-out duration-100 transform"
         enterFrom="-translate-x-full"
         enterTo="translate-x-0"

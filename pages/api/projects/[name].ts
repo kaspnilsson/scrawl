@@ -4,6 +4,7 @@ import {
   withApiAuth,
 } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { ProjectState } from '../../../interfaces/project'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -46,6 +47,7 @@ export default withApiAuth(async function handler(
       .from('projects')
       .upsert({
         created_at: new Date(),
+        state: ProjectState.OPEN,
         ...JSON.parse(body),
         name: nameStr,
         owner: user.id,
