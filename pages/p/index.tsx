@@ -23,7 +23,7 @@ const ProjectsIndex = () => {
   const [showDialog, setShowDialog] = useState(false)
   const open = () => setShowDialog(true)
   const close = (project?: Project) => {
-    if (shouldFetch) mutate()
+    if (project) mutate()
     setShowDialog(false)
   }
 
