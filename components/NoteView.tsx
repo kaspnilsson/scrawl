@@ -73,12 +73,12 @@ const NoteView = ({ date }: Props) => {
               {date.format('dddd')}
               {date.isSame(today) && (
                 <>
-                  <div className="mx-1 w-2">-</div>
+                  <div className="w-2 mx-1">-</div>
                   <span className="">today</span>
                 </>
               )}
             </div>
-            <h1 className="flex flex-wrap gap-3 items-center font-heading">
+            <h1 className="flex flex-wrap items-center gap-3 font-heading">
               {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
@@ -93,11 +93,12 @@ const NoteView = ({ date }: Props) => {
               )}
             </h1>
           </div>
-          <div className="flex items-center mt-4 w-full">
+          <div className="flex items-center w-full mt-4">
             <Editor
               className="w-full min-h-[400px]"
               content={note?.content || ''}
               onUpdate={handleUpdate}
+              noteDate={noteKey}
             />
           </div>
         </div>

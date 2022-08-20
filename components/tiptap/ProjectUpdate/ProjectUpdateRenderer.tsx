@@ -1,7 +1,7 @@
-import { Editor, NodeViewContent, NodeViewWrapper } from '@tiptap/react'
+import { NodeViewWrapper, NodeViewContent, Editor } from '@tiptap/react'
+import { Project } from '../../../interfaces/project'
+import ChooseOrCreateProject from '../../ChooseOrCreateProject'
 import { ProjectUpdateAttrs } from './ProjectUpdateAttrs'
-import ProjectUpdateEditorComponent from './ProjectUpdateEditorComponent'
-import ProjectUpdateComponent from './MutlipleChoiceComponent'
 
 export interface ProjectUpdateRendererProps {
   editor: Editor
@@ -11,31 +11,35 @@ export interface ProjectUpdateRendererProps {
   updateAttributes: (attr: ProjectUpdateAttrs) => void
 }
 
-const ProjectUpdateRenderer = ({
-  editor,
+const ProjectUpdateWrapper = ({
   node,
   updateAttributes,
-}: ProjectUpdateRendererProps) => (
-  <NodeViewWrapper>
-    <NodeViewContent>
-      <div className="mx-auto">
-        <div
-          className="p-4 m-8 border shadow-lg rounded-xl multiple-choice"
-          data-drag-handle=""
-        >
-          {editor.isEditable && (
-            <ProjectUpdateEditorComponent
-              {...node.attrs}
-              onUpdate={(attrs) => {
-                updateAttributes(attrs)
-              }}
-            />
-          )}
-          {!editor.isEditable && <ProjectUpdateComponent {...node.attrs} />}
-        </div>
-      </div>
-    </NodeViewContent>
-  </NodeViewWrapper>
-)
+}: ProjectUpdateRendererProps) => {
+  const { projectName, noteDate } = node.attrs
 
-export default ProjectUpdateRenderer
+  const handleSelectProject = (p?: Project) => {
+    const newName = p?.name || ''
+    updateAttributes({ ...node.attrs, projectName: newName })
+  }
+  return (
+    <NodeViewWrapper>
+      <div className="grid grid-cols-1 gap-2 py-4">
+        <div
+          className="flex items-center justify-between not-prose"
+          contentEditable={false}
+        >
+          <ChooseOrCreateProject
+            selectedProjectName={projectName}
+            onSelectProject={handleSelectProject}
+          />
+          <div>{noteDate}</div>
+        </div>
+        {projectName && noteDate && (
+          <NodeViewContent className="w-full details-content"></NodeViewContent>
+        )}
+      </div>
+    </NodeViewWrapper>
+  )
+}
+
+export default ProjectUpdateWrapper

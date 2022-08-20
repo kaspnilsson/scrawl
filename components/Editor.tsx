@@ -9,6 +9,8 @@ import { SlashCommands } from './tiptap/SlashCommands'
 import { slashCommands, SlashCommandsList } from './tiptap/InlineMenu'
 import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
+import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
+import ProjectUpdateContent from './tiptap/ProjectUpdate/ProjectUpdateContent'
 
 interface Props {
   content?: Content
@@ -28,6 +30,8 @@ interface Props {
         transaction: Transaction
       }) => void)
     | undefined
+  noteDate?: string
+  projectName?: string
 }
 
 const EditorComponent = ({
@@ -36,6 +40,8 @@ const EditorComponent = ({
   onFocus = () => null,
   onBlur = () => null,
   className = '',
+  projectName = '',
+  noteDate = '',
 }: Props) => {
   const { user } = useUserContext()
   const editor = useEditor(
@@ -73,9 +79,15 @@ const EditorComponent = ({
         }),
         TaskList,
         SlashCommands.configure({
-          commands: slashCommands({ userId: user?.id || '' }),
+          commands: slashCommands({
+            userId: user?.id || '',
+            projectName,
+            noteDate,
+          }),
           component: SlashCommandsList,
         }),
+        ProjectUpdate,
+        ProjectUpdateContent,
       ],
       content,
       onUpdate: ({ editor }) => {

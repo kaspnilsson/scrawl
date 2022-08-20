@@ -1,5 +1,5 @@
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { Editor, findChildren } from '@tiptap/core'
+import { findChildren } from '@tiptap/core'
 import classNames from 'classnames'
 import moment from 'moment'
 import { makeNoteKeyFromMoment } from '../../lib/apiHelpers'
@@ -68,8 +68,8 @@ export const slashCommands = ({
   noteDate = '',
 }: {
   userId: string
-  projectName: string
-  noteDate: string
+  projectName?: string
+  noteDate?: string
 }): SlashCommandsCommand[] => {
   const out: SlashCommandsCommand[] = [
     {
@@ -296,11 +296,9 @@ export const slashCommands = ({
           noteDate: noteDate || makeNoteKeyFromMoment(moment(new Date())),
           projectName,
         }
-        if (!attrs.projectName) {
-          // Need to get the project the user wants
-        }
         if (!range) {
-          editor.chain().focus().addProjectUpdate({}).run()
+          editor.commands.focus()
+          editor.commands.addProjectUpdate(attrs)
           return
         }
         editor
@@ -308,8 +306,8 @@ export const slashCommands = ({
           .focus()
           // Use deleteRange to clear the text from command chars "/bu" etc..
           .deleteRange(range)
-          .addProjectUpdate()
           .run()
+        editor.commands.addProjectUpdate(attrs)
       },
     })
   }

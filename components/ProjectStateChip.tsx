@@ -6,7 +6,7 @@ interface Props {
   onChange?: (newState: ProjectState) => void
 }
 
-const ProjectStateChip = ({ state, onChange }: Props) => {
+const ProjectStateChip = ({ state }: Props) => {
   return (
     <div
       className={classNames('badge badge-sm sm:badge-md ', {

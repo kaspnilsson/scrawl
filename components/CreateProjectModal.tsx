@@ -58,6 +58,12 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
     }
   }, [isOpen, ref])
 
+  // Reset state on open/close
+  useEffect(() => {
+    setName('')
+    setDescription('')
+  }, [isOpen])
+
   return (
     <Modal isOpen={isOpen} close={close} title="Create project">
       <form onSubmit={handleCreateProject}>
