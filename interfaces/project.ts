@@ -11,13 +11,10 @@ import { Content } from '@tiptap/core'
  */
 
 export enum ProjectState {
-  OPEN,
-  CLOSED,
-}
-
-export const STATE_DISPLAY_STRINGS = {
-  [ProjectState.OPEN]: 'Open',
-  [ProjectState.CLOSED]: 'Open',
+  BACKLOG = 'Backlog',
+  COMPLETED = 'Completed',
+  ARCHIVED = 'Archived',
+  IN_PROGRESS = 'In progress',
 }
 
 export declare interface Project {

@@ -42,3 +42,7 @@ input[type='checkbox'] {
   background: hsl(var(--af) / 0.3);
   border-color: transparent;
 }
+
+.hover {
+  @apply transition-all;
+}

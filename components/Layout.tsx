@@ -6,12 +6,14 @@ import Header from './Header'
 import Nav from './Nav'
 import useLocalStorageState from 'use-local-storage-state'
 import { useIsHydrated } from '../contexts/isHydrated'
+import classNames from 'classnames'
 
 interface Props {
   children: react.ReactNode
   rightContent?: react.ReactNode
   headerContent?: react.ReactNode
   loading?: boolean
+  noMaxWidth?: boolean
   error?: Error
 }
 
@@ -21,13 +23,16 @@ const Layout = ({
   headerContent,
   loading,
   error,
+  noMaxWidth = false,
 }: Props) => {
   const isHydrated = useIsHydrated()
+
   const [rightSidebarEnabled, setRightSidebarEnabled] =
     useLocalStorageState<boolean>('rightSidebarEnabled', {
       defaultValue: false,
       ssr: true,
     })
+
   const [leftSidebarEnabled, setLeftSidebarEnabled] = useLocalStorageState(
     'leftSidebarEnabled',
     { defaultValue: false, ssr: true }
@@ -59,7 +64,12 @@ const Layout = ({
           }
           headerContent={headerContent}
         />
-        <div className="overflow-y-auto px-2 py-4 mx-auto max-w-6xl sm:p-8 xl:px-16">
+        <div
+          className={classNames(
+            'overflow-y-auto px-2 py-4 mx-auto sm:p-8 xl:px-16',
+            { 'max-w-6xl': !noMaxWidth }
+          )}
+        >
           {loading && (
             <div className="flex p-16 m-auto loading btn btn-ghost">
               Loading

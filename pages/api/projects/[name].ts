@@ -47,7 +47,7 @@ export default withApiAuth(async function handler(
       .from('projects')
       .upsert({
         created_at: new Date(),
-        state: ProjectState.OPEN,
+        state: ProjectState.BACKLOG,
         ...JSON.parse(body),
         name: nameStr,
         owner: user.id,

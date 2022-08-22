@@ -32,8 +32,15 @@ export const SlashCommands = Extension.create<{
       filterCommands: (commands, query, editor) => {
         return commands
           .filter((item) =>
-            item.title.toLowerCase().startsWith(query.toLowerCase())
+            item.title.toLocaleLowerCase().includes(query.toLocaleLowerCase())
           )
+          .sort((a, b) => {
+            const q = query.toLocaleLowerCase()
+            return (
+              a.title.toLocaleLowerCase().indexOf(q) -
+              b.title.toLocaleLowerCase().indexOf(q)
+            )
+          })
           .filter((item) => (item.isEnabled ? item.isEnabled(editor) : true))
           .slice(0, 10)
       },

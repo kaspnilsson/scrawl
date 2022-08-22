@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { ProjectState, STATE_DISPLAY_STRINGS } from '../interfaces/project'
+import { ProjectState } from '../interfaces/project'
 
 interface Props {
   state: ProjectState
@@ -10,10 +10,10 @@ const ProjectStateChip = ({ state }: Props) => {
   return (
     <div
       className={classNames('badge badge-sm sm:badge-md ', {
-        'badge-accent': state === ProjectState.OPEN,
+        'badge-accent': state === ProjectState.IN_PROGRESS,
       })}
     >
-      {STATE_DISPLAY_STRINGS[state] || ''}
+      {state}
     </div>
   )
 }

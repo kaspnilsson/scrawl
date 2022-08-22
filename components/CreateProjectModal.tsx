@@ -24,7 +24,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
       const proj = (await postProject(name, {
         name,
         description,
-        state: ProjectState.OPEN,
+        state: ProjectState.BACKLOG,
         created_at: now.toISOString(),
         updated_at: now.toISOString(),
       })) as unknown as Project
