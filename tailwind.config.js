@@ -30,7 +30,8 @@ module.exports = {
         light: {
           primary: '#d6d3d1', // TW stone 300
           secondary: '#d6d3d1', // TW stone 300
-          accent: '#bbf7d0', // TW green 200
+          accent: '#0ea5e9', // TW sky 500 (set to opacity 0.2)
+          'accent-content': '#075985', // TW sky 800
           neutral: '#e7e5e4', // TW stone 200
           'base-100': '#ffffff', // White
           'base-200': '#f5f5f4', // TW stone 100
@@ -43,7 +44,8 @@ module.exports = {
         dark: {
           primary: '#44403c', // TW stone 700
           secondary: '#44403c', // TW stone 700
-          accent: '#bbf7d0', // TW green 200
+          accent: '#0ea5e9', // TW sky 500 (set to opacity 0.2)
+          'accent-content': '#7dd3fc', // TW sky 300
           neutral: '#292524', // TW stone 800
           'base-100': '#000000', // Black
           'base-200': '#0e0d0c', // TW stone that i made up

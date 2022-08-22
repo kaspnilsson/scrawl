@@ -31,3 +31,14 @@ input[type='checkbox'] {
   border-color: hsla(var(--bc) / 0.2);
   box-shadow: none;
 }
+
+.badge-accent,
+.btn-accent:not(.fake-checkbox) {
+  background: hsl(var(--a) / 0.2);
+  border-color: transparent;
+}
+
+.btn-accent:hover {
+  background: hsl(var(--af) / 0.3);
+  border-color: transparent;
+}

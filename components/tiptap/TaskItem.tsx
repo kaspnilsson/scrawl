@@ -78,6 +78,7 @@ export const TaskItem = Node.create<TaskItemOptions>({
     return ({ node, HTMLAttributes, getPos, editor }) => {
       const listItem = document.createElement('li')
       const checkboxWrapper = document.createElement('label')
+      checkboxWrapper.classList.add('my-0')
       const checkboxButton = document.createElement('button')
       checkboxButton.classList.add(
         'btn',
@@ -85,9 +86,11 @@ export const TaskItem = Node.create<TaskItemOptions>({
         'btn-xs',
         'btn-accent',
         'transition-all',
+        'fake-checkbox',
         node.attrs.checked ? 'btn-ghost' : 'btn-outline'
       )
       const content = document.createElement('div')
+      content.classList.add('my-0')
       checkboxWrapper.contentEditable = 'false'
       checkboxWrapper.addEventListener('click', () => {
         // If the editor isn’t editable break early

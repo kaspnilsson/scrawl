@@ -55,13 +55,13 @@ const ProjectView = ({ name }: Props) => {
     <Layout loading={loading} error={error}>
       {project && (
         <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
-          <div className="flex flex-wrap items-center w-full gap-3">
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
+          <div className="flex flex-wrap gap-3 items-center w-full">
+            <h1 className="flex flex-wrap gap-3 items-center font-heading">
               {name}
             </h1>
             <ProjectStateChip state={project?.state} />
           </div>
-          <div className="flex flex-col items-center w-full mt-4 space-y-6">
+          <div className="flex flex-col items-center mt-4 space-y-6 w-full">
             <AccordionPanel defaultOpen title="Description" className="w-full">
               <SimpleEditorComponent
                 className=""
@@ -69,13 +69,13 @@ const ProjectView = ({ name }: Props) => {
                 content={project?.description || ''}
               />
             </AccordionPanel>
-            <AccordionPanel defaultOpen title="Tasks" className="w-full">
+            {/* <AccordionPanel defaultOpen title="Tasks" className="w-full">
               <SimpleEditorComponent
                 className=""
                 onUpdate={handleUpdate}
                 content={project?.description || ''}
               />
-            </AccordionPanel>
+            </AccordionPanel> */}
           </div>
         </div>
       )}
