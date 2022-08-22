@@ -21,25 +21,21 @@ const ProjectUpdateWrapper = ({
     const newName = p?.name || ''
     updateAttributes({ ...node.attrs, projectName: newName })
   }
+
   return (
     <NodeViewWrapper>
       <div className="grid grid-cols-1 gap-2 py-4 border-t border-b">
-        <div
-          className="flex items-center justify-between not-prose"
-          contentEditable="false"
-        >
+        <div className="flex items-center justify-between not-prose">
           <ChooseOrCreateProject
+            // contentEditable="false"
             selectedProjectName={projectName}
             onSelectProject={handleSelectProject}
           />
           <div>{noteDate}</div>
         </div>
-        {projectName && noteDate && (
-          <NodeViewContent
-            className="w-full details-content min-h-6 focus:outline-none"
-            contentEditable="true"
-          ></NodeViewContent>
-        )}
+        {/* {projectName && noteDate && ( */}
+        <NodeViewContent className="w-full details-content"></NodeViewContent>
+        {/* )} */}
       </div>
     </NodeViewWrapper>
   )

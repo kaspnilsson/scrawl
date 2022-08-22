@@ -10,13 +10,15 @@ export interface SlashCommandsCommand {
   description: string
   icon: JSX.Element
   command: ({ editor, range }: { editor: Editor; range?: Range }) => void
+  isEnabled?: (editor: Editor) => boolean
 }
 
 export const SlashCommands = Extension.create<{
   commands: SlashCommandsCommand[]
   filterCommands: (
     commands: SlashCommandsCommand[],
-    query: string
+    query: string,
+    editor: Editor
   ) => SlashCommandsCommand[]
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any
@@ -27,11 +29,12 @@ export const SlashCommands = Extension.create<{
   addOptions() {
     return {
       commands: [],
-      filterCommands: (commands, query) => {
+      filterCommands: (commands, query, editor) => {
         return commands
           .filter((item) =>
             item.title.toLowerCase().startsWith(query.toLowerCase())
           )
+          .filter((item) => (item.isEnabled ? item.isEnabled(editor) : true))
           .slice(0, 10)
       },
       component: null,
@@ -48,7 +51,11 @@ export const SlashCommands = Extension.create<{
         editor: this.editor,
         ...this.options.suggestion,
         items: (query) =>
-          this.options.filterCommands(this.options.commands, query.query),
+          this.options.filterCommands(
+            this.options.commands,
+            query.query,
+            this.editor
+          ),
         command: ({
           editor,
           range,

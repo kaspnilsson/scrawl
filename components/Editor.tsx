@@ -10,7 +10,7 @@ import { slashCommands, SlashCommandsList } from './tiptap/InlineMenu'
 import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
 import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
-import ProjectUpdateContent from './tiptap/ProjectUpdate/ProjectUpdateContent'
+import AutoId from './tiptap/AutoId'
 
 interface Props {
   content?: Content
@@ -70,6 +70,7 @@ const EditorComponent = ({
         }).configure({ HTMLAttributes: { class: 'rounded-xl' } }),
         StarterKit,
         Placeholder.configure({
+          includeChildren: true,
           placeholder:
             'Capture notes, plan daily tasks, or log journal entries.',
         }),
@@ -87,7 +88,8 @@ const EditorComponent = ({
           component: SlashCommandsList,
         }),
         ProjectUpdate,
-        ProjectUpdateContent,
+        // ProjectUpdateContent,
+        AutoId,
       ],
       content,
       onUpdate: ({ editor }) => {

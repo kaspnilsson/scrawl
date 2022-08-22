@@ -63,6 +63,7 @@ const SimpleEditorComponent = ({
         StarterKit,
         Placeholder.configure({
           placeholder: placeholder || 'Add project details',
+          includeChildren: true,
         }),
         // TaskItem.configure({
         //   nested: true,
@@ -81,7 +82,7 @@ const SimpleEditorComponent = ({
       editorProps: {
         attributes: {
           class:
-            'textarea textarea-bordered prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full',
+            'prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full focus:outline-none',
         },
       },
       onFocus,

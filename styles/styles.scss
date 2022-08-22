@@ -7,7 +7,7 @@ div#__next > div:first-child {
 }
 
 .ProseMirror {
-  p.is-editor-empty:first-child::before {
+  .is-empty::before {
     color: hsl(var(--nc));
     opacity: 0.6;
     content: attr(data-placeholder);

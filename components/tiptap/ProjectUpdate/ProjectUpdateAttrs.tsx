@@ -1,4 +1,4 @@
 export interface ProjectUpdateAttrs {
-  projectName: string
+  projectName?: string
   noteDate: string
 }

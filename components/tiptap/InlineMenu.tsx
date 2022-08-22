@@ -1,11 +1,13 @@
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { findChildren } from '@tiptap/core'
+import { Editor, findChildren } from '@tiptap/core'
 import classNames from 'classnames'
 import moment from 'moment'
 import { makeNoteKeyFromMoment } from '../../lib/apiHelpers'
 import { generateRandomId } from '../../lib/randomId'
 import { resizeImage } from '../../lib/resizeImage'
 import { SlashCommandsCommand } from './SlashCommands'
+import { getCurrentlySelectedNodes as getHierarchyFromPos } from '../../lib/prosemirror'
+
 // import { EditorView } from 'prosemirror-view'
 
 // const oldUpdateState = EditorView.prototype.updateState
@@ -308,6 +310,17 @@ export const slashCommands = ({
           .deleteRange(range)
           .run()
         editor.commands.addProjectUpdate(attrs)
+      },
+      isEnabled: (editor?: Editor) => {
+        if (!editor) return false
+
+        const nodes = getHierarchyFromPos(editor.state.selection.$anchor)
+        for (const n of nodes) {
+          if (n.type.name === 'projectUpdate') {
+            return false
+          }
+        }
+        return true
       },
     })
   }

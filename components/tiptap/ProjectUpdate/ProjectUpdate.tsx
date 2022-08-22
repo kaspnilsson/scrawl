@@ -16,10 +16,10 @@ type ExtensionAttrs = { [key in keyof ProjectUpdateAttrs]: Partial<Attribute> }
 
 export const ProjectUpdate = Node.create({
   name: 'projectUpdate',
-  // content: 'block+',
+  content: 'block*',
   group: 'block',
-  selectable: true,
-  draggable: true,
+  defining: true,
+  isolating: true,
 
   addOptions() {
     return {
@@ -31,6 +31,7 @@ export const ProjectUpdate = Node.create({
     return {
       projectName: { default: '' },
       noteDate: { default: '' },
+      id: { default: '' },
     } as ExtensionAttrs
   },
 
@@ -53,17 +54,20 @@ export const ProjectUpdate = Node.create({
   addCommands() {
     return {
       addProjectUpdate:
-        (attrs?: ProjectUpdateAttrs) =>
-        ({ tr, dispatch }) => {
-          const { selection } = tr
-          const node = this.type.create(attrs)
-
-          if (dispatch) {
-            tr.replaceRangeWith(selection.from, selection.to, node)
-          }
-
-          return true
-        },
+        (attrs) =>
+        ({ commands }) =>
+          commands.insertContent([
+            {
+              type: 'projectUpdate',
+              attrs,
+              content: [
+                {
+                  type: 'paragraph',
+                },
+              ],
+            },
+            { type: 'paragraph' },
+          ]),
     }
   },
 })
