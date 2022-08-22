@@ -6,6 +6,7 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
 import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
+import TaskList from '@tiptap/extension-task-list'
 
 interface Props {
   content?: Content
@@ -70,7 +71,7 @@ const SimpleEditorComponent = ({
           nested: true,
           // HTMLAttributes: { class: 'checkbox' },
         }),
-        // TaskList,
+        TaskList,
         // SlashCommands.configure({
         //   commands: slashCommands({ userId: user?.id || '' }),
         //   component: SlashCommandsList,
