@@ -5,6 +5,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
 import { useUserContext } from '../contexts/userProfile'
+import { TaskItem } from './tiptap/TaskItem'
 
 interface Props {
   content?: Content
@@ -65,10 +66,10 @@ const SimpleEditorComponent = ({
           placeholder: placeholder || 'Add project details',
           includeChildren: true,
         }),
-        // TaskItem.configure({
-        //   nested: true,
-        //   // HTMLAttributes: { class: 'checkbox' },
-        // }),
+        TaskItem.configure({
+          nested: true,
+          // HTMLAttributes: { class: 'checkbox' },
+        }),
         // TaskList,
         // SlashCommands.configure({
         //   commands: slashCommands({ userId: user?.id || '' }),
