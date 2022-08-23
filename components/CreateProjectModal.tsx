@@ -18,19 +18,20 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   const [loading, setLoading] = useState(false)
   const handleCreateProject = async (e: FormEvent) => {
     e.preventDefault()
+    if (!name) return
     setLoading(true)
     const now = new Date()
     try {
-      const proj = (await postProject(name, {
+      const res = await postProject(name, {
         name,
         description,
         state: ProjectState.BACKLOG,
         created_at: now.toISOString(),
         updated_at: now.toISOString(),
-      })) as unknown as Project
+      })
       setName('')
       setDescription(undefined)
-      close(proj)
+      close((await res.json()) as unknown as Project)
     } catch (e: unknown) {
     } finally {
       setLoading(false)
@@ -44,10 +45,10 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   const nameIsWrongFormat = name && !VALID_PROJECT_NAME_REGEX.test(name)
   const nameIsValid = !!name && !nameIsWrongFormat && !nameIsNonUnique
 
-  const cancel = () => {
-    setName('')
-    close()
-  }
+  // const cancel = () => {
+  //   setName('')
+  //   close()
+  // }
 
   const ref = useRef<HTMLInputElement>(null)
 
@@ -58,8 +59,9 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
     }
   }, [isOpen, ref])
 
-  // Reset state on open/close
+  // Reset state on open
   useEffect(() => {
+    if (!isOpen) return
     setName('')
     setDescription(undefined)
   }, [isOpen])
@@ -108,23 +110,19 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
           <div className="w-full form-control">
             <SimpleEditorComponent
               onUpdate={setDescription}
-              content={undefined}
+              content={''}
               className=""
-              placeholder="Add project description (optional) "
+              placeholder="Add project description (optional)"
             />
           </div>
           <div className="modal-action">
-            <button
-              className="btn btn-ghost"
-              onClick={cancel}
-              disabled={loading}
-            >
-              Cancel
-            </button>
+            {/* <button className="btn btn-ghost" onClick={cancel} disabled={loading}>
+            Cancel
+          </button> */}
             <button
               className={classNames('btn', { loading: loading })}
               type="submit"
-              disabled={!nameIsValid || !description || loading}
+              disabled={!nameIsValid || loading}
             >
               Save project
             </button>

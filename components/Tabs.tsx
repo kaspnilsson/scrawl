@@ -8,6 +8,7 @@ interface Props {
   defaultTab: string
   tabChildren: { [key: string]: ReactNode }
   localStorageKey: string
+  className?: string
 }
 
 const Tabs = ({
@@ -15,6 +16,7 @@ const Tabs = ({
   defaultTab,
   tabChildren,
   localStorageKey,
+  className = '',
 }: Props) => {
   const isHydrated = useIsHydrated()
 
@@ -24,7 +26,7 @@ const Tabs = ({
   })
 
   return (
-    <div>
+    <div className={className}>
       <div className="mb-4 tabs">
         {tabNames.map((name) => (
           <a
