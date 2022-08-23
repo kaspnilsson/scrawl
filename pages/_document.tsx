@@ -24,8 +24,6 @@ export default class MyDocument extends Document {
             }}
           /> */}
           <link rel="shortcut icon" href="/favicon.svg" />
-          {/* eslint-disable-next-line @next/next/no-title-in-document-head */}
-          <title>Scrawl</title>
         </Head>
         <body>
           <Main />
