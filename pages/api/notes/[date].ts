@@ -4,6 +4,12 @@ import {
   withApiAuth,
 } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { Note } from '../../../interfaces/note'
+import { ProjectUpdate } from '../../../interfaces/projectUpdate'
+import {
+  insertUpdatesIntoContent,
+  trimUpdatesFromContent,
+} from '../../../lib/serverUtils/projectUpdates'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -14,7 +20,12 @@ export default withApiAuth(async function handler(
     method,
     query: { date },
   } = req
-  const { user } = await getUser({ req, res })
+  const { user, error } = await getUser({ req, res })
+
+  if (error) {
+    res.status(error.status).end(`Fetch user failed! ${JSON.stringify(error)}`)
+    return
+  }
 
   if (!date) {
     res.status(400).end('No note UID!')
@@ -24,29 +35,61 @@ export default withApiAuth(async function handler(
   const dateStr = date as string
 
   if (method === 'GET') {
-    const { data, error } = await supabaseServerClient({ req, res })
-      .from('notes')
+    const notePromise = supabaseServerClient({ req, res })
+      .from<Note>('notes')
       .select('*')
       .eq('note_date', dateStr)
       .eq('owner', user.id)
 
-    if (error) {
-      res.status(401).end(`GET failed! ${JSON.stringify(error)}`)
+    const updatesPromise = supabaseServerClient({ req, res })
+      .from<ProjectUpdate>('projectUpdates')
+      .select('*')
+      .eq('note_date', dateStr)
+      .eq('owner', user.id)
+
+    const [note, updates] = await Promise.all([notePromise, updatesPromise])
+
+    if (note.error || updates.error) {
+      res
+        .status(401)
+        .end(`GET failed! ${JSON.stringify(note.error || updates.error)}`)
       return
     }
 
-    res.status(200).json(data[0] || { content: '', note_date: dateStr })
+    const out = note.data[0] || { content: '', note_date: dateStr }
+    insertUpdatesIntoContent(out.content, updates.data)
+
+    res.status(200).json(out)
   } else if (method === 'POST') {
     if (!user) {
       res.status(403).end('Not logged in!')
       return
     }
 
+    const partialNote = JSON.parse(body) as Partial<Note>
+
+    if (partialNote.content?.content) {
+      const trimmed = trimUpdatesFromContent(partialNote.content.content)
+      partialNote.content.content = trimmed.content
+      if (trimmed.updates.length) {
+        await supabaseServerClient({ req, res })
+          .from('projectUpdates')
+          .upsert(
+            trimmed.updates.map((u) => ({
+              created_at: new Date(),
+              ...u,
+              owner: user.id,
+              updated_at: new Date(),
+            }))
+          )
+      }
+    }
+
     const { data, error } = await supabaseServerClient({ req, res })
       .from('notes')
       .upsert({
         created_at: new Date(),
-        ...JSON.parse(body),
+        ...partialNote,
         note_date: dateStr,
         owner: user.id,
         updated_at: new Date(),

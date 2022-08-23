@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { previousSunday, isSameDay, startOfToday } from 'date-fns'
+import { previousSunday, isSameDay, isPast } from 'date-fns'
 import moment, { Moment } from 'moment'
 import { routes } from '../lib/routes'
 import Link from './Link'
@@ -13,7 +13,6 @@ const CalendarWeek = ({ selectedDate }: Props) => {
   const lastSunday = previousSunday(
     new Date(selectedDateAsDate).setDate(selectedDateAsDate.getDate() + 1)
   )
-  const today = startOfToday()
 
   const buttons = []
   const date = lastSunday
@@ -21,13 +20,13 @@ const CalendarWeek = ({ selectedDate }: Props) => {
     buttons.push({
       moment: moment(date),
       isSelected: isSameDay(date, selectedDateAsDate),
-      isInPast: date < today,
+      isInPast: isPast(date),
     })
     date.setDate(date.getDate() + 1)
   }
 
   return (
-    <div className="flex flex-1 gap-1 m-auto prose">
+    <div className="flex flex-1 gap-1 m-auto antialiased prose">
       {buttons.map((b, index) => (
         <Link
           href={routes.notesForMoment(b.moment)}

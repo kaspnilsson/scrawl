@@ -8,6 +8,7 @@ export const getServerSideProps = withPageAuth({
 
 const Today = () => {
   const today = moment(new Date())
+  console.log(today)
   return <NoteView date={today} />
 }
 export default Today

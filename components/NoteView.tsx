@@ -1,4 +1,4 @@
-import { Content } from '@tiptap/core'
+import { JSONContent } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
 import moment, { Moment } from 'moment'
 import { useCallback, useEffect, useState } from 'react'
@@ -31,7 +31,7 @@ const NoteView = ({ date }: Props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedPostNote = useCallback(
-    debounce(async (content: Content) => {
+    debounce(async (content: JSONContent) => {
       setSaving(true)
       await postNote(noteKey, { ...note, content })
       setSaving(false)
@@ -39,7 +39,7 @@ const NoteView = ({ date }: Props) => {
     []
   )
 
-  const handleUpdate = (content: Content) => {
+  const handleUpdate = (content: JSONContent) => {
     debouncedPostNote(content)
   }
 
@@ -73,12 +73,12 @@ const NoteView = ({ date }: Props) => {
               {date.format('dddd')}
               {date.isSame(today) && (
                 <>
-                  <div className="w-2 mx-1">-</div>
+                  <div className="mx-1 w-2">-</div>
                   <span className="">today</span>
                 </>
               )}
             </div>
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
+            <h1 className="flex flex-wrap gap-3 items-center font-heading">
               {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
@@ -93,10 +93,10 @@ const NoteView = ({ date }: Props) => {
               )}
             </h1>
           </div>
-          <div className="flex items-center w-full mt-4">
+          <div className="flex items-center mt-4 w-full">
             <Editor
               className="w-full min-h-[400px]"
-              content={note?.content || ''}
+              content={note?.content}
               onUpdate={handleUpdate}
               noteDate={noteKey}
             />

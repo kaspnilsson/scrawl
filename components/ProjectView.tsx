@@ -1,4 +1,4 @@
-import { Content } from '@tiptap/core'
+import { JSONContent } from '@tiptap/core'
 import { useCallback, useEffect, useState } from 'react'
 import { postProject } from '../lib/apiHelpers'
 import Layout from './Layout'
@@ -22,7 +22,7 @@ const ProjectView = ({ name }: Props) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedPostProject = useCallback(
-    debounce(async (value: Content) => {
+    debounce(async (value: JSONContent) => {
       // setSaving(true)
       await postProject(name, { ...project, description: value })
       // setSaving(false)
@@ -30,7 +30,7 @@ const ProjectView = ({ name }: Props) => {
     []
   )
 
-  const handleUpdate = (content: Content) => {
+  const handleUpdate = (content: JSONContent) => {
     debouncedPostProject(content)
   }
 

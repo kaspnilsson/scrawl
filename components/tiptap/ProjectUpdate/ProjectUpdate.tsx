@@ -4,9 +4,11 @@ import { ReactNodeViewRenderer } from '@tiptap/react'
 import { ProjectUpdateAttrs } from './ProjectUpdateAttrs'
 import ProjectUpdateRenderer from './ProjectUpdateRenderer'
 
+export const PROJECT_UPDATE_TYPE = 'projectUpdate'
+
 declare module '@tiptap/core' {
   interface Commands {
-    projectUpdate: {
+    [PROJECT_UPDATE_TYPE]: {
       addProjectUpdate: (attrs?: ProjectUpdateAttrs) => Command
     }
   }
@@ -15,7 +17,7 @@ declare module '@tiptap/core' {
 type ExtensionAttrs = { [key in keyof ProjectUpdateAttrs]: Partial<Attribute> }
 
 export const ProjectUpdate = Node.create({
-  name: 'projectUpdate',
+  name: PROJECT_UPDATE_TYPE,
   content: 'block*',
   group: 'block',
   defining: true,
@@ -58,7 +60,7 @@ export const ProjectUpdate = Node.create({
         ({ commands }) =>
           commands.insertContent([
             {
-              type: 'projectUpdate',
+              type: PROJECT_UPDATE_TYPE,
               attrs,
               content: [
                 {

@@ -38,6 +38,7 @@ const Layout = ({
     { defaultValue: false, ssr: true }
   )
 
+  if (!isHydrated) return null
   return (
     <div className="flex w-full min-h-screen">
       <Transition
@@ -66,7 +67,7 @@ const Layout = ({
         />
         <div
           className={classNames(
-            'overflow-y-auto px-2 py-4 mx-auto sm:p-8 xl:px-16',
+            'overflow-y-auto px-2 py-4 mx-auto h-full sm:p-8 xl:px-16',
             { 'max-w-6xl': !noMaxWidth }
           )}
         >

@@ -1,4 +1,4 @@
-import { useEditor, EditorContent, Content } from '@tiptap/react'
+import { useEditor, EditorContent, JSONContent } from '@tiptap/react'
 import { Editor } from '@tiptap/core'
 import { Transaction } from 'prosemirror-state'
 import StarterKit from '@tiptap/starter-kit'
@@ -9,8 +9,8 @@ import { TaskItem } from './tiptap/TaskItem'
 import TaskList from '@tiptap/extension-task-list'
 
 interface Props {
-  content?: Content
-  onUpdate: (content: Content) => void
+  content?: JSONContent
+  onUpdate: (content: JSONContent) => void
   className?: string
   onFocus?:
     | ((props: {

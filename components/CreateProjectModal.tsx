@@ -1,4 +1,4 @@
-import { Content } from '@tiptap/core'
+import { JSONContent } from '@tiptap/core'
 import classNames from 'classnames'
 import { FormEvent, useEffect, useRef, useState } from 'react'
 import { Project, ProjectState } from '../interfaces/project'
@@ -29,7 +29,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
         updated_at: now.toISOString(),
       })) as unknown as Project
       setName('')
-      setDescription('')
+      setDescription({})
       close(proj)
     } catch (e: unknown) {
     } finally {
@@ -38,7 +38,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   }
 
   const [name, setName] = useState('')
-  const [description, setDescription] = useState<Content>('')
+  const [description, setDescription] = useState<JSONContent>({})
 
   const nameIsNonUnique = name && projects.find((p) => p.name === name)
   const nameIsWrongFormat = name && !VALID_PROJECT_NAME_REGEX.test(name)
@@ -61,7 +61,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   // Reset state on open/close
   useEffect(() => {
     setName('')
-    setDescription('')
+    setDescription({})
   }, [isOpen])
 
   return (
@@ -105,7 +105,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
           <label className="label">
             <span className="label-text font-heading">Description</span>
           </label>
-          <SimpleEditorComponent onUpdate={setDescription} content={''} />
+          <SimpleEditorComponent onUpdate={setDescription} content={{}} />
         </div>
         <div className="modal-action">
           <button className="btn btn-ghost" onClick={cancel} disabled={loading}>
