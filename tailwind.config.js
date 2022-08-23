@@ -36,10 +36,10 @@ module.exports = {
           'base-100': '#ffffff', // White
           'base-200': '#f5f5f4', // TW stone 100
           'base-300': '#d6d3d1', // TW stone 300
-          info: '#57534e', // TW stone 600
-          success: '#16a34a', // TW green 600
-          warning: '#ca8a04', // TW amber 600
-          error: '#dc2626', // TW red 600
+          info: '#c4b5fd', // TW violet 300
+          success: '#86efac', // TW green 300
+          warning: '#fcd34d', // TW amber 300
+          error: '#fca5a5', // TW red 300
         },
         dark: {
           primary: '#44403c', // TW stone 700
@@ -50,9 +50,9 @@ module.exports = {
           'base-100': '#000000', // Black
           'base-200': '#0e0d0c', // TW stone that i made up
           'base-300': '#1c1917', // TW stone 900
-          info: '#57534e', // TW stone 600
+          info: '#7c3aed', // TW violet 600
           success: '#16a34a', // TW green 600
-          warning: '#ca8a04', // TW amber 600
+          warning: '#d97706', // TW amber 600
           error: '#dc2626', // TW red 600
         },
       },

@@ -11,6 +11,7 @@ import KanbanBoard, { BoardSection } from '../../components/Board/Board'
 import { BoardCard } from '../../components/Board/Card'
 import Tabs from '../../components/Tabs'
 import ProjectTable from '../../components/ProjectTable'
+import ProjectStateChip from '../../components/ProjectStateChip'
 
 const TABS_LOCAL_STORAGE_KEY = 'allProjectsViewTabSelection'
 
@@ -25,14 +26,29 @@ export const getServerSideProps = withPageAuth({
 
 // Sections for the KanbanBoard, in sorted order.
 const SECTIONS: BoardSection[] = [
-  { id: ProjectState.BACKLOG, title: ProjectState.BACKLOG },
-  { id: ProjectState.IN_PROGRESS, title: ProjectState.IN_PROGRESS },
-  { id: ProjectState.COMPLETED, title: ProjectState.COMPLETED },
-  { id: ProjectState.ARCHIVED, title: ProjectState.ARCHIVED },
+  {
+    id: ProjectState.BACKLOG,
+    title: <ProjectStateChip state={ProjectState.BACKLOG} />,
+  },
+  {
+    id: ProjectState.IN_PROGRESS,
+    title: <ProjectStateChip state={ProjectState.IN_PROGRESS} />,
+  },
+  {
+    id: ProjectState.COMPLETED,
+    title: <ProjectStateChip state={ProjectState.COMPLETED} />,
+  },
+  {
+    id: ProjectState.ARCHIVED,
+    title: <ProjectStateChip state={ProjectState.ARCHIVED} />,
+  },
 ]
 
 const ProjectsIndex = () => {
   const [showDialog, setShowDialog] = useState(false)
+  const [initialProjectState, setInitialProjectState] = useState<
+    Partial<Project>
+  >({})
   const open = () => setShowDialog(true)
   const close = (project?: Project) => {
     if (project) mutate()
@@ -56,6 +72,11 @@ const ProjectsIndex = () => {
       state: card.sectionId as ProjectState,
     })
     mutate()
+  }
+
+  const handleAddCard = async (sectionId: string) => {
+    setInitialProjectState({ state: sectionId as ProjectState })
+    setShowDialog(true)
   }
 
   return (
@@ -82,6 +103,7 @@ const ProjectsIndex = () => {
                 sections={SECTIONS}
                 cards={cards}
                 onChange={handleCardUpdate}
+                handleAdd={handleAddCard}
               />
             ),
             Table: <ProjectTable data={data || []} />,
@@ -93,6 +115,7 @@ const ProjectsIndex = () => {
         isOpen={showDialog}
         close={close}
         projects={data || []}
+        initialProjectState={initialProjectState}
       />
     </Layout>
   )

@@ -24,7 +24,7 @@ export declare interface Project {
   created_at: string // ISO string
   updated_at: string // ISO string
   state: ProjectState
-  description: JSONContent
+  description: JSONContent | null
   tasks: string[] // IDs of tasks belonging to this project.
   updates?: ProjectUpdate[]
 }
