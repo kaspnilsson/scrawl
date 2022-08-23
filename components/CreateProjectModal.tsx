@@ -29,7 +29,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
         updated_at: now.toISOString(),
       })) as unknown as Project
       setName('')
-      setDescription({})
+      setDescription(undefined)
       close(proj)
     } catch (e: unknown) {
     } finally {
@@ -38,7 +38,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   }
 
   const [name, setName] = useState('')
-  const [description, setDescription] = useState<JSONContent>({})
+  const [description, setDescription] = useState<JSONContent | undefined>()
 
   const nameIsNonUnique = name && projects.find((p) => p.name === name)
   const nameIsWrongFormat = name && !VALID_PROJECT_NAME_REGEX.test(name)
@@ -61,64 +61,75 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   // Reset state on open/close
   useEffect(() => {
     setName('')
-    setDescription({})
+    setDescription(undefined)
   }, [isOpen])
 
   return (
     <Modal isOpen={isOpen} close={close} title="Create project">
-      <form onSubmit={handleCreateProject}>
-        <div className="w-full form-control">
-          <label className="label">
-            <span className="label-text font-heading">Name</span>
-          </label>
-          <input
-            autoFocus
-            ref={ref}
-            type="text"
-            placeholder="Add project name"
-            className={classNames('w-full input input-bordered', {
-              'input-error': nameIsNonUnique,
-            })}
-            value={name}
-            onChange={(e) =>
-              setName(
-                e.currentTarget.value.replaceAll(/\s/g, '-').toLocaleLowerCase()
-              )
-            }
-          />
-        </div>
-        {!nameIsValid && (
-          <label className="label">
-            {nameIsNonUnique && (
-              <span className="label-text-alt text-error">
-                Project name must be unique!
-              </span>
-            )}
-            {nameIsWrongFormat && (
-              <span className="label-text-alt text-error">
-                Project name can only contain letters, numbers, _, and -!
-              </span>
-            )}
-          </label>
-        )}
-        <div className="w-full form-control">
-          <label className="label">
-            <span className="label-text font-heading">Description</span>
-          </label>
-          <SimpleEditorComponent onUpdate={setDescription} content={{}} />
-        </div>
-        <div className="modal-action">
-          <button className="btn btn-ghost" onClick={cancel} disabled={loading}>
-            Cancel
-          </button>
-          <button
-            className={classNames('btn', { loading: loading })}
-            type="submit"
-            disabled={!nameIsValid || !description || loading}
-          >
-            Save project
-          </button>
-        </div>
+      <form onSubmit={handleCreateProject} className="mt-4">
+        <>
+          <div className="w-full prose form-control prose-stone">
+            <input
+              autoFocus
+              ref={ref}
+              type="text"
+              placeholder="Add project name"
+              className={classNames(
+                'w-full input input-ghost text-base text-inherit border-none focus:ring-0 focus:shadow-none focus:outline-none p-0 transition-none h-fit',
+                {
+                  'input-error': nameIsNonUnique,
+                }
+              )}
+              value={name}
+              onChange={(e) =>
+                setName(
+                  e.currentTarget.value
+                    .replaceAll(/\s/g, '-')
+                    .toLocaleLowerCase()
+                )
+              }
+            />
+          </div>
+          {nameIsNonUnique ||
+            (nameIsWrongFormat && (
+              <label className="px-0 label">
+                {nameIsNonUnique && (
+                  <span className="label-text-alt text-error">
+                    Project name must be unique!
+                  </span>
+                )}
+                {nameIsWrongFormat && (
+                  <span className="label-text-alt text-error">
+                    Project name can only contain letters, numbers, _, and -!
+                  </span>
+                )}
+              </label>
+            ))}
+          <div className="w-full form-control">
+            <SimpleEditorComponent
+              onUpdate={setDescription}
+              content={undefined}
+              className=""
+              placeholder="Add project description (optional) "
+            />
+          </div>
+          <div className="modal-action">
+            <button
+              className="btn btn-ghost"
+              onClick={cancel}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+            <button
+              className={classNames('btn', { loading: loading })}
+              type="submit"
+              disabled={!nameIsValid || !description || loading}
+            >
+              Save project
+            </button>
+          </div>
+        </>
       </form>
     </Modal>
   )

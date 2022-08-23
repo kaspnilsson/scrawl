@@ -62,9 +62,7 @@ const Layout = ({
         </Transition>
         <div className="w-full max-h-screen min-h-0 overflow-auto">
           <Header
-            leftSidebarEnabled={leftSidebarEnabled}
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
-            rightSidebarEnabled={rightSidebarEnabled}
             toggleRightSidebar={
               rightContent
                 ? () => setRightSidebarEnabled(!rightSidebarEnabled)

@@ -4,8 +4,8 @@ import classNames from 'classnames'
 import { ReactNode } from 'react'
 
 interface Props {
-  title: string
-  children: ReactNode
+  title: string | ReactNode
+  children?: ReactNode
   className?: string
   defaultOpen?: boolean
 }
@@ -23,8 +23,8 @@ const AccordionPanel = ({
   >
     {({ open }) => (
       <>
-        <Disclosure.Button className="flex items-start justify-between w-full text-lg text-left">
-          <span className="font-heading">{title}</span>
+        <Disclosure.Button className="flex items-center justify-between w-full text-lg text-left">
+          <div>{title}</div>
           <span className="flex items-center ml-6 h-7">
             <ChevronDownIcon
               className={classNames(

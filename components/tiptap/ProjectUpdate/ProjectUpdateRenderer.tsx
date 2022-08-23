@@ -24,14 +24,14 @@ const ProjectUpdateWrapper = ({
 
   return (
     <NodeViewWrapper>
-      <div className="grid grid-cols-1 gap-2 py-4 border-t border-b border-base-300">
-        <div className="flex justify-between items-center not-prose">
+      <div className="grid grid-cols-1 gap-2 py-4 border-t border-b border-normal">
+        <div className="flex items-center justify-between not-prose">
           <ChooseOrCreateProject
             // contentEditable="false"
             selectedProjectName={projectName}
             onSelectProject={handleSelectProject}
           />
-          <div>{noteDate}</div>
+          <div className="deemphasized">{noteDate}</div>
         </div>
         {/* {projectName && noteDate && ( */}
         <NodeViewContent className="w-full details-content"></NodeViewContent>

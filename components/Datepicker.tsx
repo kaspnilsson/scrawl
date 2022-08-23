@@ -410,7 +410,7 @@ const DatepickerStyles = () => (
       .react-datepicker__quarter-text:hover,
       .react-datepicker__year-text:hover {
         border-radius: 0.3rem;
-        background-color: hsl(var(--b2));
+        background-color: hsla(var(--af) / 0.3);
       }
       .react-datepicker__day--today,
       .react-datepicker__month-text--today,

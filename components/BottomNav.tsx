@@ -32,7 +32,7 @@ const BottomNav = ({ leftSidebarEnabled, toggleLeftSidebar }: Props) => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-4 gap-2 px-1 border-t btm-nav sm:hidden border-base-300 btm-nav-sm">
+    <div className="grid grid-cols-4 gap-2 px-1 border-t btm-nav sm:hidden border-normal btm-nav-sm">
       <button
         className={classNames('flex-1 min-w-0 btn btn-sm btn-ghost', {
           'btn-active': isHydrated && leftSidebarEnabled,

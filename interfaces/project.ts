@@ -1,4 +1,5 @@
 import { JSONContent } from '@tiptap/core'
+import { ProjectUpdate } from './projectUpdate'
 
 /**
  * A project is a long running concept grouping multiple units of work
@@ -25,4 +26,5 @@ export declare interface Project {
   state: ProjectState
   description: JSONContent
   tasks: string[] // IDs of tasks belonging to this project.
+  updates?: ProjectUpdate[]
 }

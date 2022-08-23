@@ -83,3 +83,9 @@ div#__next > div:first-child {
 .collapse-arrow .collapse-title.px-0:after {
   right: 0.4rem;
 }
+
+input::placeholder,
+textarea::placeholder {
+  color: hsl(var(--nc));
+  opacity: 0.6;
+}
