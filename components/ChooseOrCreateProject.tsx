@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { useIsHydrated } from '../contexts/isHydrated'
-import { Project } from '../interfaces/project'
+import { Project, sortProjectsForSelection } from '../interfaces/project'
 import { fetcher } from '../lib/apiHelpers'
 import CreateProjectModal from './CreateProjectModal'
 
@@ -62,9 +62,10 @@ const ChooseOrCreateProject = ({
           tabIndex={0}
           className="p-2 w-64 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
         >
-          {(data || []).map((p) => (
+          {(data || []).sort(sortProjectsForSelection).map((p) => (
             <li key={p.name}>
               <button
+                className="text-left"
                 onClick={() => {
                   setShowMenu(false)
                   onSelectProject(p)

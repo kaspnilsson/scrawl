@@ -67,7 +67,7 @@ div#__next > div:first-child {
       margin: 0;
     }
     li[data-checked='true'] {
-      opacity: 0.7;
+      opacity: 0.6;
 
       button {
         background: hsl(var(--a))
@@ -75,6 +75,7 @@ div#__next > div:first-child {
           viewBox='0 0 1 1'%3E%3Cpath d='M.04.627L.146.52.43.804.323.91zm.177.177L.854.167.96.273.323.91z'\
           fill='%23fff'/%3E%3C/svg%3E")
           no-repeat 100%;
+          opacity: 0.4;
       }
     }
   }
