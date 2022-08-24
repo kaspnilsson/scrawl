@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { previousSunday, isSameDay, isPast } from 'date-fns'
+import { previousSunday, isSameDay, isPast, isToday } from 'date-fns'
 import moment, { Moment } from 'moment'
 import { routes } from '../lib/routes'
 import Link from './Link'
@@ -20,7 +20,7 @@ const CalendarWeek = ({ selectedDate }: Props) => {
     buttons.push({
       moment: moment(date),
       isSelected: isSameDay(date, selectedDateAsDate),
-      isInPast: isPast(date),
+      isInPast: isPast(date) && !isToday(date),
     })
     date.setDate(date.getDate() + 1)
   }
