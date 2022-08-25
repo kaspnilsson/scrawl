@@ -42,6 +42,7 @@ const ChooseOrCreateProject = ({
   return (
     <>
       <div
+        spellCheck={false}
         className={classNames('dropdown dropdown-hover', {
           'dropdown-open': showMenu,
         })}
@@ -49,7 +50,7 @@ const ChooseOrCreateProject = ({
         <label
           tabIndex={0}
           className={classNames(
-            'flex gap-2 items-center normal-case btn btn-sm max-w-full',
+            'flex gap-2 items-center max-w-full normal-case btn btn-sm',
             {
               loading: dataLoading,
             }
@@ -66,7 +67,7 @@ const ChooseOrCreateProject = ({
         </label>
         <ul
           tabIndex={0}
-          className="w-64 p-2 overflow-auto shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit max-h-96"
+          className="overflow-auto p-2 w-64 max-h-96 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
         >
           {(data || [])
             .filter((p) => p.state !== ProjectState.ARCHIVED)
@@ -88,7 +89,7 @@ const ChooseOrCreateProject = ({
           <li>
             <button
               onClick={() => setShowDialog(true)}
-              className="flex items-center gap-2 btn-accent text-accent-content"
+              className="flex gap-2 items-center btn-accent text-accent-content"
             >
               <PlusIcon className="w-4 h-4" />
               New project
