@@ -34,6 +34,7 @@ interface Props {
       }) => void)
     | undefined
   placeholder?: string
+  editable?: boolean
 }
 
 const ProjectUpdateEditor = ({
@@ -45,6 +46,7 @@ const ProjectUpdateEditor = ({
   onBlur = () => null,
   className = '',
   placeholder = '',
+  editable = true,
 }: Props) => {
   const { user } = useUserContext()
   const editor = useEditor(
@@ -105,6 +107,7 @@ const ProjectUpdateEditor = ({
       },
       onFocus,
       onBlur,
+      editable,
     },
     [content, user]
   )

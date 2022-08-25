@@ -7,7 +7,7 @@ import { Project } from '../interfaces/project'
 import SimpleEditorComponent from './SimpleEditor'
 import ProjectStateChip from './ProjectStateChip'
 import AccordionPanel from './AccordionPanel'
-import ProjectUpdateEditor from './ProjectUpdateEditor'
+import ProjectUpdateThread from './ProjectUpdateThread'
 
 interface Props {
   name: string
@@ -56,13 +56,13 @@ const ProjectView = ({ name }: Props) => {
     <Layout loading={loading} error={error}>
       {project && (
         <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
-          <div className="flex flex-wrap gap-3 items-center w-full">
-            <h1 className="flex flex-wrap gap-3 items-center font-heading">
+          <div className="flex flex-wrap items-center w-full gap-3">
+            <h1 className="flex flex-wrap items-center gap-3 font-heading">
               {name}
             </h1>
             <ProjectStateChip state={project?.state} />
           </div>
-          <div className="flex flex-col mt-4 space-y-6 w-full">
+          <div className="flex flex-col w-full mt-4 space-y-6">
             <SimpleEditorComponent
               className="w-full"
               onUpdate={handleUpdate}
@@ -74,18 +74,7 @@ const ProjectView = ({ name }: Props) => {
               title={<h3>Updates</h3>}
               className="w-full"
             >
-              {(project.updates || []).map((u) => (
-                <ProjectUpdateEditor
-                  key={u.id}
-                  content={{
-                    type: 'doc',
-                    content: u.content,
-                  }}
-                  projectName={u.project_name}
-                  noteDate={u.note_date}
-                  onUpdate={() => null}
-                />
-              ))}
+              <ProjectUpdateThread updates={project?.updates} />
             </AccordionPanel>
             <AccordionPanel
               defaultOpen

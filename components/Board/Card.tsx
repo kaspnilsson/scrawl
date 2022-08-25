@@ -10,7 +10,7 @@ export interface BoardCard<T> {
 }
 
 const Card = <T extends object>({ title, href }: BoardCard<T>) => (
-  <div className="p-2 text-sm rounded-lg shadow-lg bg-base-100">
+  <div className="p-2 text-sm rounded-lg bg-base-100 ">
     {!!href && <Link href={href}>{title}</Link>}
     {!href && <div className="">{title}</div>}
   </div>

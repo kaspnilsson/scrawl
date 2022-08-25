@@ -3,7 +3,11 @@ import classNames from 'classnames'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { useIsHydrated } from '../contexts/isHydrated'
-import { Project, sortProjectsForSelection } from '../interfaces/project'
+import {
+  Project,
+  ProjectState,
+  sortProjectsForSelection,
+} from '../interfaces/project'
 import { fetcher } from '../lib/apiHelpers'
 import CreateProjectModal from './CreateProjectModal'
 
@@ -45,7 +49,7 @@ const ChooseOrCreateProject = ({
         <label
           tabIndex={0}
           className={classNames(
-            'flex gap-2 items-center normal-case btn btn-sm',
+            'flex gap-2 items-center normal-case btn btn-sm max-w-full',
             {
               loading: dataLoading,
             }
@@ -55,31 +59,36 @@ const ChooseOrCreateProject = ({
             setShowMenu(!showMenu)
           }}
         >
-          {selectedProjectName || 'Choose a project...'}
+          <span className="flex-1 line-clamp-1">
+            {selectedProjectName || 'Choose a project...'}
+          </span>
           <ChevronDownIcon className="w-4 h-4" />
         </label>
         <ul
           tabIndex={0}
-          className="p-2 w-64 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
+          className="w-64 p-2 overflow-auto shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit max-h-96"
         >
-          {(data || []).sort(sortProjectsForSelection).map((p) => (
-            <li key={p.name}>
-              <button
-                className="text-left"
-                onClick={() => {
-                  setShowMenu(false)
-                  onSelectProject(p)
-                }}
-              >
-                {p.name}
-              </button>
-            </li>
-          ))}
-          {!!data && <div className="m-0 divider" />}
+          {(data || [])
+            .filter((p) => p.state !== ProjectState.ARCHIVED)
+            .sort(sortProjectsForSelection)
+            .map((p) => (
+              <li key={p.name}>
+                <button
+                  className="text-left"
+                  onClick={() => {
+                    setShowMenu(false)
+                    onSelectProject(p)
+                  }}
+                >
+                  {p.name}
+                </button>
+              </li>
+            ))}
+          {!!data && <div className="py-2 m-0 divider" />}
           <li>
             <button
               onClick={() => setShowDialog(true)}
-              className="flex gap-2 items-center btn-accent text-accent-content"
+              className="flex items-center gap-2 btn-accent text-accent-content"
             >
               <PlusIcon className="w-4 h-4" />
               New project

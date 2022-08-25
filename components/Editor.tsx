@@ -71,8 +71,7 @@ const EditorComponent = ({
         StarterKit,
         Placeholder.configure({
           includeChildren: true,
-          placeholder:
-            'Capture notes, plan daily tasks, or log journal entries.',
+          placeholder: 'Capture notes or log project updates.',
         }),
         TaskItem.configure({
           nested: true,
