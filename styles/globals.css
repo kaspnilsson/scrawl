@@ -60,3 +60,7 @@ input[type='checkbox'] {
   outline: 2px solid hsla(var(--bc) / 0.2);
   outline-offset: 2px;
 } */
+
+:root {
+  color-scheme: light dark;
+}

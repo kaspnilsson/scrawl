@@ -47,7 +47,7 @@ const Layout = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="flex w-full min-h-screen overflow-x-auto">
+      <div className="flex w-full min-h-screen overflow-hidden max-w-[100vw]">
         <Transition
           show={isHydrated && leftSidebarEnabled}
           enter="transition ease-in-out duration-100 transform"
@@ -60,7 +60,7 @@ const Layout = ({
         >
           <Nav />
         </Transition>
-        <div className="w-full max-h-screen min-h-0 min-w-min">
+        <div className="w-full max-h-screen min-h-0 overflow-auto">
           <Header
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
             toggleRightSidebar={
@@ -70,25 +70,27 @@ const Layout = ({
             }
             headerContent={headerContent}
           />
-          <div
-            className={classNames(
-              'overflow-y-auto px-2 py-4 mx-auto h-full sm:p-8 xl:px-16',
-              { 'max-w-6xl': !noMaxWidth }
-            )}
-          >
-            {loading && (
-              <div className="flex p-16 m-auto loading btn btn-ghost">
-                Loading
-              </div>
-            )}
-            {!loading && error && <ErrorView error={error as Error} />}
-            {!loading && !error && children}
-            <BottomNav
-              leftSidebarEnabled={leftSidebarEnabled}
-              toggleLeftSidebar={() =>
-                setLeftSidebarEnabled(!leftSidebarEnabled)
-              }
-            />
+          <div className="w-full h-full overflow-auto">
+            <div
+              className={classNames(
+                'px-2 py-4 mx-auto h-full sm:p-8 xl:px-16 min-w-min',
+                { 'max-w-6xl': !noMaxWidth }
+              )}
+            >
+              {loading && (
+                <div className="flex p-16 m-auto loading btn btn-ghost">
+                  Loading
+                </div>
+              )}
+              {!loading && error && <ErrorView error={error as Error} />}
+              {!loading && !error && children}
+              <BottomNav
+                leftSidebarEnabled={leftSidebarEnabled}
+                toggleLeftSidebar={() =>
+                  setLeftSidebarEnabled(!leftSidebarEnabled)
+                }
+              />
+            </div>
           </div>
         </div>
         <Transition
