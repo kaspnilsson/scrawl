@@ -1,6 +1,7 @@
 import { NodeViewWrapper, NodeViewContent, Editor } from '@tiptap/react'
 import { Project } from '../../../interfaces/project'
 import ChooseOrCreateProject from '../../ChooseOrCreateProject'
+import ProjectUpdateOverflowMenu from '../../ProjectUpdateOverflowMenu'
 import { ProjectUpdateAttrs } from './ProjectUpdateAttrs'
 
 export interface ProjectUpdateRendererProps {
@@ -30,7 +31,10 @@ const ProjectUpdateWrapper = ({
             selectedProjectName={projectName}
             onSelectProject={handleSelectProject}
           />
-          <div className="text-sm deemphasized">{noteDate}</div>
+          <div className="flex gap-1 items-center">
+            <div className="text-sm deemphasized">{noteDate}</div>
+            <ProjectUpdateOverflowMenu attrs={node.attrs} />
+          </div>
         </div>
         <NodeViewContent className="w-full details-content"></NodeViewContent>
       </div>
