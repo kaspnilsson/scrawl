@@ -68,10 +68,12 @@ export const slashCommands = ({
   userId,
   projectName = '',
   noteDate = '',
+  simple = false,
 }: {
   userId: string
   projectName?: string
   noteDate?: string
+  simple?: boolean
 }): SlashCommandsCommand[] => {
   const out: SlashCommandsCommand[] = [
     {
@@ -288,6 +290,8 @@ export const slashCommands = ({
     },
   ]
 
+  if (simple) return out
+
   if (noteDate || projectName) {
     out.push({
       icon: <i className="font-thin ri-lg ri-add-box-line" />,
@@ -336,7 +340,7 @@ export const SlashCommandsList = (props: {
   const { items, selectedIndex, selectItem } = props
 
   return (
-    <div className="w-48 gap-1 p-2 shadow-lg menu not-prose rounded-box bg-base-200">
+    <div className="gap-1 p-2 w-48 shadow-lg menu not-prose rounded-box bg-base-200">
       {items.map(({ title, icon }, idx) => (
         <li key={idx} onClick={() => selectItem(idx)}>
           <div

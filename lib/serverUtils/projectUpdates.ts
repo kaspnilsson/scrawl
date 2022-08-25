@@ -3,7 +3,9 @@ import { PROJECT_UPDATE_TYPE } from '../../components/tiptap/ProjectUpdate/Proje
 import { ProjectUpdate } from '../../interfaces/projectUpdate'
 
 export const trimUpdatesFromContent = (
-  content?: JSONContent[]
+  content?: JSONContent[],
+  currentNoteDate = '',
+  currentProjectName = ''
 ): { content?: JSONContent[]; updates: Partial<ProjectUpdate>[] } => {
   const out: { content?: JSONContent[]; updates: Partial<ProjectUpdate>[] } = {
     content,
@@ -17,6 +19,18 @@ export const trimUpdatesFromContent = (
       block.attrs?.id &&
       block.attrs?.projectName
     ) {
+      if (
+        (currentNoteDate && block.attrs?.noteDate !== currentNoteDate) ||
+        (currentProjectName && block.attrs?.projectName !== currentProjectName)
+      ) {
+        console.warn(
+          `Found block ${
+            block.attrs?.id
+          } which does not belong with this report: ${JSON.stringify(block)}`
+        )
+        // If block doesnt belong here, replace it with an empty node.
+        return { type: 'paragraph' }
+      }
       out.updates.push({
         id: block.attrs.id,
         note_date: block.attrs.noteDate,
@@ -32,7 +46,8 @@ export const trimUpdatesFromContent = (
     return block
   }
 
-  out.content?.map(mapFn)
+  out.content = out.content?.map(mapFn)
+
   return out
 }
 

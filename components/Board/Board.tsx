@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { PlusIcon } from '@heroicons/react/outline'
+import { ReactNode, useState } from 'react'
 import {
   DragDropContext,
   Draggable,
@@ -7,8 +8,11 @@ import {
 } from 'react-beautiful-dnd'
 import Card, { BoardCard } from './Card'
 
+const isString = (val: unknown) =>
+  typeof val === 'string' || val instanceof String
+
 export interface BoardSection {
-  title: string
+  title: string | ReactNode
   id: string // enum
 }
 
@@ -16,12 +20,14 @@ interface Props<T> {
   sections: BoardSection[]
   cards: BoardCard<T>[]
   onChange: (changedCard: BoardCard<T>) => void
+  handleAdd?: (sectionId: string) => void
 }
 
 const KanbanBoard = <T extends object>({
   sections,
   cards,
   onChange,
+  handleAdd,
 }: Props<T>) => {
   const [localCards, setLocalCards] = useState(cards)
   const onDragEnd = (result: DropResult) => {
@@ -61,9 +67,14 @@ const KanbanBoard = <T extends object>({
                   className="flex flex-col gap-2 p-4 w-64 max-w-xs h-full rounded-lg bg-base-200"
                   ref={provided.innerRef}
                 >
-                  <div className="text-xs font-bold uppercase">
-                    {section.title}
-                  </div>
+                  {isString(section.title) ? (
+                    <div className="text-xs font-bold uppercase">
+                      {section.title}
+                    </div>
+                  ) : (
+                    section.title
+                  )}
+
                   {(cardsBySection[section.id] || [])
                     .sort((a, b) => (b.sortBy || 0) - (a.sortBy || 0))
                     .map((card, index) => (
@@ -88,6 +99,17 @@ const KanbanBoard = <T extends object>({
                       </Draggable>
                     ))}
                   {provided.placeholder}
+                  {handleAdd && (
+                    <>
+                      <button
+                        onClick={() => handleAdd(section.id)}
+                        className="flex gap-2 items-center w-full btn btn-sm btn-ghost"
+                      >
+                        <PlusIcon className="w-4 h-4" />
+                        New
+                      </button>
+                    </>
+                  )}
                 </div>
               )}
             </Droppable>

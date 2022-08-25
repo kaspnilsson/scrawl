@@ -69,7 +69,10 @@ export default withApiAuth(async function handler(
     const partialNote = JSON.parse(body) as Partial<Note>
 
     if (partialNote.content?.content) {
-      const trimmed = trimUpdatesFromContent(partialNote.content.content)
+      const trimmed = trimUpdatesFromContent(
+        partialNote.content.content,
+        dateStr
+      )
       partialNote.content.content = trimmed.content
       if (trimmed.updates.length) {
         await supabaseServerClient({ req, res })

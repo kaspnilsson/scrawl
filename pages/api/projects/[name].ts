@@ -4,7 +4,8 @@ import {
   withApiAuth,
 } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { ProjectState } from '../../../interfaces/project'
+import { Project, ProjectState } from '../../../interfaces/project'
+import { ProjectUpdate } from '../../../interfaces/projectUpdate'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -13,7 +14,7 @@ export default withApiAuth(async function handler(
   const {
     body,
     method,
-    query: { name },
+    query: { name, withUpdates },
   } = req
   const { user } = await getUser({ req, res })
 
@@ -26,7 +27,7 @@ export default withApiAuth(async function handler(
 
   if (method === 'GET') {
     const { data, error } = await supabaseServerClient({ req, res })
-      .from('projects')
+      .from<Project>('projects')
       .select('*')
       .eq('name', nameStr)
       .eq('owner', user.id)
@@ -36,7 +37,29 @@ export default withApiAuth(async function handler(
       return
     }
 
-    res.status(200).json(data[0] || { description: '', name: nameStr })
+    const project = data[0]
+    if (!project) {
+      res.status(404).end(`GET failed! ${JSON.stringify(error)}`)
+    }
+
+    if (withUpdates) {
+      const { data: updates, error } = await supabaseServerClient({ req, res })
+        .from<ProjectUpdate>('projectUpdates')
+        .select('*')
+        .eq('project_name', nameStr)
+        .eq('owner', user.id)
+
+      if (error) {
+        res
+          .status(401)
+          .end(`GET failed fetching project updates! ${JSON.stringify(error)}`)
+        return
+      }
+
+      project.updates = updates || []
+    }
+
+    res.status(200).json(project)
   } else if (method === 'POST') {
     if (!user) {
       res.status(403).end('Not logged in!')
@@ -44,7 +67,7 @@ export default withApiAuth(async function handler(
     }
 
     const { data, error } = await supabaseServerClient({ req, res })
-      .from('projects')
+      .from<Project>('projects')
       .upsert({
         created_at: new Date(),
         state: ProjectState.BACKLOG,

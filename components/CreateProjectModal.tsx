@@ -10,11 +10,17 @@ interface Props {
   isOpen: boolean
   close: (newProject?: Project) => void
   projects?: Project[]
+  initialProjectState?: Partial<Project>
 }
 
 export const VALID_PROJECT_NAME_REGEX = /[\w-]+/
 
-const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
+const CreateProjectModal = ({
+  isOpen,
+  close,
+  projects = [],
+  initialProjectState = {},
+}: Props) => {
   const [loading, setLoading] = useState(false)
   const handleCreateProject = async (e: FormEvent) => {
     e.preventDefault()
@@ -22,27 +28,32 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
     setLoading(true)
     const now = new Date()
     try {
-      const res = await postProject(name, {
+      const newProject = {
+        state: ProjectState.BACKLOG,
+        ...initialProjectState,
         name,
         description,
-        state: ProjectState.BACKLOG,
         created_at: now.toISOString(),
         updated_at: now.toISOString(),
-      })
+      }
+      const res = await postProject(name, newProject)
+      const proj = (await res.json()) as Project
       setName('')
-      setDescription(undefined)
-      close((await res.json()) as unknown as Project)
+      setDescription(null)
+      close(proj)
     } catch (e: unknown) {
     } finally {
       setLoading(false)
     }
   }
 
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState<JSONContent | undefined>()
+  const [name, setName] = useState(initialProjectState?.name || '')
+  const [description, setDescription] = useState<
+    JSONContent | undefined | null
+  >(initialProjectState?.description || null)
 
-  const nameIsNonUnique = name && projects.find((p) => p.name === name)
-  const nameIsWrongFormat = name && !VALID_PROJECT_NAME_REGEX.test(name)
+  const nameIsNonUnique = !!(name && projects.find((p) => p.name === name))
+  const nameIsWrongFormat = !!(name && !VALID_PROJECT_NAME_REGEX.test(name))
   const nameIsValid = !!name && !nameIsWrongFormat && !nameIsNonUnique
 
   // const cancel = () => {
@@ -63,7 +74,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
   useEffect(() => {
     if (!isOpen) return
     setName('')
-    setDescription(undefined)
+    setDescription(null)
   }, [isOpen])
 
   return (
@@ -77,7 +88,7 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
               type="text"
               placeholder="Add project name"
               className={classNames(
-                'w-full input input-ghost text-base text-inherit border-none focus:ring-0 focus:shadow-none focus:outline-none p-0 transition-none h-fit',
+                'p-0 w-full text-base border-none transition-none input input-ghost text-inherit focus:ring-0 focus:shadow-none focus:outline-none h-fit',
                 {
                   'input-error': nameIsNonUnique,
                 }
@@ -92,25 +103,24 @@ const CreateProjectModal = ({ isOpen, close, projects = [] }: Props) => {
               }
             />
           </div>
-          {nameIsNonUnique ||
-            (nameIsWrongFormat && (
-              <label className="px-0 label">
-                {nameIsNonUnique && (
-                  <span className="label-text-alt text-error">
-                    Project name must be unique!
-                  </span>
-                )}
-                {nameIsWrongFormat && (
-                  <span className="label-text-alt text-error">
-                    Project name can only contain letters, numbers, _, and -!
-                  </span>
-                )}
-              </label>
-            ))}
+          {(nameIsNonUnique || nameIsWrongFormat) && (
+            <label className="px-0 label">
+              {nameIsNonUnique && (
+                <span className="label-text-alt text-error">
+                  Project name must be unique!
+                </span>
+              )}
+              {nameIsWrongFormat && (
+                <span className="label-text-alt text-error">
+                  Project name can only contain letters, numbers, _, and -!
+                </span>
+              )}
+            </label>
+          )}
           <div className="w-full form-control">
             <SimpleEditorComponent
               onUpdate={setDescription}
-              content={''}
+              content={null}
               className=""
               placeholder="Add project description (optional)"
             />

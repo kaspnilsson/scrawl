@@ -4,15 +4,20 @@ import { Transaction } from 'prosemirror-state'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import Image from '@tiptap/extension-image'
+// import Document from '@tiptap/extension-document'
 import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
 import TaskList from '@tiptap/extension-task-list'
 import { slashCommands, SlashCommandsList } from './tiptap/InlineMenu'
 import { SlashCommands } from './tiptap/SlashCommands'
+import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
+import AutoId from './tiptap/AutoId'
 
 interface Props {
   content?: JSONContent | null
   onUpdate: (content: JSONContent) => void
+  projectName?: string
+  noteDate?: string
   className?: string
   onFocus?:
     | ((props: {
@@ -31,9 +36,11 @@ interface Props {
   placeholder?: string
 }
 
-const SimpleEditorComponent = ({
+const ProjectUpdateEditor = ({
   content,
   onUpdate,
+  projectName,
+  noteDate,
   onFocus = () => null,
   onBlur = () => null,
   className = '',
@@ -75,9 +82,16 @@ const SimpleEditorComponent = ({
         }),
         TaskList,
         SlashCommands.configure({
-          commands: slashCommands({ userId: user?.id || '', simple: true }),
+          commands: slashCommands({
+            userId: user?.id || '',
+            simple: true,
+            projectName,
+            noteDate,
+          }),
           component: SlashCommandsList,
         }),
+        ProjectUpdate,
+        AutoId,
       ],
       content,
       onUpdate: ({ editor }) => {
@@ -98,4 +112,4 @@ const SimpleEditorComponent = ({
   return <EditorContent className={className} editor={editor} />
 }
 
-export default SimpleEditorComponent
+export default ProjectUpdateEditor

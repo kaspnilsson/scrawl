@@ -342,7 +342,7 @@
 
 "@tiptap/extension-document@^2.0.0-beta.17":
   version "2.0.0-beta.17"
-  resolved "https://registry.npmjs.org/@tiptap/extension-document/-/extension-document-2.0.0-beta.17.tgz"
+  resolved "https://registry.yarnpkg.com/@tiptap/extension-document/-/extension-document-2.0.0-beta.17.tgz#ded4182dd860762bcf41c588f712d83908c472a3"
   integrity sha512-L6sg0FNchbtIpQkCSjMmItVGs3/vep8Fq56WRtDc1wBSGUSmtHaxQG7F2FZLnNIUMuvzVMRD81m2vYG73WkY6A==
 
 "@tiptap/extension-dropcursor@^2.0.0-beta.29":

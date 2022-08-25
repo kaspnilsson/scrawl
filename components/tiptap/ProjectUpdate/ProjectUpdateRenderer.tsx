@@ -25,9 +25,8 @@ const ProjectUpdateWrapper = ({
   return (
     <NodeViewWrapper>
       <div className="grid grid-cols-1 gap-2 py-4 border-t border-b border-normal">
-        <div className="flex items-center justify-between not-prose">
+        <div className="flex justify-between items-center not-prose">
           <ChooseOrCreateProject
-            // contentEditable="false"
             selectedProjectName={projectName}
             onSelectProject={handleSelectProject}
           />

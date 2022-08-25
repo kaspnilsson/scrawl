@@ -11,6 +11,8 @@ const ProjectStateChip = ({ state }: Props) => {
     <div
       className={classNames('badge badge-sm sm:badge-md ', {
         'badge-accent': state === ProjectState.IN_PROGRESS,
+        'badge-warning': state === ProjectState.BACKLOG,
+        'badge-success': state === ProjectState.COMPLETED,
       })}
     >
       {state}
