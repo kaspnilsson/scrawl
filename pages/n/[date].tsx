@@ -1,5 +1,5 @@
 import { withPageAuth } from '@supabase/auth-helpers-nextjs'
-import moment from 'moment'
+import moment from '../../lib/moment'
 import NoteView from '../../components/NoteView'
 
 export const getServerSideProps = withPageAuth({

@@ -1,11 +1,11 @@
 import classNames from 'classnames'
 import { previousSunday, isSameDay, isPast, isToday } from 'date-fns'
-import moment, { Moment } from 'moment'
 import { routes } from '../lib/routes'
+import moment from '../lib/moment'
 import Link from './Link'
 
 interface Props {
-  selectedDate: Moment
+  selectedDate: moment.Moment
 }
 
 const CalendarWeek = ({ selectedDate }: Props) => {

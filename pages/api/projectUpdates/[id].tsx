@@ -53,7 +53,7 @@ export default withApiAuth(async function handler(
       })
 
     if (error) {
-      res.status(401).end(`Upid failed! ${JSON.stringify(error)}`)
+      res.status(401).end(`Update failed! ${JSON.stringify(error)}`)
       return
     }
 
@@ -80,6 +80,10 @@ export default withApiAuth(async function handler(
     // // TODO if (!includeContent) note.content = null
     // res.status(200).json(note)
   } else if (method === 'DELETE') {
+    const { error } = await supabaseServerClient({ req, res })
+      .from('projectUpdates')
+      .delete()
+      .match({ id: idStr, owner: user.id })
     // if (!user) {
     //   res.status(403).end('Not logged in!')
     //   return
@@ -89,6 +93,10 @@ export default withApiAuth(async function handler(
     //   res.status(403).end('You do not own this note!')
     //   return
     // }
+    if (error) {
+      res.status(401).end(`Delete failed! ${JSON.stringify(error)}`)
+      return
+    }
 
     // // Delete things referencing this note first to not violate foriegn key constraints
     // await prismaClient.notes.deleteMany({ where: { noteId: uid } })

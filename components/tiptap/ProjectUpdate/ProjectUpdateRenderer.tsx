@@ -24,17 +24,15 @@ const ProjectUpdateWrapper = ({
 
   return (
     <NodeViewWrapper>
-      <div className="px-4 py-2 sm:py-4 rounded-xl bg-base-200">
-        <div className="flex flex-wrap items-center justify-between gap-1 not-prose">
+      <div className="px-4 py-2 rounded-xl sm:py-4 bg-base-200">
+        <div className="flex flex-wrap gap-1 justify-between items-center not-prose">
           <ChooseOrCreateProject
             selectedProjectName={projectName}
             onSelectProject={handleSelectProject}
           />
           <div className="text-sm deemphasized">{noteDate}</div>
         </div>
-        {/* {projectName && noteDate && ( */}
         <NodeViewContent className="w-full details-content"></NodeViewContent>
-        {/* )} */}
       </div>
     </NodeViewWrapper>
   )

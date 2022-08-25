@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from '../lib/moment'
 import Link from 'next/link'
 import { Project } from '../interfaces/project'
 import { makeNoteKeyFromMoment } from '../lib/apiHelpers'

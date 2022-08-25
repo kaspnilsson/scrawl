@@ -36,3 +36,8 @@ export const postProject = async (name: string, project: Partial<Project>) =>
 
 export const makeNoteKeyFromMoment = (moment: Moment) =>
   moment.format('YYYY-MM-DD')
+
+export const deleteProjectUpdate = (id: string) =>
+  fetch(`/api/projectUpdates/${id}`, {
+    method: 'DELETE',
+  }).then(handleFetchErrors)

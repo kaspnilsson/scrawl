@@ -13,12 +13,12 @@ const ProjectUpdateThread = ({ updates = [] }: Props) => {
     <ol className="relative p-0 list-none sm:border-l border-normal">
       {updates.map((u) => (
         <li
-          className="px-4 py-2 mb-10 sm:ml-4 sm:px-8 sm:py-4 rounded-xl bg-base-200"
+          className="px-4 py-2 mb-10 rounded-xl sm:ml-4 sm:px-8 sm:py-4 bg-base-200"
           key={u.id}
         >
-          <div className="absolute hidden w-4 h-4 border rounded-full bg-accent -left-2 border-normal sm:flex ring-4 ring-base-100"></div>
+          <div className="hidden absolute -left-2 w-4 h-4 rounded-full ring-8 bg-accent border-normal sm:flex ring-base-100"></div>
           <Link href={routes.notesForDate(u.note_date)}>
-            <div className="flex items-center gap-1 text-sm deemphasized">
+            <div className="flex gap-1 items-center text-sm deemphasized">
               {u.note_date}
               <PencilIcon className="w-3 h-3" />
             </div>

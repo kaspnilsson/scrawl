@@ -1,6 +1,6 @@
 import { JSONContent } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
-import moment, { Moment } from 'moment'
+import moment from '../lib/moment'
 import { useCallback, useEffect, useState } from 'react'
 import { makeNoteKeyFromMoment, postNote } from '../lib/apiHelpers'
 import CalendarWeek from './CalendarWeek'
@@ -13,7 +13,7 @@ import { routes } from '../lib/routes'
 import { Note } from '../interfaces/note'
 
 interface Props {
-  date: Moment
+  date: moment.Moment
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())

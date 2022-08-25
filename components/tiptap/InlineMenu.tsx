@@ -1,7 +1,7 @@
 import { supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { Editor, findChildren } from '@tiptap/core'
 import classNames from 'classnames'
-import moment from 'moment'
+import moment from '../../lib/moment'
 import { makeNoteKeyFromMoment } from '../../lib/apiHelpers'
 import { generateRandomId } from '../../lib/randomId'
 import { resizeImage } from '../../lib/resizeImage'

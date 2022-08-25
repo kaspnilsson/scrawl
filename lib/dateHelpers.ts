@@ -1,4 +1,4 @@
-import moment from 'moment'
+import moment from './moment'
 
 /**
  * @param {date|moment} startDate The start date
