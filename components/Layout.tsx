@@ -56,11 +56,11 @@ const Layout = ({
           leave="transition ease-in-out duration-100 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
-          className="flex flex-col flex-1 h-screen border-r not-prose bg-base-200 w-fit border-base-300"
+          className="flex flex-col h-screen border-r flex-0 not-prose bg-base-200 w-fit border-base-300"
         >
           <Nav />
         </Transition>
-        <div className="w-full min-h-0 max-h-screen">
+        <div className="overflow-hidden flex-1 w-full max-w-full min-h-0 max-h-screen">
           <Header
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
             toggleRightSidebar={
@@ -70,13 +70,13 @@ const Layout = ({
             }
             headerContent={headerContent}
           />
-          <div className="overflow-auto w-full h-full">
-            <div
-              className={classNames(
-                'px-2 py-4 pb-40 mx-auto min-w-min h-full sm:p-8 xl:px-16',
-                { 'max-w-6xl': !noMaxWidth }
-              )}
-            >
+          <div
+            className={classNames(
+              'overflow-auto px-2 py-4 pb-40 mx-auto max-w-full h-full sm:p-8 xl:px-16',
+              { 'max-w-6xl': !noMaxWidth }
+            )}
+          >
+            <div className="min-w-fit">
               {loading && (
                 <div className="flex p-16 m-auto loading btn btn-ghost">
                   Loading
@@ -84,13 +84,13 @@ const Layout = ({
               )}
               {!loading && error && <ErrorView error={error as Error} />}
               {!loading && !error && children}
-              <BottomNav
-                leftSidebarEnabled={leftSidebarEnabled}
-                toggleLeftSidebar={() =>
-                  setLeftSidebarEnabled(!leftSidebarEnabled)
-                }
-              />
             </div>
+            <BottomNav
+              leftSidebarEnabled={leftSidebarEnabled}
+              toggleLeftSidebar={() =>
+                setLeftSidebarEnabled(!leftSidebarEnabled)
+              }
+            />
           </div>
         </div>
         <Transition
