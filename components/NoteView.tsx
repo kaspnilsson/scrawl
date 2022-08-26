@@ -11,6 +11,7 @@ import Datepicker from './Datepicker'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
 import { Note } from '../interfaces/note'
+import useSWR from 'swr'
 
 interface Props {
   date: moment.Moment
@@ -22,10 +23,18 @@ const NoteView = ({ date }: Props) => {
   const router = useRouter()
   const noteKey = makeNoteKeyFromMoment(date)
 
-  const [note, setNote] = useState<Note | null>(null)
+  const {
+    data: note,
+    error,
+    // mutate,
+  } = useSWR<Note>(`/api/notes/${noteKey}`, fetcher)
+  const loading = note === undefined
+  // const [note, setNote] = useState<Note | null>(null)
   const [saving, setSaving] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error>()
+  // const [contentInitialized, setContentInitialized] = useState(false)
+  // const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
+  // const [error, setError] = useState<Error>()
 
   const today = moment(startOfToday())
 
@@ -34,6 +43,7 @@ const NoteView = ({ date }: Props) => {
     debounce(async (content: JSONContent) => {
       setSaving(true)
       await postNote(noteKey, { ...note, content })
+      // await mutate()
       setSaving(false)
     }, 500),
     []
@@ -43,22 +53,22 @@ const NoteView = ({ date }: Props) => {
     debouncedPostNote(content)
   }
 
-  useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        setError(undefined)
-        setLoading(true)
-        const res = await fetcher(`/api/notes/${noteKey}`)
-        setNote(res)
-      } catch (e: unknown) {
-        setError(e as Error)
-        setNote(null)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchNote()
-  }, [noteKey])
+  // useEffect(() => {
+  //   const fetchNote = async () => {
+  //     try {
+  //       setError(undefined)
+  //       setLoading(true)
+  //       const res = await fetcher(`/api/notes/${noteKey}`)
+  //       setNote(res)
+  //     } catch (e: unknown) {
+  //       setError(e as Error)
+  //       setNote(null)
+  //     } finally {
+  //       setLoading(false)
+  //     }
+  //   }
+  //   fetchNote()
+  // }, [noteKey])
 
   return (
     <Layout
