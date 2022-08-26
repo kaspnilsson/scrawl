@@ -49,7 +49,7 @@ export default withApiAuth(async function handler(
         ...JSON.parse(body),
         id: idStr,
         owner: user.id,
-        upidd_at: new Date(),
+        updated_at: new Date(),
       })
 
     if (error) {

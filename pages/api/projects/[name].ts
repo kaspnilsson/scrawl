@@ -48,7 +48,7 @@ export default withApiAuth(async function handler(
         .select('*')
         .eq('project_name', nameStr)
         .eq('owner', user.id)
-        .order('updated_at', { ascending: false })
+        .order('created_at', { ascending: false })
 
       if (error) {
         res
