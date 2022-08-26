@@ -77,6 +77,7 @@ const ProjectsIndex = () => {
       state: card.sectionId as ProjectState,
     })
     mutate()
+    setInitialProjectState({})
   }
 
   const handleAddCard = async (sectionId: string) => {
@@ -87,12 +88,12 @@ const ProjectsIndex = () => {
   return (
     <Layout loading={data === undefined} error={error} noMaxWidth={true}>
       <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
-        <div className="flex flex-wrap gap-4 justify-between items-center mx-auto mb-4">
-          <h1 className="flex gap-2 items-center pr-8 font-heading">
+        <div className="flex flex-wrap items-center justify-between gap-4 mx-auto mb-4">
+          <h1 className="flex items-center gap-2 pr-8 font-heading">
             Projects
           </h1>
           <button
-            className="flex gap-2 items-center btn btn-outline btn-sm sm:btn-md"
+            className="flex items-center gap-2 btn btn-outline btn-sm sm:btn-md"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />

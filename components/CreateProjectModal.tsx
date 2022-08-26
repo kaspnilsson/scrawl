@@ -120,7 +120,7 @@ const CreateProjectModal = ({
           <div className="w-full form-control">
             <SimpleEditorComponent
               onUpdate={setDescription}
-              content={null}
+              content={initialProjectState?.description || null}
               className=""
               placeholder="Add project description (optional)"
             />
