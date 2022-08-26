@@ -1,7 +1,7 @@
 import { JSONContent } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
 import moment from '../lib/moment'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { makeNoteKeyFromMoment, postNote } from '../lib/apiHelpers'
 import CalendarWeek from './CalendarWeek'
 import Editor from './Editor'
@@ -11,6 +11,7 @@ import Datepicker from './Datepicker'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
 import { Note } from '../interfaces/note'
+import useSWR from 'swr'
 
 interface Props {
   date: moment.Moment
@@ -22,10 +23,13 @@ const NoteView = ({ date }: Props) => {
   const router = useRouter()
   const noteKey = makeNoteKeyFromMoment(date)
 
-  const [note, setNote] = useState<Note | null>(null)
+  const {
+    data: note,
+    error,
+    // mutate,
+  } = useSWR<Note>(`/api/notes/${noteKey}`, fetcher)
+  const loading = note === undefined
   const [saving, setSaving] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<Error>()
 
   const today = moment(startOfToday())
 
@@ -34,6 +38,7 @@ const NoteView = ({ date }: Props) => {
     debounce(async (content: JSONContent) => {
       setSaving(true)
       await postNote(noteKey, { ...note, content })
+      // await mutate()
       setSaving(false)
     }, 500),
     []
@@ -43,23 +48,6 @@ const NoteView = ({ date }: Props) => {
     debouncedPostNote(content)
   }
 
-  useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        setError(undefined)
-        setLoading(true)
-        const res = await fetcher(`/api/notes/${noteKey}`)
-        setNote(res)
-      } catch (e: unknown) {
-        setError(e as Error)
-        setNote(null)
-      } finally {
-        setLoading(false)
-      }
-    }
-    fetchNote()
-  }, [noteKey])
-
   return (
     <Layout
       headerContent={<CalendarWeek selectedDate={date} />}
@@ -67,18 +55,18 @@ const NoteView = ({ date }: Props) => {
       error={error}
     >
       {!loading && !error && (
-        <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading min-w-fit">
+        <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading min-w-[300px]">
           <div>
             <div className="flex items-center text-sm font-semibold uppercase">
               {date.format('dddd')}
               {date.isSame(today) && (
                 <>
-                  <div className="w-2 mx-1">-</div>
+                  <div className="mx-1 w-2">-</div>
                   <span className="">today</span>
                 </>
               )}
             </div>
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
+            <h1 className="flex flex-wrap gap-3 items-center font-heading">
               {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
@@ -93,7 +81,7 @@ const NoteView = ({ date }: Props) => {
               )}
             </h1>
           </div>
-          <div className="flex items-center w-full mt-4">
+          <div className="flex items-center mt-4 w-full">
             <Editor
               className="w-full min-h-[400px]"
               content={note?.content}
