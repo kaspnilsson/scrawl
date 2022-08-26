@@ -70,7 +70,7 @@ const Layout = ({
             }
             headerContent={headerContent}
           />
-          <div className="overflow-auto">
+          <div className="h-full overflow-auto">
             <div
               className={classNames(
                 'px-2 py-4 pb-40 mx-auto max-w-full sm:p-8 xl:px-16 min-w-fit',
