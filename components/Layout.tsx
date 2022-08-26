@@ -60,7 +60,7 @@ const Layout = ({
         >
           <Nav />
         </Transition>
-        <div className="flex-1 w-full max-w-full max-h-screen min-h-0 overflow-hidden">
+        <div className="flex overflow-hidden flex-col flex-1 w-full max-w-full min-h-0 max-h-screen">
           <Header
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
             toggleRightSidebar={
@@ -70,10 +70,10 @@ const Layout = ({
             }
             headerContent={headerContent}
           />
-          <div className="h-full overflow-auto">
+          <div className="overflow-auto h-full">
             <div
               className={classNames(
-                'px-2 py-4 pb-40 mx-auto max-w-full sm:p-8 xl:px-16 min-w-fit',
+                'px-2 py-4 mx-auto mb-40 max-w-full sm:p-8 xl:px-16 min-w-fit',
                 { 'max-w-6xl': !noMaxWidth }
               )}
             >

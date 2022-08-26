@@ -1,7 +1,7 @@
 import { JSONContent } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
 import moment from '../lib/moment'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { makeNoteKeyFromMoment, postNote } from '../lib/apiHelpers'
 import CalendarWeek from './CalendarWeek'
 import Editor from './Editor'
@@ -29,12 +29,7 @@ const NoteView = ({ date }: Props) => {
     // mutate,
   } = useSWR<Note>(`/api/notes/${noteKey}`, fetcher)
   const loading = note === undefined
-  // const [note, setNote] = useState<Note | null>(null)
   const [saving, setSaving] = useState(false)
-  // const [contentInitialized, setContentInitialized] = useState(false)
-  // const [loading, setLoading] = useState(true)
-  // const [loading, setLoading] = useState(true)
-  // const [error, setError] = useState<Error>()
 
   const today = moment(startOfToday())
 
@@ -53,23 +48,6 @@ const NoteView = ({ date }: Props) => {
     debouncedPostNote(content)
   }
 
-  // useEffect(() => {
-  //   const fetchNote = async () => {
-  //     try {
-  //       setError(undefined)
-  //       setLoading(true)
-  //       const res = await fetcher(`/api/notes/${noteKey}`)
-  //       setNote(res)
-  //     } catch (e: unknown) {
-  //       setError(e as Error)
-  //       setNote(null)
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
-  //   fetchNote()
-  // }, [noteKey])
-
   return (
     <Layout
       headerContent={<CalendarWeek selectedDate={date} />}
@@ -83,12 +61,12 @@ const NoteView = ({ date }: Props) => {
               {date.format('dddd')}
               {date.isSame(today) && (
                 <>
-                  <div className="w-2 mx-1">-</div>
+                  <div className="mx-1 w-2">-</div>
                   <span className="">today</span>
                 </>
               )}
             </div>
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
+            <h1 className="flex flex-wrap gap-3 items-center font-heading">
               {date.format('MMM D, YYYY')}
               <Datepicker
                 selectedDate={date.toDate()}
@@ -103,7 +81,7 @@ const NoteView = ({ date }: Props) => {
               )}
             </h1>
           </div>
-          <div className="flex items-center w-full mt-4">
+          <div className="flex items-center mt-4 w-full">
             <Editor
               className="w-full min-h-[400px]"
               content={note?.content}
