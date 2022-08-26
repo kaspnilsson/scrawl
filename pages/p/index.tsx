@@ -1,6 +1,6 @@
 import { PlusIcon } from '@heroicons/react/outline'
 import { getUser, withPageAuth } from '@supabase/auth-helpers-nextjs'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import Layout from '../../components/Layout'
 import { Project, ProjectState } from '../../interfaces/project'
@@ -46,6 +46,7 @@ const SECTIONS: BoardSection[] = [
 
 const ProjectsIndex = () => {
   const [showDialog, setShowDialog] = useState(false)
+  const [cards, setCards] = useState<BoardCard<Project>[]>([])
   const [initialProjectState, setInitialProjectState] = useState<
     Partial<Project>
   >({})
@@ -57,14 +58,18 @@ const ProjectsIndex = () => {
 
   const { data, error, mutate } = useSWR<Project[]>('/api/projects', fetcher)
 
-  const cards = (data || []).map((p) => ({
-    title: p.name,
-    href: routes.project(p.name),
-    sectionId: p.state,
-    id: p.name,
-    data: p,
-    sortBy: new Date(p.updated_at).getTime(),
-  }))
+  useEffect(() => {
+    setCards(
+      (data || []).map((p) => ({
+        title: p.name,
+        href: routes.project(p.name),
+        sectionId: p.state,
+        id: p.name,
+        data: p,
+        sortBy: new Date(p.updated_at).getTime(),
+      }))
+    )
+  }, [data, mutate])
 
   const handleCardUpdate = async (card: BoardCard<Project>) => {
     await postProject(card.id, {
@@ -82,12 +87,12 @@ const ProjectsIndex = () => {
   return (
     <Layout loading={data === undefined} error={error} noMaxWidth={true}>
       <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
-        <div className="flex flex-wrap items-center justify-between gap-4 mx-auto mb-4">
-          <h1 className="flex items-center gap-2 pr-8 font-heading">
+        <div className="flex flex-wrap gap-4 justify-between items-center mx-auto mb-4">
+          <h1 className="flex gap-2 items-center pr-8 font-heading">
             Projects
           </h1>
           <button
-            className="flex items-center gap-2 btn btn-outline btn-sm sm:btn-md"
+            className="flex gap-2 items-center btn btn-outline btn-sm sm:btn-md"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />

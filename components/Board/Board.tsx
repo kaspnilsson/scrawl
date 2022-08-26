@@ -1,5 +1,5 @@
 import { PlusIcon } from '@heroicons/react/outline'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import {
   DragDropContext,
   Draggable,
@@ -29,7 +29,7 @@ const KanbanBoard = <T extends object>({
   onChange,
   handleAdd,
 }: Props<T>) => {
-  const [localCards, setLocalCards] = useState(cards)
+  const [localCards, setLocalCards] = useState<BoardCard<T>[]>([])
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return
     const { source, destination } = result
@@ -46,6 +46,10 @@ const KanbanBoard = <T extends object>({
       ])
     }
   }
+
+  useEffect(() => {
+    setLocalCards(cards)
+  }, [cards])
 
   const cardsBySection: { [sectionId: string]: BoardCard<T>[] } = {}
   const cardsById: { [cardId: string]: BoardCard<T> } = {}
