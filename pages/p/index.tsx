@@ -93,7 +93,7 @@ const ProjectsIndex = () => {
             Projects
           </h1>
           <button
-            className="flex items-center gap-2 btn btn-outline btn-sm sm:btn-md"
+            className="flex items-center gap-2 normal-case !border btn btn-accent btn-sm"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />
