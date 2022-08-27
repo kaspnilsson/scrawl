@@ -31,17 +31,6 @@ input[type='checkbox'] {
   border-color: hsla(var(--bc) / 0.2);
   box-shadow: none;
 }
-/* 
-.badge-accent,
-.btn-accent:not(.fake-checkbox) {
-  background: hsla(var(--a) / 0.2);
-  border-color: transparent;
-}
-
-.btn-accent:hover {
-  background: hsla(var(--af) / 0.3);
-  border-color: transparent;
-} */
 
 .hover {
   @apply transition-all;
@@ -50,16 +39,6 @@ input[type='checkbox'] {
 .deemphasized {
   color: hsla(var(--nc) / 0.6);
 }
-
-.border-normal {
-  border-color: hsla(var(--b3) / 1);
-}
-
-/* .textarea-bordered:focus-within,
-.textarea-ghost:focus-within {
-  outline: 2px solid hsla(var(--bc) / 0.2);
-  outline-offset: 2px;
-} */
 
 :root {
   color-scheme: light dark;

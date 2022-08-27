@@ -25,7 +25,7 @@ const BottomNav = ({ toggleLeftSidebar }: Props) => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-3 gap-2 px-1 border-t btm-nav sm:hidden border-normal btm-nav-sm">
+    <div className="grid grid-cols-3 gap-2 px-1 border-t btm-nav sm:hidden border-neutral btm-nav-sm">
       <button
         className="flex-1 min-w-0 btn btn-sm btn-ghost"
         onClick={toggleLeftSidebar}

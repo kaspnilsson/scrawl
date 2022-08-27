@@ -18,8 +18,8 @@ const Header = ({
   toggleRightSidebar,
   headerContent,
 }: Props) => (
-  <div className="flex sticky top-0 z-10 items-center px-3 py-1 w-full h-12 bg-opacity-50 border-b backdrop-blur-md bg-base-100 border-normal">
-    <div className="flex justify-between items-center w-full">
+  <div className="sticky top-0 z-10 flex items-center w-full h-12 px-3 py-1 bg-opacity-50 border-b backdrop-blur-md bg-base-100 border-neutral">
+    <div className="flex items-center justify-between w-full">
       <button
         className="hidden btn-square btn btn-sm btn-ghost sm:flex"
         onClick={toggleLeftSidebar}
@@ -27,7 +27,7 @@ const Header = ({
         <MenuAlt2Icon className="w-6 h-6" />
       </button>
       <div className="flex-1">{headerContent}</div>
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <button
           className={classNames('hidden btn-square btn btn-sm btn-ghost')}
         >
