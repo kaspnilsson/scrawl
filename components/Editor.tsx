@@ -43,6 +43,9 @@ const EditorComponent = ({
   projectName = '',
   noteDate = '',
 }: Props) => {
+  const handleUpdate = ({ editor }: { editor: Editor }) => {
+    onUpdate(editor.getJSON())
+  }
   const { user } = useUserContext()
   const editor = useEditor(
     {
@@ -91,16 +94,14 @@ const EditorComponent = ({
         AutoId,
       ],
       content,
-      onUpdate: ({ editor }) => {
-        onUpdate(editor.getJSON())
-      },
+      onUpdate: handleUpdate,
       editorProps: {
         attributes: {
           class: 'focus:outline-none',
         },
       },
-      onFocus,
-      onBlur,
+      onFocus: onFocus || handleUpdate,
+      onBlur: onBlur || handleUpdate,
     },
     [content, user]
   )

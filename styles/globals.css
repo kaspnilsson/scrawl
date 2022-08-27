@@ -31,7 +31,7 @@ input[type='checkbox'] {
   border-color: hsla(var(--bc) / 0.2);
   box-shadow: none;
 }
-
+/* 
 .badge-accent,
 .btn-accent:not(.fake-checkbox) {
   background: hsla(var(--a) / 0.2);
@@ -41,7 +41,7 @@ input[type='checkbox'] {
 .btn-accent:hover {
   background: hsla(var(--af) / 0.3);
   border-color: transparent;
-}
+} */
 
 .hover {
   @apply transition-all;
