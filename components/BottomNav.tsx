@@ -1,4 +1,4 @@
-import { SunIcon, BriefcaseIcon, MenuAlt2Icon } from '@heroicons/react/outline'
+import { SunIcon, BriefcaseIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'

@@ -48,7 +48,7 @@ export default withApiAuth(async function handler(
         .select('*')
         .eq('project_name', nameStr)
         .eq('owner', user.id)
-        .order('created_at', { ascending: false })
+        .order('note_date', { ascending: false })
 
       if (error) {
         res
