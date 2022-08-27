@@ -5,13 +5,16 @@ import { routes } from '../lib/routes'
 import Link from './Link'
 
 const LINKS = [
-  { icon: <SunIcon className="w-5 h-5" />, route: routes.today },
+  {
+    icon: <SunIcon className="w-5 h-5 prose prose-stone" />,
+    route: routes.today,
+  },
   // {
-  //   icon: <CalendarIcon className="w-5 h-5" />,
+  //   icon: <CalendarIcon className="w-5 h-5 prose prose-stone" />,
   //   route: routes.calendar,
   // },
   {
-    icon: <BriefcaseIcon className="w-5 h-5" />,
+    icon: <BriefcaseIcon className="w-5 h-5 prose prose-stone" />,
     route: routes.projects,
   },
 ]
@@ -21,7 +24,7 @@ interface Props {
   toggleLeftSidebar: () => void
 }
 
-const BottomNav = ({ toggleLeftSidebar }: Props) => {
+const BottomNav = ({ toggleLeftSidebar, leftSidebarEnabled }: Props) => {
   const router = useRouter()
 
   return (
@@ -30,14 +33,21 @@ const BottomNav = ({ toggleLeftSidebar }: Props) => {
         className="flex-1 min-w-0 btn btn-sm btn-ghost"
         onClick={toggleLeftSidebar}
       >
-        <MenuAlt2Icon className="w-5 h-5" />
+        {leftSidebarEnabled ? (
+          <i className="font-thin ri-lg ri-side-bar-fill" />
+        ) : (
+          <i className="font-thin ri-lg ri-side-bar-line" />
+        )}
       </button>
       {LINKS.map(({ icon, route }, index) => (
         <Link key={index} href={route} className="flex-1 min-w-0">
           <button
-            className={classNames('btn btn-sm btn-ghost w-full', {
-              'btn-active': router.pathname === route,
-            })}
+            className={classNames(
+              'btn btn-sm btn-ghost w-full prose prose-stone',
+              {
+                'btn-active': router.pathname === route,
+              }
+            )}
           >
             {icon}
           </button>

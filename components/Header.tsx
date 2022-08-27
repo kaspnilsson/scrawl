@@ -1,21 +1,20 @@
-import {
-  MenuAlt3Icon,
-  MenuAlt2Icon,
-  QuestionMarkCircleIcon,
-} from '@heroicons/react/outline'
-// import { useUser } from '@supabase/auth-helpers-react'
+import { QuestionMarkCircleIcon } from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { ReactNode } from 'react'
 
 interface Props {
   toggleLeftSidebar: () => void
+  leftSidebarEnabled?: boolean
   toggleRightSidebar?: () => void
+  rightSidebarEnabled?: boolean
   headerContent?: ReactNode
 }
 
 const Header = ({
   toggleLeftSidebar,
   toggleRightSidebar,
+  leftSidebarEnabled,
+  rightSidebarEnabled,
   headerContent,
 }: Props) => (
   <div className="sticky top-0 z-10 flex items-center w-full h-12 px-3 py-1 bg-opacity-50 border-b backdrop-blur-md bg-base-100 border-neutral">
@@ -24,7 +23,11 @@ const Header = ({
         className="hidden btn-square btn btn-sm btn-ghost sm:flex"
         onClick={toggleLeftSidebar}
       >
-        <MenuAlt2Icon className="w-6 h-6" />
+        {leftSidebarEnabled ? (
+          <i className="font-thin ri-lg ri-side-bar-fill" />
+        ) : (
+          <i className="font-thin ri-lg ri-side-bar-line" />
+        )}
       </button>
       <div className="flex-1">{headerContent}</div>
       <div className="flex items-center justify-between">
@@ -38,7 +41,11 @@ const Header = ({
             className="btn-square btn btn-sm btn-ghost"
             onClick={toggleRightSidebar}
           >
-            <MenuAlt3Icon className="w-6 h-6" />
+            {rightSidebarEnabled ? (
+              <i className="font-thin rotate-180 ri-lg ri-side-bar-fill" />
+            ) : (
+              <i className="font-thin rotate-180 ri-lg ri-side-bar-line" />
+            )}
           </button>
         )}
       </div>

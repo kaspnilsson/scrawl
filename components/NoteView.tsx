@@ -57,7 +57,7 @@ const NoteView = ({ date }: Props) => {
       {!loading && !error && (
         <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading min-w-[300px]">
           <div>
-            <div className="flex items-center gap-2 text-sm font-semibold uppercase">
+            <div className="flex items-center gap-2 text-sm font-semibold uppercase mb-0.5">
               {date.format('dddd')}
               {date.isSame(today, 'date') && (
                 <span className="badge-accent badge">today</span>

@@ -47,7 +47,7 @@ const Layout = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="flex w-full min-h-screen overflow-hidden max-w-[100vw]">
+      <div className="flex w-full min-h-screen overflow-hidden max-w-[100vw] prose-stone prose">
         <Transition
           show={isHydrated && leftSidebarEnabled}
           enter="transition ease-in-out duration-100 transform"
@@ -68,6 +68,8 @@ const Layout = ({
                 ? () => setRightSidebarEnabled(!rightSidebarEnabled)
                 : undefined
             }
+            leftSidebarEnabled={leftSidebarEnabled}
+            rightSidebarEnabled={rightSidebarEnabled}
             headerContent={headerContent}
           />
           <div className="flex h-full overflow-auto">
