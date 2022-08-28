@@ -75,7 +75,7 @@ const Layout = ({
           <div className="flex h-full overflow-auto">
             <div
               className={classNames(
-                'flex-1 px-2 py-4 mx-auto mb-40 max-w-full sm:p-8 xl:px-16 min-w-fit h-fit',
+                'flex-1 px-2 py-4 mx-auto mb-36 max-w-full sm:p-8 xl:px-16 min-w-fit h-fit',
                 { 'max-w-6xl': !noMaxWidth }
               )}
             >
