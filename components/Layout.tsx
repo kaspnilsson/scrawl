@@ -47,7 +47,7 @@ const Layout = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="flex w-full min-h-screen overflow-hidden max-w-[100vw] prose-stone prose">
+      <div className="flex w-full overflow-hidden max-w-[100vw] prose-stone prose">
         <Transition
           show={isHydrated && leftSidebarEnabled}
           enter="transition ease-in-out duration-100 transform"
@@ -75,7 +75,7 @@ const Layout = ({
           <div className="flex h-full overflow-auto">
             <div
               className={classNames(
-                'flex-1 px-2 py-4 mx-auto mb-40 max-w-full sm:p-8 xl:px-16 min-w-fit',
+                'flex-1 px-2 py-4 mx-auto mb-40 max-w-full sm:p-8 xl:px-16 min-w-fit h-fit',
                 { 'max-w-6xl': !noMaxWidth }
               )}
             >
