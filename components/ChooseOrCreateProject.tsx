@@ -50,7 +50,7 @@ const ChooseOrCreateProject = ({
         <label
           tabIndex={0}
           className={classNames(
-            'flex gap-2 items-center max-w-full normal-case btn btn-sm',
+            'flex gap-2 items-center max-w-full btn btn-sm',
             {
               loading: dataLoading,
             }
@@ -67,7 +67,7 @@ const ChooseOrCreateProject = ({
         </label>
         <ul
           tabIndex={0}
-          className="overflow-auto p-2 w-64 max-h-96 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
+          className="w-64 p-2 overflow-auto shadow max-h-96 dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
         >
           {(data || [])
             .filter((p) => p.state !== ProjectState.ARCHIVED)
@@ -89,7 +89,7 @@ const ChooseOrCreateProject = ({
           <li>
             <button
               onClick={() => setShowDialog(true)}
-              className="flex gap-2 items-center btn-accent text-accent-content"
+              className="flex items-center gap-2 btn-accent text-accent-content"
             >
               <PlusIcon className="w-4 h-4" />
               New project

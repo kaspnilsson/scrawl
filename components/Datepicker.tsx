@@ -46,7 +46,7 @@ const DatepickerStyles = () => (
         display: block;
         height: 9px;
         position: absolute;
-        top: 6px;
+        top: 21px;
         width: 9px;
       }
       .react-datepicker-popper[data-placement^='top']
@@ -227,7 +227,6 @@ const DatepickerStyles = () => (
       .react-datepicker-year-header {
         margin-top: 0;
         color: hsl(var(--bc));
-        font-weight: bold;
         font-size: 0.944rem;
       }
 
@@ -354,6 +353,7 @@ const DatepickerStyles = () => (
       }
 
       .react-datepicker__day-names {
+        font-size: 0.7rem;
         margin-top: 8px;
         margin-bottom: -8px;
       }
@@ -416,7 +416,6 @@ const DatepickerStyles = () => (
       .react-datepicker__month-text--today,
       .react-datepicker__quarter-text--today,
       .react-datepicker__year-text--today {
-        font-weight: bold;
       }
       .react-datepicker__day--highlighted,
       .react-datepicker__month-text--highlighted,
@@ -691,7 +690,6 @@ const DatepickerStyles = () => (
         border-top: 1px solid hsl(var(--n));
         cursor: pointer;
         text-align: center;
-        font-weight: bold;
         padding: 12px 0;
         clear: left;
       }

@@ -1,7 +1,7 @@
 import { JSONContent } from '@tiptap/core'
 import { startOfToday } from 'date-fns'
 import moment from '../lib/moment'
-import { useCallback, useState } from 'react'
+import { useCallback } from 'react'
 import { makeNoteKeyFromMoment, postNote } from '../lib/apiHelpers'
 import CalendarWeek from './CalendarWeek'
 import Editor from './Editor'
@@ -29,17 +29,14 @@ const NoteView = ({ date }: Props) => {
     // mutate,
   } = useSWR<Note>(`/api/notes/${noteKey}`, fetcher)
   const loading = note === undefined
-  const [saving, setSaving] = useState(false)
 
   const today = moment(startOfToday())
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedPostNote = useCallback(
     debounce(async (content: JSONContent) => {
-      setSaving(true)
       await postNote(noteKey, { ...note, content })
       // await mutate()
-      setSaving(false)
     }, 500),
     []
   )
@@ -55,7 +52,7 @@ const NoteView = ({ date }: Props) => {
       error={error}
     >
       {!loading && !error && (
-        <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading min-w-[300px]">
+        <div className="m-auto prose prose-stone prose-headings:m-0 min-w-[300px]">
           <div>
             <div className="flex items-center gap-2 text-sm font-semibold uppercase mb-0.5">
               {date.format('dddd')}
@@ -63,20 +60,15 @@ const NoteView = ({ date }: Props) => {
                 <span className="badge-accent badge">today</span>
               )}
             </div>
-            <h1 className="flex flex-wrap items-center gap-3 font-heading">
-              {date.format('MMM D, YYYY')}
+            <div className="flex flex-wrap items-center gap-3">
+              <h1 className="font-heading">{date.format('MMM D, YYYY')}</h1>
               <Datepicker
                 selectedDate={date.toDate()}
                 onDateSelect={(date) =>
                   router.push(routes.notesForMoment(moment(date)))
                 }
               />
-              {saving && (
-                <button className="hidden min-h-0 opacity-50 btn loading btn-ghost no-animation text-neutral-content h-fit">
-                  Saving...
-                </button>
-              )}
-            </h1>
+            </div>
           </div>
           <div className="flex items-center w-full mt-4">
             <Editor

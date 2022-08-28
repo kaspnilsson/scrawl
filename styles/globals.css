@@ -40,6 +40,14 @@ input[type='checkbox'] {
   color: hsla(var(--nc) / 0.6);
 }
 
+.btn {
+  @apply normal-case;
+}
+
 :root {
   color-scheme: light dark;
+}
+
+.react-datepicker__day {
+  @apply font-heading;
 }
