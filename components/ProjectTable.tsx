@@ -10,8 +10,8 @@ interface Props {
 }
 
 const ProjectTable = ({ data }: Props) => (
-  <div className="flex items-center mt-4 w-full not-prose">
-    <div className="overflow-hidden w-full md:rounded-lg">
+  <div className="flex items-center w-full mt-4 not-prose">
+    <div className="w-full overflow-hidden md:rounded-lg md:border border-neutral">
       <table
         className="table min-w-full text-sm border-separate"
         style={{ borderSpacing: 0 }}

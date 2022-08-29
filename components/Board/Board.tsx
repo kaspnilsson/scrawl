@@ -61,13 +61,13 @@ const KanbanBoard = <T extends object>({
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <div className="flex gap-1 items-start min-w-0 w-fit">
+      <div className="flex items-start min-w-0 gap-1 w-fit">
         {sections.map((section) => (
           <Droppable key={section.id} droppableId={section.id}>
             {(provided) => (
               <div
                 {...provided.droppableProps}
-                className="flex flex-col gap-2 p-4 w-64 max-w-xs h-full rounded-lg bg-base-200"
+                className="flex flex-col w-64 h-full max-w-xs gap-2 p-4 border rounded-lg bg-base-200 border-neutral"
                 ref={provided.innerRef}
               >
                 {isString(section.title) ? (
@@ -79,7 +79,7 @@ const KanbanBoard = <T extends object>({
                 )}
 
                 {(cardsBySection[section.id] || [])
-                  .sort((a, b) => (b.sortBy || 0) - (a.sortBy || 0))
+                  .sort((a, b) => (a.sortBy || 0) - (b.sortBy || 0))
                   .map((card, index) => (
                     <Draggable
                       key={card.id}
@@ -106,7 +106,7 @@ const KanbanBoard = <T extends object>({
                   <>
                     <button
                       onClick={() => handleAdd(section.id)}
-                      className="flex gap-2 items-center w-full btn btn-sm btn-ghost"
+                      className="flex items-center w-full gap-2 btn btn-sm btn-ghost"
                     >
                       <PlusIcon className="w-4 h-4" />
                       New

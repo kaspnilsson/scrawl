@@ -6,7 +6,7 @@ export interface BoardCard<T> {
   id: string
   sectionId: string // enum
   data?: T
-  sortBy?: number // bigger => higher
+  sortBy?: number // bigger => lower
 }
 
 const Card = <T extends object>({ title, href }: BoardCard<T>) => (
