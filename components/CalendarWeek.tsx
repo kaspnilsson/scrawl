@@ -26,7 +26,7 @@ const CalendarWeek = ({ selectedDate }: Props) => {
   }
 
   return (
-    <div className="flex flex-1 gap-1 m-auto antialiased prose">
+    <div className="flex items-center flex-1 gap-1 m-auto antialiased prose">
       {buttons.map((b, index) => (
         <Link
           href={routes.notesForMoment(b.moment)}
@@ -38,7 +38,8 @@ const CalendarWeek = ({ selectedDate }: Props) => {
               'btn not-prose flex flex-col min-w-fit sm:btn-block h-fit min-h-0 py-1 px-1 sm:px-4 w-full',
               {
                 'btn-ghost': !b.isSelected,
-                'btn-accent': b.isSelected,
+                'btn-accent bg-accent/40 hover:bg-accent border-0':
+                  b.isSelected,
                 'opacity-50': b.isInPast && !b.isSelected,
               }
             )}
