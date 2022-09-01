@@ -79,46 +79,34 @@ export default withApiAuth(async function handler(
       })
 
     if (error) {
-      res.status(401).end(`Upname failed! ${JSON.stringify(error)}`)
+      res.status(401).end(`Post failed! ${JSON.stringify(error)}`)
       return
     }
 
     res.status(200).json(data[0])
   } else if (method === 'PUT') {
-    // if (!user) {
-    //   res.status(403).end('Not logged in!')
-    //   return
-    // }
-    // const data = JSON.parse(body)
-    // if (!(await userCanEditnote(uid, user.id))) {
-    //   res.status(403).end('You do not own this note!')
-    //   return
-    // }
-    // const note = await prismaClient.note.upname({
-    //   where: { uid },
-    //   data,
-    //   include: { profiles: true },
-    // })
-    // if (!note) {
-    //   res.status(401).end('Upname failed!')
-    //   return
-    // }
-    // // TODO if (!includeContent) note.content = null
-    // res.status(200).json(note)
+    // TODO
   } else if (method === 'DELETE') {
-    // if (!user) {
-    //   res.status(403).end('Not logged in!')
-    //   return
-    // }
+    if (!user) {
+      res.status(403).end('Not logged in!')
+      return
+    }
 
-    // if (!(await userCanEditnote(uid, user.id))) {
-    //   res.status(403).end('You do not own this note!')
-    //   return
-    // }
+    const { error } = await supabaseServerClient({ req, res })
+      .from<Project>('projects')
+      .update({
+        state: ProjectState.DELETED,
+      })
+      .match({
+        name: nameStr,
+        owner: user.id,
+      })
 
-    // // Delete things referencing this note first to not violate foriegn key constraints
-    // await prismaClient.projects.deleteMany({ where: { noteId: uid } })
-    // await prismaClient.note.delete({ where: { uid } })
+    if (error) {
+      res.status(401).end(`Delete failed! ${JSON.stringify(error)}`)
+      return
+    }
+
     res.status(200).end()
   } else {
     res.status(405).end(`Method ${method} Not Allowed`)

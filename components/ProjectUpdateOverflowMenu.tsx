@@ -22,7 +22,7 @@ const ProjectUpdateOverflowMenu = ({ update, attrs }: Props) => {
   const actions: Action[] = []
 
   if (!update) {
-    // attrs defined.f
+    // attrs defined.
   } else {
     // update defined.
   }
@@ -36,7 +36,7 @@ const ProjectUpdateOverflowMenu = ({ update, attrs }: Props) => {
       </button>
       <ul
         tabIndex={0}
-        className="overflow-auto p-2 w-64 max-h-96 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
+        className="w-64 p-2 overflow-auto shadow max-h-96 dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
       >
         {actions.map((a, index) => (
           <li key={index}>

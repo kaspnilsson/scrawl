@@ -16,6 +16,7 @@ export enum ProjectState {
   COMPLETED = 'Completed',
   ARCHIVED = 'Archived',
   IN_PROGRESS = 'In progress',
+  DELETED = 'Deleted',
 }
 
 export declare interface Project {
@@ -34,6 +35,7 @@ export const STATE_TO_SORT_VALUE = {
   [ProjectState.BACKLOG]: 3,
   [ProjectState.COMPLETED]: 2,
   [ProjectState.ARCHIVED]: 1,
+  [ProjectState.DELETED]: 0,
 }
 
 export const sortProjectsForSelection = (a: Project, b: Project) => {

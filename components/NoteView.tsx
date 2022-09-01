@@ -52,7 +52,7 @@ const NoteView = ({ date }: Props) => {
       error={error}
     >
       {!loading && !error && (
-        <div className="m-auto prose prose-stone prose-headings:m-0 min-w-[300px]">
+        <div className="m-auto prose prose-stone prose-headings:m-0 min-w-[300px] prose-headings:font-heading">
           <div>
             <div className="flex items-center gap-2 text-sm font-semibold uppercase mb-0.5">
               {date.format('dddd')}

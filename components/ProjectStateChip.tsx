@@ -6,16 +6,18 @@ interface Props {
   onChange?: (newState: ProjectState) => void
 }
 
-const ProjectStateChip = ({ state }: Props) => {
+const ProjectStateChip = ({ state, onChange }: Props) => {
   return (
     <div
-      className={classNames('badge badge-sm sm:badge-md ', {
+      className={classNames('badge badge-sm', {
         'badge-accent': state === ProjectState.IN_PROGRESS,
         'badge-warning': state === ProjectState.BACKLOG,
+        'badge-info': state === ProjectState.ARCHIVED,
         'badge-success': state === ProjectState.COMPLETED,
       })}
     >
       {state}
+      {onChange && <button></button>}
     </div>
   )
 }

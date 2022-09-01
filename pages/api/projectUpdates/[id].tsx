@@ -84,23 +84,12 @@ export default withApiAuth(async function handler(
       .from('projectUpdates')
       .delete()
       .match({ id: idStr, owner: user.id })
-    // if (!user) {
-    //   res.status(403).end('Not logged in!')
-    //   return
-    // }
 
-    // if (!(await userCanEditnote(uid, user.id))) {
-    //   res.status(403).end('You do not own this note!')
-    //   return
-    // }
     if (error) {
       res.status(401).end(`Delete failed! ${JSON.stringify(error)}`)
       return
     }
 
-    // // Delete things referencing this note first to not violate foriegn key constraints
-    // await prismaClient.notes.deleteMany({ where: { noteId: uid } })
-    // await prismaClient.note.delete({ where: { uid } })
     res.status(200).end()
   } else {
     res.status(405).end(`Method ${method} Not Allowed`)

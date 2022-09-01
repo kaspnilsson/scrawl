@@ -1,4 +1,4 @@
-import { Moment } from 'moment'
+import moment from './moment'
 import { Note } from '../interfaces/note'
 import { Project } from '../interfaces/project'
 
@@ -34,7 +34,12 @@ export const postProject = async (name: string, project: Partial<Project>) =>
     body: JSON.stringify(project),
   }).then(handleFetchErrors)
 
-export const makeNoteKeyFromMoment = (moment: Moment) =>
+export const deleteProject = async (name: string) =>
+  fetch(`/api/projects/${name}`, {
+    method: 'DELETE',
+  }).then(handleFetchErrors)
+
+export const makeNoteKeyFromMoment = (moment: moment.Moment) =>
   moment.format('YYYY-MM-DD')
 
 export const deleteProjectUpdate = (id: string) =>
