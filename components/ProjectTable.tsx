@@ -18,16 +18,16 @@ const ProjectTable = ({ data }: Props) => (
       >
         <thead className="text-sm bg-base-200">
           <tr>
-            <th scope="col" className="sticky top-0 z-10 text-left">
+            <th scope="col" className="sticky top-0 z-10 p-3 text-left">
               Name
             </th>
-            <th scope="col" className="font-semibold text-left">
+            <th scope="col" className="p-3 font-semibold text-left">
               Created
             </th>
-            <th scope="col" className="font-semibold text-left">
+            <th scope="col" className="p-3 font-semibold text-left">
               Updated
             </th>
-            <th scope="col" className="font-semibold text-left">
+            <th scope="col" className="p-3 font-semibold text-left">
               Status
             </th>
           </tr>
@@ -42,17 +42,17 @@ const ProjectTable = ({ data }: Props) => (
             .map((d, index) => (
               <tr className="hover" key={index}>
                 <Link passHref href={routes.project(d.name)}>
-                  <td className="whitespace-nowrap link">{d.name}</td>
+                  <td className="p-3 whitespace-nowrap link">{d.name}</td>
                 </Link>
-                <td className="whitespace-nowrap">
+                <td className="p-3 whitespace-nowrap">
                   {d.created_at
                     ? makeNoteKeyFromMoment(moment(d.created_at))
                     : 'Unknown'}
                 </td>
-                <td className="whitespace-nowrap">
+                <td className="p-3 whitespace-nowrap">
                   {d.updated_at ? moment(d.updated_at).fromNow() : 'Unknown'}
                 </td>
-                <td className="whitespace-nowrap">
+                <td className="p-3 whitespace-nowrap">
                   <ProjectStateChip state={d.state} />
                 </td>
               </tr>

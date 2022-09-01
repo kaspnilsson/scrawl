@@ -67,7 +67,7 @@ const KanbanBoard = <T extends object>({
             {(provided) => (
               <div
                 {...provided.droppableProps}
-                className="flex flex-col w-64 h-full max-w-xs gap-2 p-4 border rounded-lg bg-base-200 border-neutral"
+                className="flex flex-col w-64 h-full max-w-xs gap-2 p-3 border rounded-lg bg-base-200 border-neutral"
                 ref={provided.innerRef}
               >
                 {isString(section.title) ? (
