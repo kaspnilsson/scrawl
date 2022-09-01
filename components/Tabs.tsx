@@ -3,17 +3,22 @@ import { ReactNode } from 'react'
 import useLocalStorageState from 'use-local-storage-state'
 import { useIsHydrated } from '../contexts/isHydrated'
 
+interface Tab {
+  name: string
+  icon?: ReactNode
+}
+
 interface Props {
-  tabNames: string[]
-  defaultTab: string
+  tabs: Tab[]
+  defaultTabName: string
   tabChildren: { [key: string]: ReactNode }
   localStorageKey: string
   className?: string
 }
 
 const Tabs = ({
-  tabNames,
-  defaultTab,
+  tabs,
+  defaultTabName,
   tabChildren,
   localStorageKey,
   className = '',
@@ -21,25 +26,23 @@ const Tabs = ({
   const isHydrated = useIsHydrated()
 
   const [selected, setSelected] = useLocalStorageState(localStorageKey, {
-    defaultValue: defaultTab,
+    defaultValue: defaultTabName,
     ssr: true,
   })
 
   return (
     <div className={className}>
       <div className="mb-4 tabs">
-        {tabNames.map((name) => (
+        {tabs.map((tab) => (
           <a
-            key={name}
-            className={classNames(
-              'tab tab-bordered no-underline font-heading px-12 text-lg',
-              {
-                'tab-active': isHydrated && selected === name,
-              }
-            )}
-            onClick={() => setSelected(name)}
+            key={tab.name}
+            className={classNames('tab tab-bordered no-underline px-12', {
+              'tab-active': isHydrated && selected === tab.name,
+            })}
+            onClick={() => setSelected(tab.name)}
           >
-            {name}
+            {tab.name}
+            {tab.icon ? <div className="ml-1">{tab.icon}</div> : null}
           </a>
         ))}
       </div>

@@ -17,7 +17,7 @@ const Header = ({
   rightSidebarEnabled,
   headerContent,
 }: Props) => (
-  <div className="sticky top-0 z-10 flex items-center w-full h-12 px-3 py-1 bg-opacity-50 border-b backdrop-blur-md bg-base-100 border-neutral">
+  <div className="sticky top-0 z-10 flex items-center w-full px-3 py-1 bg-opacity-50 border-b backdrop-blur-md bg-base-100 border-neutral min-h-[3rem]">
     <div className="flex items-center justify-between w-full">
       <button
         className="hidden btn-square btn btn-sm btn-ghost sm:flex"

@@ -1,4 +1,4 @@
-import { PlusIcon } from '@heroicons/react/outline'
+import { PlusIcon, ViewBoardsIcon, TableIcon } from '@heroicons/react/solid'
 import { getUser, withPageAuth } from '@supabase/auth-helpers-nextjs'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
@@ -91,7 +91,7 @@ const ProjectsIndex = () => {
       error={error}
       noMaxWidth={true}
       headerContent={
-        <div className="flex flex-wrap items-center justify-between gap-4 pl-2">
+        <div className="flex flex-wrap items-center justify-between pl-2">
           <h3 className="flex items-center gap-2 m-0 font-heading">Projects</h3>
           <button
             className="flex items-center gap-2 btn btn-accent btn-sm"
@@ -105,7 +105,10 @@ const ProjectsIndex = () => {
     >
       <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
         <Tabs
-          tabNames={['Board', 'Table']}
+          tabs={[
+            { name: 'Board', icon: <ViewBoardsIcon className="w-5 h-5" /> },
+            { name: 'Table', icon: <TableIcon className="w-5 h-5" /> },
+          ]}
           defaultTab={'Board'}
           tabChildren={{
             Board: (
