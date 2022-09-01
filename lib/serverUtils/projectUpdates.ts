@@ -77,6 +77,9 @@ export const insertUpdatesIntoContent = (
         console.error(
           `no project update found with id ${block.attrs.id}, but referenced in content.`
         )
+        delete block.attrs
+        block.content = []
+        block.type = 'paragraph'
       }
     }
   }

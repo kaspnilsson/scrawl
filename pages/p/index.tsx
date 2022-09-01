@@ -86,20 +86,24 @@ const ProjectsIndex = () => {
   }
 
   return (
-    <Layout loading={data === undefined} error={error} noMaxWidth={true}>
-      <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
-        <div className="flex flex-wrap items-center justify-between gap-4 mx-auto mb-4">
-          <h1 className="flex items-center gap-2 pr-8 font-heading">
-            Projects
-          </h1>
+    <Layout
+      loading={data === undefined}
+      error={error}
+      noMaxWidth={true}
+      headerContent={
+        <div className="flex flex-wrap items-center justify-between gap-4 pl-2">
+          <h3 className="flex items-center gap-2 m-0 font-heading">Projects</h3>
           <button
-            className="flex items-center gap-2 !border btn btn-accent btn-sm"
+            className="flex items-center gap-2 btn btn-accent btn-sm"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />
             Create a project
           </button>
         </div>
+      }
+    >
+      <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
         <Tabs
           tabNames={['Board', 'Table']}
           defaultTab={'Board'}

@@ -43,7 +43,8 @@ module.exports = {
         dark: {
           primary: '#44403c', // TW stone 700
           secondary: '#44403c', // TW stone 700
-          accent: '#0369a1', // TW sky 700
+          accent: '#0284c7', // TW sky 600
+          'accent-focus': '#0ea5e9', // TW sky 500
           neutral: '#292524', // TW stone 800
           'base-100': '#000000', // Black
           'base-200': '#0e0d0c', // TW stone that i made up

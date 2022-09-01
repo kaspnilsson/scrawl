@@ -38,7 +38,7 @@ const CalendarWeek = ({ selectedDate }: Props) => {
               'btn not-prose flex flex-col min-w-fit sm:btn-block h-fit min-h-0 py-1 px-1 sm:px-4 w-full',
               {
                 'btn-ghost': !b.isSelected,
-                'btn-accent bg-accent/40 hover:bg-accent/80 border-0':
+                'btn-accent bg-accent/40 hover:bg-accent border-0':
                   b.isSelected,
                 'opacity-50': b.isInPast && !b.isSelected,
               }
