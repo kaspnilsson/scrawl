@@ -47,7 +47,7 @@ const Layout = ({
       <Head>
         <title>{title}</title>
       </Head>
-      <div className="flex w-full overflow-hidden max-w-[100vw] prose-stone prose">
+      <div className="flex w-full overflow-hidden max-w-[100vw] prose-stone prose max-h-[100vh]">
         <Transition
           show={isHydrated && leftSidebarEnabled}
           enter="transition ease-in-out duration-100 transform"
@@ -60,7 +60,7 @@ const Layout = ({
         >
           <Nav />
         </Transition>
-        <div className="flex-1 w-full max-w-full max-h-screen min-h-0 overflow-hidden">
+        <div className="flex-1 w-full max-w-full min-h-0 overflow-hidden">
           <Header
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
             toggleRightSidebar={
