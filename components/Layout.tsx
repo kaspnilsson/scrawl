@@ -56,7 +56,7 @@ const Layout = ({
           leave="transition ease-in-out duration-100 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
-          className="flex flex-col h-screen border-r flex-0 not-prose bg-base-200 w-fit border-neutral"
+          className="flex flex-col border-r flex-0 not-prose bg-base-200 w-fit border-neutral"
         >
           <Nav />
         </Transition>
