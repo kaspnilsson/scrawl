@@ -109,7 +109,7 @@ const ProjectsIndex = () => {
             { name: 'Board', icon: <ViewBoardsIcon className="w-5 h-5" /> },
             { name: 'Table', icon: <TableIcon className="w-5 h-5" /> },
           ]}
-          defaultTab={'Board'}
+          defaultTabName={'Board'}
           tabChildren={{
             Board: (
               <KanbanBoard
