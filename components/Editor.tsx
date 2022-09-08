@@ -3,7 +3,6 @@ import { Editor } from '@tiptap/core'
 import { Transaction } from 'prosemirror-state'
 import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
-import TaskList from '@tiptap/extension-task-list'
 import Image from '@tiptap/extension-image'
 import { SlashCommands } from './tiptap/SlashCommands'
 import { slashCommands, SlashCommandsList } from './tiptap/InlineMenu'
@@ -11,6 +10,7 @@ import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
 import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
 import AutoId from './tiptap/AutoId'
+import { TaskList } from './tiptap/TaskList'
 
 interface Props {
   content?: JSONContent
@@ -77,7 +77,7 @@ const EditorComponent = ({
           placeholder: 'Capture notes or log project updates.',
         }),
         TaskItem.configure({
-          nested: true,
+          // nested: true,
           // HTMLAttributes: { class: 'checkbox' },
         }),
         TaskList,

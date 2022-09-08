@@ -1,6 +1,8 @@
 import { mergeAttributes, Node, wrappingInputRule } from '@tiptap/core'
 import { Node as ProseMirrorNode } from 'prosemirror-model'
 
+export const TASK_ITEM_TYPE = 'taskItem'
+
 export interface TaskItemOptions {
   onReadOnlyChecked?: (node: ProseMirrorNode, checked: boolean) => boolean
   nested: boolean
@@ -10,7 +12,7 @@ export interface TaskItemOptions {
 export const inputRegex = /^\s*(\[([( |x])?\])\s$/
 
 export const TaskItem = Node.create<TaskItemOptions>({
-  name: 'taskItem',
+  name: TASK_ITEM_TYPE,
 
   addOptions() {
     return {
@@ -35,6 +37,9 @@ export const TaskItem = Node.create<TaskItemOptions>({
           'data-checked': attributes.checked,
         }),
       },
+      projectName: { default: '' },
+      noteDate: { default: '' },
+      id: { default: '' },
     }
   },
 

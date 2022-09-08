@@ -44,6 +44,7 @@ const NoteView = ({ date }: Props) => {
   const handleUpdate = (content: JSONContent) => {
     debouncedPostNote(content)
   }
+  console.log(note)
 
   return (
     <Layout
@@ -60,7 +61,7 @@ const NoteView = ({ date }: Props) => {
                 <span className="badge-accent badge">today</span>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
               <h1 className="font-heading">{date.format('MMM D, YYYY')}</h1>
               <Datepicker
                 selectedDate={date.toDate()}
@@ -70,7 +71,7 @@ const NoteView = ({ date }: Props) => {
               />
             </div>
           </div>
-          <div className="flex items-center w-full mt-4">
+          <div className="flex items-center mt-4 w-full">
             <Editor
               className="w-full min-h-[400px]"
               content={note?.content}

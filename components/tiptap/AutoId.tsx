@@ -5,7 +5,7 @@ import { generateRandomId } from '../../lib/randomId'
 /**
  * Types that should have an ID in them
  */
-export const types = new Set(['heading', 'projectUpdate'])
+export const types = new Set(['heading', 'projectUpdate', 'taskItem'])
 
 /**
  * Adds a unique ID to each type in [types]

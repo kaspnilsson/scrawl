@@ -67,15 +67,18 @@ export default withApiAuth(async function handler(
       return
     }
 
+    const proj = JSON.parse(body) as Partial<Project>
+    delete proj.updates
+
     const { data, error } = await supabaseServerClient({ req, res })
       .from<Project>('projects')
       .upsert({
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
         state: ProjectState.BACKLOG,
-        ...JSON.parse(body),
+        ...proj,
         name: nameStr,
         owner: user.id,
-        updated_at: new Date(),
+        updated_at: new Date().toISOString(),
       })
 
     if (error) {
