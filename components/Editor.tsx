@@ -10,7 +10,7 @@ import { useUserContext } from '../contexts/userProfile'
 import { TaskItem } from './tiptap/TaskItem'
 import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
 import AutoId from './tiptap/AutoId'
-import { TaskList } from './tiptap/TaskList'
+import TaskList from '@tiptap/extension-task-list'
 
 interface Props {
   content?: JSONContent

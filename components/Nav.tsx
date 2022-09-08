@@ -1,4 +1,9 @@
-import { SunIcon, BriefcaseIcon, LogoutIcon } from '@heroicons/react/outline'
+import {
+  SunIcon,
+  BriefcaseIcon,
+  LogoutIcon,
+  CheckCircleIcon,
+} from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 import { useUserContext } from '../contexts/userProfile'
 import { routes } from '../lib/routes'
@@ -17,11 +22,11 @@ const LINKS = [
     icon: <BriefcaseIcon className="w-4 h-4" />,
     route: routes.projects,
   },
-  // {
-  //   text: 'Tasks',
-  //   icon: <CheckCircleIcon className="w-4 h-4" />,
-  //   route: routes.tasks,
-  // },
+  {
+    text: 'Tasks',
+    icon: <CheckCircleIcon className="w-4 h-4" />,
+    route: routes.tasks,
+  },
 ]
 
 const Nav = () => {

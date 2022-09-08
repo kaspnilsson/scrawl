@@ -38,7 +38,7 @@ const AutoId = Node.create({
           }
           const tr = newState.tr
 
-          newState.doc.descendants((node, pos, parent) => {
+          newState.doc.descendants((node, pos) => {
             // Check for duplicate IDs
             let id = node.attrs.id
             if (id && existingIds.has(id)) {
@@ -46,12 +46,7 @@ const AutoId = Node.create({
             } else if (id) {
               existingIds.add(id)
             }
-            if (
-              node.isBlock &&
-              parent === newState.doc &&
-              !id &&
-              types.has(node.type.name)
-            ) {
+            if (node.isBlock && !id && types.has(node.type.name)) {
               id = generateRandomId()
               tr.setNodeMarkup(pos, undefined, {
                 ...node.attrs,

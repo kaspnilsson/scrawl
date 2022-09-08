@@ -1,6 +1,6 @@
 import { JSONContent } from '@tiptap/core'
 
-export declare interface TaskList {
+export declare interface Task {
   id: string
   owner: string
   created_at: string // ISO string

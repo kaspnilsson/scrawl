@@ -7,6 +7,7 @@ import { generateRandomId } from '../../lib/randomId'
 import { resizeImage } from '../../lib/resizeImage'
 import { SlashCommandsCommand } from './SlashCommands'
 import { getCurrentlySelectedNodes as getHierarchyFromPos } from '../../lib/prosemirror'
+import { CheckCircleIcon } from '@heroicons/react/outline'
 
 // import { EditorView } from 'prosemirror-view'
 
@@ -113,7 +114,7 @@ export const slashCommands = ({
       },
     },
     {
-      icon: <i className="font-thin ri-lg ri-task-line" />,
+      icon: <CheckCircleIcon className="w-5 h-5" />,
       title: 'Task list',
       description: 'Create a task list',
       command: ({ editor, range }) => {
@@ -348,7 +349,7 @@ export const SlashCommandsList = (props: {
               active: selectedIndex === idx,
             })}
           >
-            {icon}
+            <span className="flex items-center w-6 h-full">{icon}</span>
             <span className="text-sm">{title}</span>
           </div>
         </li>
