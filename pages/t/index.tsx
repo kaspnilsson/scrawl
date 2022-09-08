@@ -29,6 +29,8 @@ const TasksIndex = () => {
     >
       <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
         WIP
+        <div className="divider divider-horizontal" />
+        <div className="pre">{JSON.stringify(data)}</div>
       </div>
     </Layout>
   )

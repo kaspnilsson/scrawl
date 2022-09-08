@@ -6,10 +6,15 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Note } from '../../../interfaces/note'
 import { ProjectUpdate } from '../../../interfaces/projectUpdate'
+import { Task } from '../../../interfaces/task'
 import {
   insertUpdatesIntoContent,
   trimUpdatesFromContent,
 } from '../../../lib/serverUtils/projectUpdates'
+import {
+  insertTasksIntoContent,
+  trimTasksFromContent,
+} from '../../../lib/serverUtils/tasks'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -47,17 +52,32 @@ export default withApiAuth(async function handler(
       .eq('note_date', dateStr)
       .eq('owner', user.id)
 
-    const [note, updates] = await Promise.all([notePromise, updatesPromise])
+    const tasksPromise = supabaseServerClient({ req, res })
+      .from<Task>('tasks')
+      .select('*')
+      .eq('note_date', dateStr)
+      .eq('owner', user.id)
 
-    if (note.error || updates.error) {
+    const [note, updates, tasks] = await Promise.all([
+      notePromise,
+      updatesPromise,
+      tasksPromise,
+    ])
+
+    if (note.error || updates.error || tasks.error) {
       res
         .status(401)
-        .end(`GET failed! ${JSON.stringify(note.error || updates.error)}`)
+        .end(
+          `GET failed! ${JSON.stringify(
+            note.error || updates.error || tasks.error
+          )}`
+        )
       return
     }
 
     const out = note.data[0] || { content: '', note_date: dateStr }
     insertUpdatesIntoContent(out.content, updates.data)
+    insertTasksIntoContent(out.content, tasks.data)
 
     res.status(200).json(out)
   } else if (method === 'POST') {
@@ -69,16 +89,37 @@ export default withApiAuth(async function handler(
     const partialNote = JSON.parse(body) as Partial<Note>
 
     if (partialNote.content?.content) {
-      const trimmed = trimUpdatesFromContent(
+      // Get updates out, then get tasks out of updates, then get tasks out of note.
+      const trimmedUpdates = trimUpdatesFromContent(
         partialNote.content.content,
         dateStr
       )
-      partialNote.content.content = trimmed.content
-      if (trimmed.updates.length) {
+      partialNote.content.content = trimmedUpdates.content
+      if (trimmedUpdates.updates.length) {
+        // TODO trim out tasks
+        // Also, consider adding this particular logic in a single server util
         await supabaseServerClient({ req, res })
           .from('projectUpdates')
           .upsert(
-            trimmed.updates.map((u) => ({
+            trimmedUpdates.updates.map((u) => ({
+              created_at: new Date(),
+              ...u,
+              owner: user.id,
+              updated_at: new Date(),
+            }))
+          )
+      }
+
+      const trimmedTasks = trimTasksFromContent(
+        partialNote.content.content,
+        dateStr
+      )
+      partialNote.content.content = trimmedTasks.content
+      if (trimmedTasks.tasks.length) {
+        await supabaseServerClient({ req, res })
+          .from('tasks')
+          .upsert(
+            trimmedTasks.tasks.map((u) => ({
               created_at: new Date(),
               ...u,
               owner: user.id,
