@@ -24,10 +24,10 @@ export const getServerSideProps: GetServerSideProps = async (
     }
   }
 
-  return { props: {} }
+  return { props: { res } }
 }
 
-const Login = () => {
+const Login = ({ res }: { res: unknown }) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -78,6 +78,8 @@ const Login = () => {
           Sign in to your account
         </h2>
       </div>
+
+      <span>{JSON.stringify(res)}</span>
 
       <div className="px-4 py-8 mt-8 sm:shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10 sm:mx-auto sm:w-full sm:max-w-md sm:bg-base-200">
         <form className="space-y-6" onSubmit={handleMagicLink}>
