@@ -79,8 +79,6 @@ const Login = () => {
         </h2>
       </div>
 
-      <span>{typeof window !== 'undefined' && window.location.href}</span>
-
       <div className="px-4 py-8 mt-8 sm:shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10 sm:mx-auto sm:w-full sm:max-w-md sm:bg-base-200">
         <form className="space-y-6" onSubmit={handleMagicLink}>
           <div>
