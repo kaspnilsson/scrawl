@@ -1,4 +1,8 @@
-import { SunIcon, BriefcaseIcon } from '@heroicons/react/outline'
+import {
+  SunIcon,
+  BriefcaseIcon,
+  CheckCircleIcon,
+} from '@heroicons/react/outline'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
@@ -9,13 +13,13 @@ const LINKS = [
     icon: <SunIcon className="w-5 h-5 prose prose-stone" />,
     route: routes.today,
   },
-  // {
-  //   icon: <CalendarIcon className="w-5 h-5 prose prose-stone" />,
-  //   route: routes.calendar,
-  // },
   {
     icon: <BriefcaseIcon className="w-5 h-5 prose prose-stone" />,
     route: routes.projects,
+  },
+  {
+    icon: <CheckCircleIcon className="w-4 h-4" />,
+    route: routes.tasks,
   },
 ]
 
@@ -28,7 +32,7 @@ const BottomNav = ({ toggleLeftSidebar, leftSidebarEnabled }: Props) => {
   const router = useRouter()
 
   return (
-    <div className="grid grid-cols-3 gap-2 px-1 border-t btm-nav sm:hidden border-neutral btm-nav-sm">
+    <div className="grid grid-cols-4 gap-2 px-1 border-t btm-nav sm:hidden border-neutral btm-nav-sm">
       <button
         className="flex-1 min-w-0 btn btn-sm btn-ghost"
         onClick={toggleLeftSidebar}

@@ -55,7 +55,7 @@ const TasksIndex = () => {
       error={error}
       noMaxWidth={true}
       headerContent={
-        <div className="flex flex-wrap justify-between items-center md:pl-2">
+        <div className="flex flex-wrap justify-between items-center sm:pl-2">
           <h3 className="flex gap-2 items-center m-0 font-heading">Tasks</h3>
           <button
             className="flex gap-2 items-center btn btn-accent btn-sm"
