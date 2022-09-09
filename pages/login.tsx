@@ -14,7 +14,7 @@ const makeRedirectUrl = (path: string) =>
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
-  const res = await getUser(ctx)
+  const res = await getUser(ctx, { forceRefresh: true })
   if (res.user) {
     return {
       redirect: {
