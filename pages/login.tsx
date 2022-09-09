@@ -76,18 +76,12 @@ const Login = ({ res }: { res: unknown }) => {
   }, [router, user])
 
   return (
-    <div className="flex flex-col justify-center items-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">
+    <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="flex flex-col gap-8 items-center mt-6 text-3xl text-center font-heading">
           <Scrawl size={48} />
           Sign in to your account
         </h2>
-      </div>
-
-      <div className="p-2 card bg-base-200 w-fit">
-        <span>res: {JSON.stringify(res)}</span>
-        <span className="divider divider-horizontal"></span>
-        <span>error: {JSON.stringify(userFetchError || 'none')}</span>
       </div>
 
       <div className="px-4 py-8 mt-8 sm:shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10 sm:mx-auto sm:w-full sm:max-w-md sm:bg-base-200">
@@ -172,6 +166,11 @@ const Login = ({ res }: { res: unknown }) => {
               {error}
             </div>
           )}
+        </div>
+        <div className="p-4 mx-auto mt-4 card card-body bg-base-300 w-fit">
+          <span>res: {JSON.stringify(res)}</span>
+          <span className="divider divider-horizontal"></span>
+          <span>error: {JSON.stringify(userFetchError || 'none')}</span>
         </div>
       </div>
     </div>
