@@ -94,7 +94,7 @@ const ProjectsIndex = () => {
       error={error}
       noMaxWidth={true}
       headerContent={
-        <div className="flex flex-wrap justify-between items-center pl-2">
+        <div className="flex flex-wrap justify-between items-center md:pl-2">
           <h3 className="flex gap-2 items-center m-0 font-heading">Projects</h3>
           <button
             className="flex gap-2 items-center btn btn-accent btn-sm"
