@@ -1,50 +1,48 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
-// import { ApiError } from '@supabase/gotrue-js'
+import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-// import { PUBLIC_BASE_URL, routes } from '../lib/routes'
+import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
-// import toast from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useUserContext } from '../contexts/userProfile'
-// import { useRouter } from 'next/router'
-import { useUser } from '@supabase/auth-helpers-react'
+import { useRouter } from 'next/router'
 
-// const makeRedirectUrl = (path: string) =>
-//   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
+const makeRedirectUrl = (path: string) =>
+  `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   const res = await getUser(ctx, { forceRefresh: true })
-  // if (res.user) {
-  //   return {
-  //     redirect: {
-  //       destination: makeRedirectUrl(routes.today),
-  //       permanent: false,
-  //     },
-  //   }
-  // }
+  if (res.user) {
+    return {
+      redirect: {
+        destination: makeRedirectUrl(routes.today),
+        permanent: false,
+      },
+    }
+  }
 
-  return { props: { res } }
+  return { props: {} }
 }
 
-const Login = ({ res }: { res: unknown }) => {
+const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { error: userFetchError } = useUserContext()
-  const ctx = useUser()
-  // const router = useRouter()
+  const { user } = useUserContext()
+  const router = useRouter()
 
-  const handleSignIn = (payload: unknown) => {
-    setError(JSON.stringify(payload, undefined, ' '))
-    // if (error) {
-    //   setError(`ERROR ${error.status} - ${error.message}`)
-    // }
-    // setLoading(false)
-    // return error
+  const handleSignIn = ({ error }: { error: ApiError | null }) => {
+    // setError(JSON.stringify(payload, undefined, ' '))
+    if (error) {
+      setError(`ERROR ${error.status} - ${error.message}`)
+    }
+    setLoading(false)
+    return error
   }
 
   const handleGoogleLogin = async () => {
@@ -65,18 +63,18 @@ const Login = ({ res }: { res: unknown }) => {
         email,
       })
       .then(handleSignIn)
-    // .then((error) => {
-    //   if (!error) {
-    //     toast.success('Check your email for a magic link!')
-    //   }
-    // })
+      .then((error) => {
+        if (!error) {
+          toast.success('Check your email for a magic link!')
+        }
+      })
   }
 
-  // useEffect(() => {
-  //   if (user) {
-  //     router.replace(routes.today)
-  //   }
-  // }, [router, user])
+  useEffect(() => {
+    if (user) {
+      router.replace(routes.today)
+    }
+  }, [router, user])
 
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">
@@ -167,7 +165,7 @@ const Login = ({ res }: { res: unknown }) => {
             </div>
           )}
         </div>
-        <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
+        {/* <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
           <div className="p-4 pb-0 font-semibold card-title">
             Debug info for nerds
           </div>
@@ -177,12 +175,8 @@ const Login = ({ res }: { res: unknown }) => {
             <span>
               error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
             </span>
-            <span className="m-0 divider divider-vertical"></span>
-            <span>
-              userctx: {JSON.stringify(ctx || 'none', undefined, ' ')}
-            </span>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   )
