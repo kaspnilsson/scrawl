@@ -1,12 +1,12 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
 import { FormEvent, useEffect, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
-import { ApiError } from '@supabase/gotrue-js'
+// import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
-import toast from 'react-hot-toast'
+// import toast from 'react-hot-toast'
 import { useUserContext } from '../contexts/userProfile'
 import { useRouter } from 'next/router'
 import { useUser } from '@supabase/auth-helpers-react'
@@ -38,12 +38,13 @@ const Login = ({ res }: { res: unknown }) => {
   const ctx = useUser()
   const router = useRouter()
 
-  const handleSignIn = ({ error }: { error: ApiError | null }) => {
-    if (error) {
-      setError(`ERROR ${error.status} - ${error.message}`)
-    }
-    setLoading(false)
-    return error
+  const handleSignIn = (payload: unknown) => {
+    setError(JSON.stringify(payload, undefined, ''))
+    // if (error) {
+    //   setError(`ERROR ${error.status} - ${error.message}`)
+    // }
+    // setLoading(false)
+    // return error
   }
 
   const handleGoogleLogin = async () => {
@@ -64,11 +65,11 @@ const Login = ({ res }: { res: unknown }) => {
         email,
       })
       .then(handleSignIn)
-      .then((error) => {
-        if (!error) {
-          toast.success('Check your email for a magic link!')
-        }
-      })
+    // .then((error) => {
+    //   if (!error) {
+    //     toast.success('Check your email for a magic link!')
+    //   }
+    // })
   }
 
   useEffect(() => {
