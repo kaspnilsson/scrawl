@@ -27,12 +27,12 @@ export default class MyDocument extends Document {
           <link rel="apple-touch-icon" href="/icon.png"></link>
           <meta
             name="theme-color"
-            content="#000"
+            content="#0e0d0c"
             media="(prefers-color-scheme: dark)"
           />
           <meta
             name="theme-color"
-            content="#fff"
+            content="#f5f5f4"
             media="(prefers-color-scheme: light)"
           />
           <link rel="shortcut icon" href="/favicon.svg" />
