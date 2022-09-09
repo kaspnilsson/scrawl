@@ -1,11 +1,3 @@
-html,
-body,
-body > div:first-child,
-div#__next,
-div#__next > div:first-child {
-  min-height: 100vh;
-}
-
 .ProseMirror {
   .is-empty::before {
     color: hsl(var(--nc));
