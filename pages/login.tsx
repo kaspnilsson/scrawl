@@ -39,7 +39,7 @@ const Login = ({ res }: { res: unknown }) => {
   // const router = useRouter()
 
   const handleSignIn = (payload: unknown) => {
-    setError(JSON.stringify(payload, undefined, ''))
+    setError(JSON.stringify(payload, undefined, ' '))
     // if (error) {
     //   setError(`ERROR ${error.status} - ${error.message}`)
     // }
@@ -162,13 +162,13 @@ const Login = ({ res }: { res: unknown }) => {
           </div>
 
           {error && (
-            <div className="flex items-center p-4 mt-6 text-xs whitespace-pre-wrap break-all rounded-md bg-error text-error-content">
+            <div className="flex items-center p-4 mt-6 text-xs !whitespace-pre-wrap !break-all rounded-md bg-error text-error-content">
               {error}
             </div>
           )}
         </div>
         <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
-          <div className="p-4 font-semibold card-title">
+          <div className="p-4 pb-0 font-semibold card-title">
             Debug info for nerds
           </div>
           <div className="p-4 text-xs card-body">
