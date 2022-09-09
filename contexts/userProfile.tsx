@@ -25,7 +25,7 @@ interface Props {
 
 const UserProfileProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter()
-  const { user: sessionUser } = useUser()
+  const { user: sessionUser, error } = useUser()
   const [user, setUser] = useState(sessionUser)
   const [loading, setLoading] = useState(false)
 
@@ -65,6 +65,7 @@ const UserProfileProvider = ({ children }: { children: ReactNode }) => {
     user,
     loading,
     logout,
+    error,
   }
 
   return (
