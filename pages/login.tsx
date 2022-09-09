@@ -1,31 +1,31 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
 // import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
 import { GetServerSideProps, GetServerSidePropsContext } from 'next'
-import { PUBLIC_BASE_URL, routes } from '../lib/routes'
+// import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
 // import toast from 'react-hot-toast'
 import { useUserContext } from '../contexts/userProfile'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 import { useUser } from '@supabase/auth-helpers-react'
 
-const makeRedirectUrl = (path: string) =>
-  `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
+// const makeRedirectUrl = (path: string) =>
+//   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
 
 export const getServerSideProps: GetServerSideProps = async (
   ctx: GetServerSidePropsContext
 ) => {
   const res = await getUser(ctx, { forceRefresh: true })
-  if (res.user) {
-    return {
-      redirect: {
-        destination: makeRedirectUrl(routes.today),
-        permanent: false,
-      },
-    }
-  }
+  // if (res.user) {
+  //   return {
+  //     redirect: {
+  //       destination: makeRedirectUrl(routes.today),
+  //       permanent: false,
+  //     },
+  //   }
+  // }
 
   return { props: { res } }
 }
@@ -34,9 +34,9 @@ const Login = ({ res }: { res: unknown }) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user, error: userFetchError } = useUserContext()
+  const { error: userFetchError } = useUserContext()
   const ctx = useUser()
-  const router = useRouter()
+  // const router = useRouter()
 
   const handleSignIn = (payload: unknown) => {
     setError(JSON.stringify(payload, undefined, ''))
@@ -72,11 +72,11 @@ const Login = ({ res }: { res: unknown }) => {
     // })
   }
 
-  useEffect(() => {
-    if (user) {
-      router.replace(routes.today)
-    }
-  }, [router, user])
+  // useEffect(() => {
+  //   if (user) {
+  //     router.replace(routes.today)
+  //   }
+  // }, [router, user])
 
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">
@@ -162,19 +162,26 @@ const Login = ({ res }: { res: unknown }) => {
           </div>
 
           {error && (
-            <div className="flex items-center p-4 mt-6 rounded-md bg-error text-error-content">
+            <div className="flex items-center p-4 mt-6 text-xs whitespace-pre-wrap break-all rounded-md bg-error text-error-content">
               {error}
             </div>
           )}
         </div>
-        <div className="p-4 mx-auto mt-4 whitespace-pre-wrap break-all card card-body bg-base-300">
-          <span>res: {JSON.stringify(res, undefined, ' ')}</span>
-          <span className="divider divider-horizontal"></span>
-          <span>
-            error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
-          </span>
-          <span className="divider divider-horizontal"></span>
-          <span>userctx: {JSON.stringify(ctx || 'none', undefined, ' ')}</span>
+        <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
+          <div className="p-4 font-semibold card-title">
+            Debug info for nerds
+          </div>
+          <div className="p-4 text-xs card-body">
+            <span>res: {JSON.stringify(res, undefined, ' ')}</span>
+            <span className="m-0 divider divider-vertical"></span>
+            <span>
+              error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
+            </span>
+            <span className="m-0 divider divider-vertical"></span>
+            <span>
+              userctx: {JSON.stringify(ctx || 'none', undefined, ' ')}
+            </span>
+          </div>
         </div>
       </div>
     </div>
