@@ -33,7 +33,7 @@ const ComboboxComponent = <T extends object>({
 
   return (
     <Combobox as="div" value={value} onChange={onChange}>
-      <Combobox.Label className="block text-sm font-medium text-gray-700">
+      <Combobox.Label className="block text-sm font-semibold text-gray-700">
         Assigned to
       </Combobox.Label>
       <div className="relative mt-1">
