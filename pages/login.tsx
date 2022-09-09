@@ -1,5 +1,5 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
 import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
@@ -7,6 +7,8 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
+import { useUserContext } from '../contexts/userProfile'
+import { useRouter } from 'next/router'
 
 const makeRedirectUrl = (path: string) =>
   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
@@ -24,13 +26,16 @@ export const getServerSideProps: GetServerSideProps = async (
     }
   }
 
-  return { props: { res } }
+  return { props: {} }
 }
 
 const Login = ({ res }: { res: unknown }) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const { user } = useUserContext()
+  const router = useRouter()
+
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
     if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
@@ -42,12 +47,9 @@ const Login = ({ res }: { res: unknown }) => {
   const handleGoogleLogin = async () => {
     setLoading(true)
     return await supabaseClient.auth
-      .signIn(
-        {
-          provider: 'google',
-        },
-        { redirectTo: makeRedirectUrl(routes.today) }
-      )
+      .signIn({
+        provider: 'google',
+      })
       .then(handleSignIn)
   }
 
@@ -56,12 +58,9 @@ const Login = ({ res }: { res: unknown }) => {
     setLoading(true)
 
     await supabaseClient.auth
-      .signIn(
-        {
-          email,
-        },
-        { redirectTo: makeRedirectUrl(routes.today) }
-      )
+      .signIn({
+        email,
+      })
       .then(handleSignIn)
       .then((error) => {
         if (!error) {
@@ -69,6 +68,12 @@ const Login = ({ res }: { res: unknown }) => {
         }
       })
   }
+
+  useEffect(() => {
+    if (user) {
+      router.replace(routes.today)
+    }
+  }, [router, user])
 
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">

@@ -19,14 +19,14 @@ const Calendar = () => {
             {date.format('dddd')}
             {date.isSame(today) && (
               <>
-                <div className="w-2 h-3 mx-1 my-auto divider-horizontal divider"></div>
+                <div className="mx-1 my-auto w-2 h-3 divider-horizontal divider"></div>
                 <span className="text-primary-content">today</span>
               </>
             )}
           </div> */}
-          <h1 className="flex items-center gap-2 font-heading">Calendar</h1>
+          <h1 className="flex gap-2 items-center font-heading">Calendar</h1>
         </div>
-        <div className="flex items-center w-full mt-4">TODO</div>
+        <div className="flex items-center mt-4 w-full">TODO</div>
       </div>
     </Layout>
   )
