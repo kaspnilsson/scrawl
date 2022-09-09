@@ -7,7 +7,7 @@ const withPWA = require('next-pwa')({
   cacheOnFrontEndNav: true,
 })
 
-module.exports = {
+module.exports = withPWA({
   async redirects() {
     return [
       {
@@ -17,4 +17,4 @@ module.exports = {
       },
     ]
   },
-}
+})
