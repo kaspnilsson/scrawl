@@ -35,7 +35,7 @@ const Nav = () => {
 
   return (
     <div className="flex flex-col gap-2 justify-between h-screen w-fit">
-      <ul className="flex gap-1 p-2 w-40 font-semibold sm:w-56 menu menu-compact">
+      <ul className="flex gap-1 p-2 w-56 font-semibold menu menu-compact">
         {LINKS.map(({ text, icon, route }, index) => (
           <li key={index}>
             <Link

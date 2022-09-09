@@ -47,6 +47,16 @@ const Layout = ({
       <Head>
         <title>{title}</title>
       </Head>
+      <div
+        className={classNames('fixed inset-0 z-30 bg-black/30 sm:hidden', {
+          hidden: !leftSidebarEnabled && !rightSidebarEnabled,
+        })}
+        onClick={() => {
+          setLeftSidebarEnabled(false)
+          setRightSidebarEnabled(false)
+        }}
+        aria-hidden="true"
+      />
       <div className="flex w-full overflow-hidden max-w-[100vw] prose-stone prose max-h-[100vh]">
         <Transition
           show={isHydrated && leftSidebarEnabled}
@@ -56,7 +66,7 @@ const Layout = ({
           leave="transition ease-in-out duration-100 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
-          className="flex flex-col border-r flex-0 not-prose bg-base-200 w-fit border-neutral"
+          className="flex fixed z-40 flex-col border-r flex-0 not-prose bg-base-200 w-fit border-neutral sm:static"
         >
           <Nav />
         </Transition>
