@@ -31,7 +31,6 @@ const Login = () => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
     if (error) {
       setError(`ERROR ${error.status} - ${error.message}`)
@@ -79,6 +78,8 @@ const Login = () => {
           Sign in to your account
         </h2>
       </div>
+
+      <span>{typeof window !== 'undefined' && window.location.href}</span>
 
       <div className="px-4 py-8 mt-8 sm:shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10 sm:mx-auto sm:w-full sm:max-w-md sm:bg-base-200">
         <form className="space-y-6" onSubmit={handleMagicLink}>
