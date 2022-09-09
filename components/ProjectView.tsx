@@ -36,7 +36,6 @@ const ProjectView = ({ name }: Props) => {
     debounce(async (value: JSONContent) => {
       if (!project) return
       const newProject = { ...project, description: value }
-      console.log(newProject)
       await postProject(name, newProject)
     }, 500),
     [project]

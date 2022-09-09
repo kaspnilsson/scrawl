@@ -51,8 +51,8 @@ const ProjectsIndex = () => {
     Partial<Project>
   >({})
   const open = () => setShowDialog(true)
-  const close = (project?: Project) => {
-    if (project) mutate([...(data || []), project])
+  const close = async (project?: Project) => {
+    if (project) await mutate([...(data || []), project])
     setShowDialog(false)
   }
 
@@ -72,11 +72,14 @@ const ProjectsIndex = () => {
   }, [data, mutate])
 
   const handleCardUpdate = async (card: BoardCard<Project>) => {
-    await postProject(card.id, {
+    const newProject = {
       ...card.data,
       state: card.sectionId as ProjectState,
-    })
-    mutate()
+    } as Project
+    await mutate(
+      data?.map((p) => (p.name === newProject.name ? newProject : p))
+    )
+    await postProject(card.id, newProject)
     setInitialProjectState({})
   }
 
@@ -91,10 +94,10 @@ const ProjectsIndex = () => {
       error={error}
       noMaxWidth={true}
       headerContent={
-        <div className="flex flex-wrap items-center justify-between pl-2">
-          <h3 className="flex items-center gap-2 m-0 font-heading">Projects</h3>
+        <div className="flex flex-wrap justify-between items-center pl-2">
+          <h3 className="flex gap-2 items-center m-0 font-heading">Projects</h3>
           <button
-            className="flex items-center gap-2 btn btn-accent btn-sm"
+            className="flex gap-2 items-center btn btn-accent btn-sm"
             onClick={open}
           >
             <PlusIcon className="w-4 h-4" />

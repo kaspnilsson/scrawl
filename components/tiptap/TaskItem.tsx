@@ -7,6 +7,8 @@ export interface TaskItemOptions {
   onReadOnlyChecked?: (node: ProseMirrorNode, checked: boolean) => boolean
   nested: boolean
   HTMLAttributes: Record<string, string>
+  noteDate?: string
+  projectName?: string
 }
 
 export const inputRegex = /^\s*(\[([( |x])?\])\s$/
@@ -18,6 +20,8 @@ export const TaskItem = Node.create<TaskItemOptions>({
     return {
       nested: false,
       HTMLAttributes: {},
+      noteDate: '',
+      projectName: '',
     }
   },
 
@@ -37,8 +41,8 @@ export const TaskItem = Node.create<TaskItemOptions>({
           'data-checked': attributes.checked,
         }),
       },
-      projectName: { default: '' },
-      noteDate: { default: '' },
+      projectName: { default: this.options.projectName || '' },
+      noteDate: { default: this.options.noteDate || '' },
       id: { default: '' },
     }
   },
@@ -86,13 +90,10 @@ export const TaskItem = Node.create<TaskItemOptions>({
       checkboxWrapper.classList.add('my-0')
       const checkboxButton = document.createElement('button')
       checkboxButton.classList.add(
-        'btn',
-        'btn-square',
-        'btn-xs',
-        'btn-accent',
+        'checkbox',
+        'checkbox-accent',
         'transition-all',
-        'fake-checkbox',
-        node.attrs.checked ? 'btn-ghost' : 'btn-outline'
+        'hover:bg-accent'
       )
       const content = document.createElement('div')
       content.classList.add('my-0')
@@ -104,8 +105,9 @@ export const TaskItem = Node.create<TaskItemOptions>({
         }
         // reverse the value
         const checked = listItem.dataset.checked !== 'true'
-        checkboxButton.classList.toggle('btn-ghost')
-        checkboxButton.classList.toggle('btn-outline')
+        checkboxButton.setAttribute('checked', checked ? 'checked' : '')
+        // checkboxButton.classList.toggle('btn-ghost')
+        // checkboxButton.classList.toggle('btn-outline')
         if (editor.isEditable && typeof getPos === 'function') {
           editor
             .chain()

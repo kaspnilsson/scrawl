@@ -8,4 +8,5 @@ export declare interface Task {
   content?: JSONContent[]
   note_date: string
   project_name: string
+  checked: boolean
 }

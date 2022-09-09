@@ -17,6 +17,7 @@ export default withApiAuth(async function handler(
       .from('tasks')
       .select('*')
       .eq('owner', user.id)
+      .order('created_at')
 
     if (error) {
       res.status(status).end(error)

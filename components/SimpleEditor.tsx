@@ -70,7 +70,6 @@ const SimpleEditorComponent = ({
           includeChildren: true,
         }),
         TaskItem.configure({
-          nested: true,
           // HTMLAttributes: { class: 'checkbox' },
         }),
         TaskList,

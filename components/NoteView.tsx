@@ -44,6 +44,7 @@ const NoteView = ({ date }: Props) => {
   const handleUpdate = (content: JSONContent) => {
     debouncedPostNote(content)
   }
+
   console.log(note)
 
   return (

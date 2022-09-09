@@ -76,6 +76,10 @@ export default withApiAuth(async function handler(
     }
 
     const out = note.data[0] || { content: '', note_date: dateStr }
+    // TODO need to create a new function insertTasksIntoUpdate that behaves slightly differently -- these types are wrong.
+    // const fakeContent = updates.data.map((update) =>
+    //   insertTasksIntoContent(update.content, tasks.data)
+    // )
     insertUpdatesIntoContent(out.content, updates.data)
     insertTasksIntoContent(out.content, tasks.data)
 
@@ -96,18 +100,50 @@ export default withApiAuth(async function handler(
       )
       partialNote.content.content = trimmedUpdates.content
       if (trimmedUpdates.updates.length) {
-        // TODO trim out tasks
-        // Also, consider adding this particular logic in a single server util
-        await supabaseServerClient({ req, res })
-          .from('projectUpdates')
-          .upsert(
-            trimmedUpdates.updates.map((u) => ({
-              created_at: new Date(),
-              ...u,
-              owner: user.id,
-              updated_at: new Date(),
-            }))
+        const promises = []
+        for (const update of trimmedUpdates.updates) {
+          const trimmedTasks = trimTasksFromContent(
+            update.content,
+            dateStr,
+            update.project_name
           )
+          update.content = trimmedTasks.content
+          if (trimmedTasks.tasks.length) {
+            promises.push(
+              await supabaseServerClient({ req, res })
+                .from('tasks')
+                .upsert(
+                  trimmedTasks.tasks.map((u) => ({
+                    created_at: new Date(),
+                    ...u,
+                    owner: user.id,
+                    updated_at: new Date(),
+                  }))
+                )
+            )
+          }
+        }
+
+        promises.push(
+          supabaseServerClient({ req, res })
+            .from('projectUpdates')
+            .upsert(
+              trimmedUpdates.updates.map((u) => ({
+                created_at: new Date(),
+                ...u,
+                owner: user.id,
+                updated_at: new Date(),
+              }))
+            )
+        )
+
+        const responses = await Promise.all(promises)
+        for (const r of responses) {
+          if (r.error) {
+            res.status(401).end(`Update failed! ${JSON.stringify(r.error)}`)
+            return
+          }
+        }
       }
 
       const trimmedTasks = trimTasksFromContent(

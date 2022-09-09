@@ -20,13 +20,6 @@
   src: url('../assets/fonts/ClashDisplaySemibold.woff');
 }
 
-input[type='checkbox'] {
-  @apply checkbox;
-  @apply checkbox-primary;
-
-  @apply bg-base-200;
-}
-
 .input-bordered:focus {
   border-color: hsla(var(--bc) / 0.2);
   box-shadow: none;

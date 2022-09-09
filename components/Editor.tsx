@@ -103,7 +103,7 @@ const EditorComponent = ({
       onFocus: onFocus || handleUpdate,
       onBlur: onBlur || handleUpdate,
     },
-    [content, user]
+    [user, noteDate, projectName]
   )
 
   return <EditorContent className={className} editor={editor} />

@@ -1,6 +1,7 @@
 import moment from './moment'
 import { Note } from '../interfaces/note'
 import { Project } from '../interfaces/project'
+import { Task } from '../interfaces/task'
 
 export const fetcher = (url: string) =>
   fetch(url)
@@ -16,9 +17,6 @@ export const handleFetchErrors = async (res: Response) => {
 export const logoutServerside = async () =>
   fetch('/api/auth/logout').then(handleFetchErrors)
 
-export const getProjects = async () =>
-  fetch(`/api/projects`, { method: 'GET' }).then(handleFetchErrors)
-
 export const getNote = async (dateStr: string) =>
   fetch(`/api/notes/${dateStr}`, { method: 'GET' }).then(handleFetchErrors)
 
@@ -27,6 +25,9 @@ export const postNote = async (dateStr: string, note: Partial<Note>) =>
     method: 'POST',
     body: JSON.stringify(note),
   }).then(handleFetchErrors)
+
+export const getProjects = async () =>
+  fetch(`/api/projects`, { method: 'GET' }).then(handleFetchErrors)
 
 export const postProject = async (name: string, project: Partial<Project>) =>
   fetch(`/api/projects/${name}`, {
@@ -44,5 +45,16 @@ export const makeNoteKeyFromMoment = (moment: moment.Moment) =>
 
 export const deleteProjectUpdate = (id: string) =>
   fetch(`/api/projectUpdates/${id}`, {
+    method: 'DELETE',
+  }).then(handleFetchErrors)
+
+export const postTask = async (id: string, task: Partial<Task>) =>
+  fetch(`/api/tasks/${id}`, {
+    method: 'POST',
+    body: JSON.stringify(task),
+  }).then(handleFetchErrors)
+
+export const deleteTask = async (name: string) =>
+  fetch(`/api/tasks/${name}`, {
     method: 'DELETE',
   }).then(handleFetchErrors)

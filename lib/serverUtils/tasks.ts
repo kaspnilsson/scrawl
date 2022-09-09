@@ -30,6 +30,7 @@ export const trimTasksFromContent = (
           )
           continue
         }
+        if (!child.content) continue
         // Verify that the task belongs here (things can get fucked up when copied / pasted, for example)
         if (child.attrs?.noteDate || child.attrs?.projectName) {
           if (
@@ -49,6 +50,7 @@ export const trimTasksFromContent = (
           id: child.attrs.id,
           note_date: currentNoteDate,
           project_name: currentProjectName,
+          checked: child.attrs.checked,
           content: child.content,
         })
         child.content = undefined
@@ -79,7 +81,7 @@ export const insertTasksIntoContent = (
   const out = content ?? { type: 'doc', content: [] }
 
   // Traverse all content
-  const blocks = [...(content?.content || [])]
+  const blocks = [...(out?.content || [])]
   while (blocks.length) {
     const block = blocks.pop()
     if (block?.type === TASK_LIST_TYPE && block.content) {
@@ -87,11 +89,18 @@ export const insertTasksIntoContent = (
       for (let i = 0; i < block.content?.length || 0; i++) {
         const child = block.content[i]
         if (tasksById[child.attrs?.id]) {
-          child.content = tasksById[child.attrs?.id].content
+          const { content, note_date, project_name, checked } =
+            tasksById[child.attrs?.id]
+          child.content = content
+          if (!child.attrs) child.attrs = {}
+          child.attrs.noteDate = note_date
+          child.attrs.projectName = project_name
+          child.attrs.checked = checked
           delete tasksById[child.attrs?.id]
+          block.content[i] = child
         } else {
-          console.error(
-            `no task found with id ${child.attrs?.id}, but referenced in content.`
+          console.warn(
+            `No task found with id ${child.attrs?.id}, but referenced in content.`
           )
           block.content.splice(i, 1)
           i--
@@ -103,22 +112,24 @@ export const insertTasksIntoContent = (
   if (unusedTasks.length) {
     if (!out.content) out.content = []
     // Insert the rest of them at the end of the doc
-    const newTaskList = {
-      type: TASK_LIST_TYPE,
-      content: [] as JSONContent[],
-    }
-    for (const u of unusedTasks) {
-      newTaskList.content.push({
-        type: TASK_ITEM_TYPE,
-        attrs: {
-          id: u.id,
-          noteDate: u.note_date,
-          projectName: u.project_name,
-        },
-        content: u.content,
-      })
-    }
-    out.content.push(newTaskList)
+    // TODO do we actually want this tho
+    // const newTaskList = {
+    //   type: TASK_LIST_TYPE,
+    //   content: [] as JSONContent[],
+    // }
+    // for (const u of unusedTasks) {
+    //   newTaskList.content.push({
+    //     type: TASK_ITEM_TYPE,
+    //     attrs: {
+    //       id: u.id,
+    //       noteDate: u.note_date,
+    //       projectName: u.project_name,
+    //       checked: u.checked,
+    //     },
+    //     content: u.content,
+    //   })
+    // }
+    // out.content.push(newTaskList)
   }
 
   return out

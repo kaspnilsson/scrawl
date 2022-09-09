@@ -61,7 +61,7 @@ export const insertUpdatesIntoContent = (
   const out = content ?? { type: 'doc', content: [] }
 
   // Traverse all content
-  const blocks = [...(content?.content || [])]
+  const blocks = [...(out?.content || [])]
   while (blocks.length) {
     const block = blocks.pop()
     if (
@@ -99,6 +99,6 @@ export const insertUpdatesIntoContent = (
       })
     }
   }
-
+  // console.log(JSON.stringify(out))
   return out
 }
