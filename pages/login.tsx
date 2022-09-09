@@ -33,7 +33,7 @@ const Login = ({ res }: { res: unknown }) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user, error } = useUserContext()
+  const { user, error: userFetchError } = useUserContext()
   const router = useRouter()
 
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
@@ -86,7 +86,7 @@ const Login = ({ res }: { res: unknown }) => {
 
       <span>{JSON.stringify(res)}</span>
       <span className="divider divider-horizontal"></span>
-      <span>{JSON.stringify(error)}</span>
+      <span>{JSON.stringify(userFetchError)}</span>
 
       <div className="px-4 py-8 mt-8 sm:shadow-lg shadow-base-content/10 sm:rounded-lg sm:px-10 sm:mx-auto sm:w-full sm:max-w-md sm:bg-base-200">
         <form className="space-y-6" onSubmit={handleMagicLink}>

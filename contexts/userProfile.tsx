@@ -11,6 +11,7 @@ import { User } from '../interfaces/userAndProfile'
 import { logoutServerside } from '../lib/apiHelpers'
 import { routes } from '../lib/routes'
 import { useRouter } from 'next/router'
+import { ErrorPayload } from '@supabase/auth-helpers-shared'
 
 export const UserProfileContext = createContext<Props>({
   user: null,
@@ -21,6 +22,7 @@ interface Props {
   user: User | null
   loading: boolean
   logout?: () => void
+  error?: ErrorPayload
 }
 
 const UserProfileProvider = ({ children }: { children: ReactNode }) => {
