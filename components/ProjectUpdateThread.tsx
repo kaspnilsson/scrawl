@@ -14,10 +14,10 @@ interface Props {
 
 const ProjectUpdateThread = ({ updates = [], project }: Props) => {
   return (
-    <ol className="relative p-0 list-none sm:border-l border-neutral">
+    <ol className="flex relative flex-col gap-6 p-0 m-0 list-none sm:border-l border-neutral">
       {updates.map((u) => (
         <li
-          className="px-4 py-2 mb-10 rounded-xl sm:ml-4 sm:px-8 sm:py-4 bg-base-200"
+          className="px-4 py-2 my-0 rounded-xl sm:ml-4 sm:px-8 sm:py-4 bg-base-200"
           key={u.id}
         >
           <div className="hidden absolute -left-2 w-4 h-4 rounded-full ring-4 bg-accent border-neutral sm:flex ring-base-100"></div>
@@ -39,7 +39,7 @@ const ProjectUpdateThread = ({ updates = [], project }: Props) => {
           />
         </li>
       ))}
-      <li className="px-4 py-2 mb-10 rounded-xl sm:ml-4 sm:px-8 sm:py-4 bg-base-200">
+      <li className="px-4 py-2 my-0 rounded-xl sm:ml-4 sm:px-8 sm:py-4 bg-base-200">
         <div className="hidden absolute -left-2 w-4 h-4 rounded-full ring-4 bg-accent border-neutral sm:flex ring-base-100"></div>
         <div className="flex gap-1 items-center text-sm deemphasized">
           {makeNoteKeyFromMoment(moment(project.created_at))}

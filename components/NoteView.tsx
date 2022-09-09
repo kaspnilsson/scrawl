@@ -26,7 +26,8 @@ const NoteView = ({ date }: Props) => {
   const {
     data: note,
     error,
-    // mutate,
+    mutate,
+    isValidating,
   } = useSWR<Note>(`/api/notes/${noteKey}`, fetcher)
   const loading = note === undefined
 
@@ -35,17 +36,16 @@ const NoteView = ({ date }: Props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedPostNote = useCallback(
     debounce(async (content: JSONContent) => {
-      await postNote(noteKey, { ...note, content })
-      // await mutate()
+      const newNote = { ...note, content } as Note
+      await mutate(newNote, false)
+      await postNote(noteKey, newNote)
     }, 500),
-    []
+    [note]
   )
 
   const handleUpdate = (content: JSONContent) => {
     debouncedPostNote(content)
   }
-
-  console.log(note)
 
   return (
     <Layout
@@ -78,6 +78,7 @@ const NoteView = ({ date }: Props) => {
               content={note?.content}
               onUpdate={handleUpdate}
               noteDate={noteKey}
+              deps={[isValidating]}
             />
           </div>
         </div>

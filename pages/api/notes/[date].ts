@@ -3,6 +3,7 @@ import {
   getUser,
   withApiAuth,
 } from '@supabase/auth-helpers-nextjs'
+import { PostgrestError, PostgrestFilterBuilder } from '@supabase/postgrest-js'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Note } from '../../../interfaces/note'
 import { ProjectUpdate } from '../../../interfaces/projectUpdate'
@@ -13,8 +14,19 @@ import {
 } from '../../../lib/serverUtils/projectUpdates'
 import {
   insertTasksIntoContent,
+  insertTasksIntoUpdate,
   trimTasksFromContent,
 } from '../../../lib/serverUtils/tasks'
+
+const extractErrorsFromPromises = async (
+  promises: PostgrestFilterBuilder<unknown>[]
+): Promise<PostgrestError | null> => {
+  const arr = await Promise.all(promises)
+  for (const res of arr) {
+    if (res.error) return res.error
+  }
+  return null
+}
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -66,7 +78,11 @@ export default withApiAuth(async function handler(
 
     if (note.error || updates.error || tasks.error) {
       res
-        .status(401)
+        .status(
+          parseInt(
+            note.error?.code || updates.error?.code || tasks.error?.code || 'no'
+          ) || 401
+        )
         .end(
           `GET failed! ${JSON.stringify(
             note.error || updates.error || tasks.error
@@ -76,12 +92,57 @@ export default withApiAuth(async function handler(
     }
 
     const out = note.data[0] || { content: '', note_date: dateStr }
-    // TODO need to create a new function insertTasksIntoUpdate that behaves slightly differently -- these types are wrong.
-    // const fakeContent = updates.data.map((update) =>
-    //   insertTasksIntoContent(update.content, tasks.data)
-    // )
-    insertUpdatesIntoContent(out.content, updates.data)
-    insertTasksIntoContent(out.content, tasks.data)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const promises: PostgrestFilterBuilder<any>[] = []
+    updates.data.map((update) => {
+      const { unusedTaskIds } = insertTasksIntoUpdate(
+        update,
+        tasks.data.filter((t) => t.project_name === update.project_name)
+      )
+      if (unusedTaskIds) {
+        promises.push(
+          supabaseServerClient({ req, res })
+            .from<Task>('tasks')
+            .delete({ returning: 'minimal' })
+            .match({ owner: user.id })
+            .in('id', unusedTaskIds)
+        )
+      }
+    })
+    const { unusedUpdateIds } = insertUpdatesIntoContent(
+      out.content,
+      updates.data
+    )
+    if (unusedUpdateIds) {
+      promises.push(
+        supabaseServerClient({ req, res })
+          .from<ProjectUpdate>('projectUpdates')
+          .delete({ returning: 'minimal' })
+          .match({ owner: user.id })
+          .in('id', unusedUpdateIds)
+      )
+    }
+    const { unusedTaskIds } = insertTasksIntoContent(
+      out.content,
+      tasks.data.filter((t) => t.note_date === dateStr && !t.project_name)
+    )
+    if (unusedTaskIds) {
+      promises.push(
+        supabaseServerClient({ req, res })
+          .from<ProjectUpdate>('tasks')
+          .delete({ returning: 'minimal' })
+          .match({ owner: user.id })
+          .in('id', unusedTaskIds)
+      )
+    }
+
+    const err = await extractErrorsFromPromises(promises)
+    if (err) {
+      res
+        .status(parseInt(err.code) || 401)
+        .end(`GET failed! ${JSON.stringify(err)}`)
+      return
+    }
 
     res.status(200).json(out)
   } else if (method === 'POST') {

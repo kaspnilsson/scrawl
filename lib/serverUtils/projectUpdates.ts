@@ -54,7 +54,7 @@ export const trimUpdatesFromContent = (
 export const insertUpdatesIntoContent = (
   content: JSONContent | undefined,
   updates: ProjectUpdate[]
-): JSONContent => {
+): { content: JSONContent; unusedUpdateIds: string[] } => {
   const updatesById: { [key: string]: ProjectUpdate } = {}
   for (const u of updates) updatesById[u.id] = u
 
@@ -83,22 +83,21 @@ export const insertUpdatesIntoContent = (
       }
     }
   }
-  const unusedUpdates = Object.values(updatesById)
-  if (unusedUpdates.length) {
-    if (!out.content) out.content = []
-    // Insert the rest of them at the end of the doc
-    for (const u of unusedUpdates) {
-      out.content.push({
-        type: PROJECT_UPDATE_TYPE,
-        attrs: {
-          id: u.id,
-          noteDate: u.note_date,
-          projectName: u.project_name,
-        },
-        content: u.content,
-      })
-    }
-  }
-  // console.log(JSON.stringify(out))
-  return out
+  // const unusedUpdates = Object.values(updatesById)
+  // if (unusedUpdates.length) {
+  //   if (!out.content) out.content = []
+  //   // Insert the rest of them at the end of the doc
+  //   for (const u of unusedUpdates) {
+  //     out.content.push({
+  //       type: PROJECT_UPDATE_TYPE,
+  //       attrs: {
+  //         id: u.id,
+  //         noteDate: u.note_date,
+  //         projectName: u.project_name,
+  //       },
+  //       content: u.content,
+  //     })
+  //   }
+  // }
+  return { content: out, unusedUpdateIds: Object.keys(updatesById) }
 }

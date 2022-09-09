@@ -6,6 +6,7 @@ import {
 import { NextApiRequest, NextApiResponse } from 'next'
 import { Project, ProjectState } from '../../../interfaces/project'
 import { ProjectUpdate } from '../../../interfaces/projectUpdate'
+import { TASK_LIST_TYPE } from '../../../lib/serverUtils/tasks'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -49,6 +50,10 @@ export default withApiAuth(async function handler(
         .eq('project_name', nameStr)
         .eq('owner', user.id)
         .order('note_date', { ascending: false })
+
+      for (const u of updates || []) {
+        u.content = u.content?.filter((n) => n.type !== TASK_LIST_TYPE)
+      }
 
       if (error) {
         res

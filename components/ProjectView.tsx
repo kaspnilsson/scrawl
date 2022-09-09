@@ -1,6 +1,6 @@
 import { JSONContent } from '@tiptap/core'
 import { useCallback, useState } from 'react'
-import { deleteProject, postProject } from '../lib/apiHelpers'
+import { deleteProject, postProject, postTask } from '../lib/apiHelpers'
 import Layout from './Layout'
 import { debounce } from 'lodash'
 import { Project } from '../interfaces/project'
@@ -13,6 +13,8 @@ import useSWR from 'swr'
 import { DotsVerticalIcon } from '@heroicons/react/outline'
 import { useRouter } from 'next/router'
 import { routes } from '../lib/routes'
+import { Task } from '../interfaces/task'
+import TaskTable from './TaskTable'
 
 interface Props {
   name: string
@@ -24,10 +26,16 @@ const ProjectView = ({ name }: Props) => {
   const [fetching, setFetching] = useState(false)
   const {
     data: project,
-    error,
-    // mutate,
+    error: projectError,
+    mutate: mutateProject,
   } = useSWR<Project>(`/api/projects/${name}?withUpdates=true`, fetcher)
   const loading = project === undefined || fetching
+
+  const {
+    data: tasks,
+    error: tasksError,
+    mutate: mutateTasks,
+  } = useSWR<Task[]>(`/api/tasks?projectName=${name}`, fetcher)
 
   const router = useRouter()
 
@@ -36,6 +44,7 @@ const ProjectView = ({ name }: Props) => {
     debounce(async (value: JSONContent) => {
       if (!project) return
       const newProject = { ...project, description: value }
+      await mutateProject(newProject)
       await postProject(name, newProject)
     }, 500),
     [project]
@@ -52,10 +61,18 @@ const ProjectView = ({ name }: Props) => {
     setFetching(false)
   }
 
+  const updateTask = async (t: Task) => {
+    await mutateTasks(
+      tasks?.map((task) => (task.id === t.id ? t : task)),
+      false
+    )
+    await postTask(t.id, t)
+  }
+
   return (
     <Layout
       loading={loading}
-      error={error}
+      error={projectError || tasksError}
       headerContent={
         !!project && (
           <div className="flex gap-3 justify-between items-center px-2 w-full">
@@ -95,10 +112,10 @@ const ProjectView = ({ name }: Props) => {
             />
             <AccordionPanel
               defaultOpen
-              title={<h3>Activity</h3>}
+              title={<h3>Tasks</h3>}
               className="w-full"
             >
-              <ProjectActivityCalendar project={project} />
+              <TaskTable data={tasks || []} updateTask={updateTask}></TaskTable>
             </AccordionPanel>
             <AccordionPanel
               defaultOpen
@@ -110,18 +127,13 @@ const ProjectView = ({ name }: Props) => {
                 project={project}
               />
             </AccordionPanel>
-            {/* <AccordionPanel
+            <AccordionPanel
               defaultOpen
-              title={<h3>Tasks</h3>}
+              title={<h3>Activity</h3>}
               className="w-full"
-            ></AccordionPanel> */}
-            {/* <AccordionPanel defaultOpen title="Tasks" className="w-full">
-              <SimpleEditorComponent
-                className=""
-                onUpdate={handleUpdate}
-                content={project?.description || ''}
-              />
-            </AccordionPanel> */}
+            >
+              <ProjectActivityCalendar project={project} />
+            </AccordionPanel>
           </div>
         </div>
       )}

@@ -11,6 +11,7 @@ import { TaskItem } from './tiptap/TaskItem'
 import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
 import AutoId from './tiptap/AutoId'
 import TaskList from '@tiptap/extension-task-list'
+import { DependencyList } from 'react'
 
 interface Props {
   content?: JSONContent
@@ -32,6 +33,7 @@ interface Props {
     | undefined
   noteDate?: string
   projectName?: string
+  deps?: DependencyList
 }
 
 const EditorComponent = ({
@@ -42,6 +44,7 @@ const EditorComponent = ({
   className = '',
   projectName = '',
   noteDate = '',
+  deps = [],
 }: Props) => {
   const handleUpdate = ({ editor }: { editor: Editor }) => {
     onUpdate(editor.getJSON())
@@ -103,7 +106,7 @@ const EditorComponent = ({
       onFocus: onFocus || handleUpdate,
       onBlur: onBlur || handleUpdate,
     },
-    [user, noteDate, projectName]
+    [user, noteDate, projectName, ...deps]
   )
 
   return <EditorContent className={className} editor={editor} />
