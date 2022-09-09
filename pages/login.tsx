@@ -9,6 +9,7 @@ import classNames from 'classnames'
 import toast from 'react-hot-toast'
 import { useUserContext } from '../contexts/userProfile'
 import { useRouter } from 'next/router'
+import { useUser } from '@supabase/auth-helpers-react'
 
 const makeRedirectUrl = (path: string) =>
   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
@@ -34,6 +35,7 @@ const Login = ({ res }: { res: unknown }) => {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const { user, error: userFetchError } = useUserContext()
+  const ctx = useUser()
   const router = useRouter()
 
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
@@ -164,10 +166,14 @@ const Login = ({ res }: { res: unknown }) => {
             </div>
           )}
         </div>
-        <div className="p-4 mx-auto mt-4 card card-body bg-base-300 w-fit">
-          <span>res: {JSON.stringify(res)}</span>
+        <div className="p-4 mx-auto mt-4 whitespace-pre-wrap break-all card card-body bg-base-300">
+          <span>res: {JSON.stringify(res, undefined, ' ')}</span>
           <span className="divider divider-horizontal"></span>
-          <span>error: {JSON.stringify(userFetchError || 'none')}</span>
+          <span>
+            error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
+          </span>
+          <span className="divider divider-horizontal"></span>
+          <span>userctx: {JSON.stringify(ctx || 'none', undefined, ' ')}</span>
         </div>
       </div>
     </div>
