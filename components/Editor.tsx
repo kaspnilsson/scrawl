@@ -83,7 +83,7 @@ const EditorComponent = ({
         StarterKit,
         Placeholder.configure({
           includeChildren: true,
-          placeholder: 'Capture notes or log project updates.',
+          placeholder: "Capture notes or type '/'",
         }),
         TaskItem.configure({
           // nested: true,
