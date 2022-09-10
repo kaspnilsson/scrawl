@@ -55,10 +55,10 @@ const TasksIndex = () => {
       error={error}
       noMaxWidth={true}
       headerContent={
-        <div className="flex flex-wrap justify-between items-center sm:pl-2">
-          <h3 className="flex gap-2 items-center m-0 font-heading">Tasks</h3>
+        <div className="flex flex-wrap items-center justify-between sm:pl-2">
+          <h3 className="flex items-center gap-2 m-0 font-heading">Tasks</h3>
           <button
-            className="flex gap-2 items-center btn btn-accent btn-sm"
+            className="flex items-center gap-2 btn btn-accent btn-sm"
             onClick={clearAllCompletedTasks}
           >
             Clear all completed
@@ -66,7 +66,7 @@ const TasksIndex = () => {
         </div>
       }
     >
-      <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none">
+      <div className="m-auto prose prose-headings:!m-0 prose-headings:font-heading max-w-none prose-sm sm:prose-md">
         {Object.keys(dataByProject).map((name) => (
           <AccordionPanel
             key={name}

@@ -102,7 +102,7 @@ const ProjectUpdateEditor = ({
       editorProps: {
         attributes: {
           class:
-            'prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full focus:outline-none',
+            'prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full focus:outline-none prose-sm sm:prose-md',
         },
       },
       onFocus,

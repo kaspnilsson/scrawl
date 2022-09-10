@@ -12,8 +12,8 @@ const Logout = () => {
 
   return (
     <Layout>
-      <div className="m-auto prose prose-headings:m-0 prose-headings:font-heading">
-        <div className="flex justify-center items-center py-16 m-auto h-full">
+      <div className="m-auto prose-sm prose prose-headings:m-0 prose-headings:font-heading sm:prose-md">
+        <div className="flex items-center justify-center h-full py-16 m-auto">
           <div className="flex p-16 m-auto loading btn btn-ghost">
             Logging out
           </div>

@@ -15,7 +15,7 @@ const TaskItemRenderer = ({ content, className = '' }: Props) => {
       editorProps: {
         attributes: {
           class:
-            'prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full focus:outline-none prose-p:!m-0',
+            'prose prose-stone prose-headings:m-0 prose-headings:font-heading max-w-none w-full focus:outline-none prose-p:!m-0 prose-sm sm:prose-md',
         },
       },
     },

@@ -45,7 +45,7 @@ const ProjectUpdateWrapper = ({
             <ProjectUpdateOverflowMenu attrs={node.attrs} />
           </div>
         </div>
-        <NodeViewContent className="w-full details-content"></NodeViewContent>
+        <NodeViewContent className="w-full"></NodeViewContent>
       </div>
     </NodeViewWrapper>
   )

@@ -102,7 +102,7 @@ const ProjectView = ({ name }: Props) => {
       }
     >
       {project && (
-        <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
+        <div className="m-auto prose-sm prose prose-stone prose-headings:m-0 prose-headings:font-heading sm:prose-md">
           <div className="flex flex-col w-full mt-4 space-y-4">
             <SimpleEditorComponent
               className="w-full"

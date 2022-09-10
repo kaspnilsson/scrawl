@@ -54,7 +54,7 @@ const NoteView = ({ date }: Props) => {
       error={error}
     >
       {!loading && !error && (
-        <div className="m-auto prose prose-stone prose-headings:m-0 min-w-[300px] prose-headings:font-heading">
+        <div className="m-auto prose prose-stone prose-headings:m-0 min-w-[300px] prose-headings:font-heading prose-sm sm:prose-md">
           <div>
             <div className="flex items-center gap-2 text-sm font-semibold uppercase mb-0.5">
               {date.format('dddd')}
@@ -62,7 +62,7 @@ const NoteView = ({ date }: Props) => {
                 <span className="badge-accent badge">today</span>
               )}
             </div>
-            <div className="flex flex-wrap gap-3 items-center">
+            <div className="flex flex-wrap items-center gap-3">
               <h1 className="font-heading">{date.format('MMM D, YYYY')}</h1>
               <Datepicker
                 selectedDate={date.toDate()}
@@ -72,7 +72,7 @@ const NoteView = ({ date }: Props) => {
               />
             </div>
           </div>
-          <div className="flex items-center mt-4 w-full">
+          <div className="flex items-center w-full mt-4">
             <Editor
               className="w-full min-h-[400px]"
               content={note?.content}

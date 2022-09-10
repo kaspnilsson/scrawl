@@ -23,13 +23,13 @@ const AccordionPanel = ({
   >
     {({ open }) => (
       <>
-        <Disclosure.Button className="flex justify-between items-center w-full text-lg text-left">
+        <Disclosure.Button className="flex items-center justify-between w-full text-base text-left sm:text-lg">
           <div>{title}</div>
           <span className="flex items-center ml-6 h-7">
             <ChevronDownIcon
               className={classNames(
                 open ? 'rotate-180' : 'rotate-0',
-                'w-6 h-6 transition-all transform'
+                'sm:w-6 sm:h-6 transition-all transform w-4 h-4'
               )}
               aria-hidden="true"
             />
