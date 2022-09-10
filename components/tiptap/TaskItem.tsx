@@ -97,6 +97,7 @@ export const TaskItem = Node.create<TaskItemOptions>({
       )
       const content = document.createElement('div')
       content.classList.add('my-0')
+      content.classList.add('w-full')
       checkboxWrapper.contentEditable = 'false'
       checkboxWrapper.addEventListener('click', () => {
         // If the editor isn’t editable break early

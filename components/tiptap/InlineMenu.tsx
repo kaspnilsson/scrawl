@@ -341,7 +341,7 @@ export const SlashCommandsList = (props: {
   const { items, selectedIndex, selectItem } = props
 
   return (
-    <div className="gap-1 p-2 w-48 shadow-lg menu not-prose rounded-box bg-base-200">
+    <div className="w-48 gap-1 p-2 shadow-lg menu not-prose rounded-box bg-base-200">
       {items.map(({ title, icon }, idx) => (
         <li key={idx} onClick={() => selectItem(idx)}>
           <div

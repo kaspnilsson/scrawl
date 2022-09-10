@@ -12,6 +12,12 @@ import { ProjectUpdate } from './tiptap/ProjectUpdate/ProjectUpdate'
 import AutoId from './tiptap/AutoId'
 import TaskList from '@tiptap/extension-task-list'
 import { DependencyList } from 'react'
+import Highlight from '@tiptap/extension-highlight'
+import Underline from '@tiptap/extension-underline'
+import Link from '@tiptap/extension-link'
+import TextBubbleMenu from './TextBubbleMenu'
+import TextAlign from '@tiptap/extension-text-align'
+import BubbleMenu from '@tiptap/extension-bubble-menu'
 
 interface Props {
   content?: JSONContent
@@ -93,8 +99,18 @@ const EditorComponent = ({
           component: SlashCommandsList,
         }),
         ProjectUpdate,
-        // ProjectUpdateContent,
         AutoId,
+        Highlight,
+        Underline,
+        Link,
+        TextAlign.configure({
+          alignments: ['left', 'center', 'right'],
+          types: ['heading', 'paragraph'],
+        }),
+        BubbleMenu.configure({
+          pluginKey: 'text-bubble-menu',
+          element: document.querySelector('.text-bubble-menu') as HTMLElement,
+        }),
       ],
       content,
       onUpdate: handleUpdate,
@@ -109,7 +125,12 @@ const EditorComponent = ({
     [user, noteDate, projectName, ...deps]
   )
 
-  return <EditorContent className={className} editor={editor} />
+  return (
+    <>
+      {editor && <TextBubbleMenu editor={editor} />}
+      <EditorContent className={className} editor={editor} />
+    </>
+  )
 }
 
 export default EditorComponent
