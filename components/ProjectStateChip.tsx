@@ -9,7 +9,7 @@ interface Props {
 const ProjectStateChip = ({ state, onChange }: Props) => {
   return (
     <div
-      className={classNames('badge badge-sm', {
+      className={classNames('badge badge-sm min-w-fit line-clamp-1', {
         'badge-accent': state === ProjectState.IN_PROGRESS,
         'badge-warning': state === ProjectState.BACKLOG,
         'badge-info': state === ProjectState.ARCHIVED,

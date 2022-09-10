@@ -48,7 +48,7 @@ const Layout = ({
         <title>{title}</title>
       </Head>
       <div
-        className={classNames('fixed inset-0 z-30 bg-black/30 sm:hidden', {
+        className={classNames('fixed inset-0 z-30 bg-black/50 sm:hidden', {
           hidden: !leftSidebarEnabled && !rightSidebarEnabled,
         })}
         onClick={() => {
@@ -66,11 +66,11 @@ const Layout = ({
           leave="transition ease-in-out duration-100 transform"
           leaveFrom="translate-x-0"
           leaveTo="-translate-x-full"
-          className="flex fixed z-40 flex-col border-r flex-0 not-prose bg-base-200 w-fit border-neutral sm:static"
+          className="fixed z-40 flex flex-col border-r flex-0 not-prose bg-base-200 w-fit border-neutral sm:static"
         >
           <Nav />
         </Transition>
-        <div className="overflow-hidden flex-1 w-full max-w-full min-h-0">
+        <div className="flex-1 w-full max-w-full min-h-0 mt-12 overflow-hidden sm:mt-0">
           <Header
             toggleLeftSidebar={() => setLeftSidebarEnabled(!leftSidebarEnabled)}
             toggleRightSidebar={
@@ -82,7 +82,7 @@ const Layout = ({
             rightSidebarEnabled={rightSidebarEnabled}
             headerContent={headerContent}
           />
-          <div className="flex overflow-auto h-full">
+          <div className="flex h-full overflow-auto">
             <div
               className={classNames(
                 'flex-1 px-2 py-4 mx-auto mb-36 max-w-full sm:p-8 xl:px-16 min-w-fit h-fit',

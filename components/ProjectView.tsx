@@ -75,9 +75,9 @@ const ProjectView = ({ name }: Props) => {
       error={projectError || tasksError}
       headerContent={
         !!project && (
-          <div className="flex gap-3 justify-between items-center px-2 w-full">
-            <div className="flex gap-2 items-center">
-              <h3 className="flex gap-3 items-center m-0 font-heading">
+          <div className="flex items-center justify-between w-full gap-3 sm:px-2">
+            <div className="flex items-center gap-2">
+              <h3 className="flex items-center gap-3 m-0 font-heading line-clamp-1">
                 {name}
               </h3>
               <ProjectStateChip state={project?.state} />
@@ -87,7 +87,7 @@ const ProjectView = ({ name }: Props) => {
                 <DotsVerticalIcon className="w-4 h-4" />
               </button>
               <ul
-                className="overflow-auto p-2 w-64 max-h-96 shadow dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
+                className="w-64 p-2 overflow-auto shadow max-h-96 dropdown-content menu bg-base-100 rounded-box menu-compact min-w-fit"
                 tabIndex={0}
               >
                 <li>
@@ -103,7 +103,7 @@ const ProjectView = ({ name }: Props) => {
     >
       {project && (
         <div className="m-auto prose prose-stone prose-headings:m-0 prose-headings:font-heading">
-          <div className="flex flex-col mt-4 space-y-4 w-full">
+          <div className="flex flex-col w-full mt-4 space-y-4">
             <SimpleEditorComponent
               className="w-full"
               onUpdate={handleUpdate}
