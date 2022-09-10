@@ -28,7 +28,10 @@ const ProjectUpdateWrapper = ({
   return (
     <NodeViewWrapper>
       <div className="px-4 py-2 my-2 rounded-xl sm:py-4 bg-base-200">
-        <div className="flex flex-wrap items-center justify-between gap-1 not-prose">
+        <div
+          className="flex flex-wrap items-center justify-between gap-1 not-prose"
+          spellCheck={false}
+        >
           {!projectName && (
             <ChooseOrCreateProject onSelectProject={handleSelectProject} />
           )}

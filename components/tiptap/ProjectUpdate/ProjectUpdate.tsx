@@ -1,4 +1,4 @@
-import { mergeAttributes, Command, Attribute, Node } from '@tiptap/core'
+import { mergeAttributes, Attribute, Node } from '@tiptap/core'
 
 import { ReactNodeViewRenderer } from '@tiptap/react'
 import { ProjectUpdateAttrs } from './ProjectUpdateAttrs'
@@ -7,9 +7,9 @@ import ProjectUpdateRenderer from './ProjectUpdateRenderer'
 export const PROJECT_UPDATE_TYPE = 'projectUpdate'
 
 declare module '@tiptap/core' {
-  interface Commands {
+  interface Commands<ReturnType> {
     [PROJECT_UPDATE_TYPE]: {
-      addProjectUpdate: (attrs?: ProjectUpdateAttrs) => Command
+      addProjectUpdate: (attrs?: ProjectUpdateAttrs) => ReturnType
     }
   }
 }
@@ -51,6 +51,12 @@ export const ProjectUpdate = Node.create({
 
   addNodeView() {
     return ReactNodeViewRenderer(ProjectUpdateRenderer)
+  },
+
+  addKeyboardShortcuts() {
+    return {
+      'Mod-Shift-p': () => this.editor.commands.addProjectUpdate(),
+    }
   },
 
   addCommands() {

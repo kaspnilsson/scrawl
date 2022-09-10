@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Extension, Editor } from '@tiptap/core'
 import Suggestion, { SuggestionOptions } from '@tiptap/suggestion'
 import { ReactRenderer, Range } from '@tiptap/react'
@@ -11,6 +11,7 @@ export interface SlashCommandsCommand {
   icon: JSX.Element
   command: ({ editor, range }: { editor: Editor; range?: Range }) => void
   isEnabled?: (editor: Editor) => boolean
+  shortcut?: ReactNode
 }
 
 export const SlashCommands = Extension.create<{

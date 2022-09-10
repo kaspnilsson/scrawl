@@ -50,7 +50,7 @@ const ComboboxComponent = <T extends object>({
       <div className="relative mt-1">
         <Combobox.Input
           ref={ref}
-          className="w-full input-bordered border-neutral sm:text-sm input input-sm sm:input-md"
+          className="w-full input-bordered border-neutral sm:!text-sm input input-sm sm:input-md"
           onChange={(event) => setQuery(event.target.value)}
           displayValue={(option) => renderOption(option as T)}
           autoFocus={autoFocus}
@@ -72,7 +72,7 @@ const ComboboxComponent = <T extends object>({
           leaveTo="transform scale-95 opacity-0"
         >
           <Combobox.Options
-            className="absolute z-20 max-w-xs py-1 mt-1 overflow-auto text-base rounded-md shadow-lg max-h-60 sm:text-sm bg-base-300 w-fit"
+            className="absolute z-20 max-w-xs py-1 mt-1 overflow-auto text-xs rounded-md shadow-lg max-h-60 sm:text-sm bg-base-300 w-fit"
             static
           >
             {filteredOptions.map((option) => (

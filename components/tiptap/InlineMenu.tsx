@@ -58,6 +58,13 @@ const resizeAndUploadImage = async (
   })
 }
 
+const CmdOrCtrl = () =>
+  navigator.platform.indexOf('Mac') > -1 ? (
+    <kbd className="kbd kbd-xs">cmd</kbd>
+  ) : (
+    <kbd className="kbd kbd-xs">ctrl</kbd>
+  )
+
 // // https://stackoverflow.com/questions/68146588/tiptap-insert-node-below-at-the-end-of-the-current-one
 // const forceNewBlock = (editor: Editor) => {
 //   const pos = editor.state.selection.$from.after(1)
@@ -81,6 +88,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-h-1" />,
       title: 'Big Heading',
       description: 'Big section Heading',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">alt</kbd>+
+          <kbd className="kbd kbd-xs">1</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -99,6 +112,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-h-2" />,
       title: 'Small Heading',
       description: 'Small section Heading',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">alt</kbd>+
+          <kbd className="kbd kbd-xs">2</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -117,6 +136,12 @@ export const slashCommands = ({
       icon: <CheckCircleIcon className="w-5 h-5" />,
       title: 'Task list',
       description: 'Create a task list',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">shift</kbd>+
+          <kbd className="kbd kbd-xs">9</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleTaskList().run()
@@ -135,6 +160,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-list-unordered" />,
       title: 'Bulleted list',
       description: 'Create a bulleted list',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">shift</kbd>+
+          <kbd className="kbd kbd-xs">8</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleBulletList().run()
@@ -153,6 +184,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-list-ordered" />,
       title: 'Numbered list',
       description: 'Create a numbered list',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">shift</kbd>+
+          <kbd className="kbd kbd-xs">7</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleOrderedList().run()
@@ -172,6 +209,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-double-quotes-l" />,
       title: 'Quote',
       description: 'Create a quote',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">shift</kbd>+
+          <kbd className="kbd kbd-xs">B</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().toggleBlockquote().run()
@@ -280,6 +323,11 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-code-s-slash-line" />,
       title: 'Code',
       description: 'Create a code snippet',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">E</kbd>
+        </>
+      ),
       command: ({ editor, range }) => {
         if (!range) {
           editor.chain().focus().setCodeBlock().run()
@@ -298,6 +346,12 @@ export const slashCommands = ({
       icon: <i className="font-thin ri-lg ri-add-box-line" />,
       title: 'Project update',
       description: 'Create a project update',
+      shortcut: (
+        <>
+          <CmdOrCtrl />+<kbd className="kbd kbd-xs">shift</kbd>+
+          <kbd className="kbd kbd-xs">P</kbd>
+        </>
+      ),
       command: async ({ editor, range }) => {
         const attrs = {
           noteDate: noteDate || makeNoteKeyFromMoment(moment(new Date())),
@@ -341,8 +395,8 @@ export const SlashCommandsList = (props: {
   const { items, selectedIndex, selectItem } = props
 
   return (
-    <div className="w-48 gap-1 p-2 shadow-lg menu not-prose rounded-box bg-base-200">
-      {items.map(({ title, icon }, idx) => (
+    <div className="max-w-sm gap-1 p-2 shadow-lg w-fit menu not-prose rounded-box bg-base-200">
+      {items.map(({ title, icon, shortcut = null }, idx) => (
         <li key={idx} onClick={() => selectItem(idx)}>
           <div
             className={classNames('hover:active flex gap-2 items-center p-2', {
@@ -350,7 +404,8 @@ export const SlashCommandsList = (props: {
             })}
           >
             <span className="flex items-center w-6 h-full">{icon}</span>
-            <span className="text-sm">{title}</span>
+            <span className="mr-12 text-sm">{title}</span>
+            <div className="hidden ml-auto sm:flex">{shortcut}</div>
           </div>
         </li>
       ))}

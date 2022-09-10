@@ -106,3 +106,7 @@ textarea::placeholder {
 ::selection {
   background-color: hsl(var(--a) / 0.6);
 }
+
+.ProseMirror-gapcursor:after {
+  border-color: hsl(var(--a));
+}
