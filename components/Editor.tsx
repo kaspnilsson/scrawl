@@ -18,6 +18,7 @@ import Link from '@tiptap/extension-link'
 import TextBubbleMenu from './TextBubbleMenu'
 import TextAlign from '@tiptap/extension-text-align'
 import BubbleMenu from '@tiptap/extension-bubble-menu'
+import { TrailingNode } from './tiptap/TrailingNode'
 
 interface Props {
   content?: JSONContent
@@ -90,6 +91,7 @@ const EditorComponent = ({
           // HTMLAttributes: { class: 'checkbox' },
         }),
         TaskList,
+        TrailingNode,
         SlashCommands.configure({
           commands: slashCommands({
             userId: user?.id || '',
