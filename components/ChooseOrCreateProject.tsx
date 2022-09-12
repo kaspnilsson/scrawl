@@ -38,7 +38,9 @@ const ChooseOrCreateProject = ({ onSelectProject }: Props) => {
     <>
       <ComboboxComponent<() => void>
         loading={dataLoading}
-        onChange={(o) => o()}
+        onChange={(o) => {
+          if (o) o()
+        }}
         options={[...dataOptions, createOption]}
         autoFocus
         placeholder="Choose a project..."

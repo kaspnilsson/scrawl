@@ -12,7 +12,7 @@ interface Option<T> {
 
 interface Props<T> {
   value?: T
-  onChange: (value: T) => void
+  onChange: (value?: T) => void
   options: Option<T>[]
   placeholder?: string
   label?: string
@@ -86,7 +86,7 @@ const ComboboxComponent = <T extends object>({
             {filteredOptions.map((option) => (
               <Combobox.Option
                 key={option.label}
-                value={option}
+                value={option.value}
                 className={({ active }) =>
                   classNames(
                     'relative cursor-default select-none py-2 pl-3 pr-9 font-semibold',
