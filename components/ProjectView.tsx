@@ -93,7 +93,7 @@ const ProjectView = ({ name }: Props) => {
       checked: false,
     }
     await mutateTasks([...(tasks || []), newTask], false)
-    await postTask(newTask.id, newTask)
+    await postTask(newTask.id, newTask, true)
   }
 
   return (

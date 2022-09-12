@@ -48,8 +48,12 @@ export const deleteProjectUpdate = (id: string) =>
     method: 'DELETE',
   }).then(handleFetchErrors)
 
-export const postTask = async (id: string, task: Partial<Task>) =>
-  fetch(`/api/tasks/${id}`, {
+export const postTask = async (
+  id: string,
+  task: Partial<Task>,
+  insertIntoNote = false
+) =>
+  fetch(`/api/tasks/${id}?insertIntoNote=${insertIntoNote}`, {
     method: 'POST',
     body: JSON.stringify(task),
   }).then(handleFetchErrors)

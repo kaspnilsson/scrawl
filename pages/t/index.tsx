@@ -71,7 +71,7 @@ const TasksIndex = () => {
       checked: false,
     }
     await mutate([...(data || []), newTask], false)
-    await postTask(newTask.id, newTask)
+    await postTask(newTask.id, newTask, true)
   }
 
   return (

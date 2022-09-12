@@ -4,6 +4,10 @@ import {
   withApiAuth,
 } from '@supabase/auth-helpers-nextjs'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { TASK_ITEM_TYPE } from '../../../components/tiptap/TaskItem'
+import { Note } from '../../../interfaces/note'
+import { Task } from '../../../interfaces/task'
+import { TASK_LIST_TYPE } from '../../../lib/serverUtils/tasks'
 
 export default withApiAuth(async function handler(
   req: NextApiRequest,
@@ -12,7 +16,7 @@ export default withApiAuth(async function handler(
   const {
     body,
     method,
-    query: { id },
+    query: { id, insertIntoNote },
   } = req
   const { user } = await getUser({ req, res })
 
@@ -42,15 +46,64 @@ export default withApiAuth(async function handler(
       return
     }
 
+    const newTask: Task = {
+      created_at: new Date(),
+      ...JSON.parse(body),
+      id: idStr,
+      owner: user.id,
+      updated_at: new Date(),
+    }
+
     const { data, error } = await supabaseServerClient({ req, res })
       .from('tasks')
-      .upsert({
-        created_at: new Date(),
-        ...JSON.parse(body),
-        id: idStr,
-        owner: user.id,
-        updated_at: new Date(),
+      .upsert(newTask)
+
+    if (insertIntoNote === 'true' && !newTask.project_name) {
+      let noteRes = await supabaseServerClient({ req, res })
+        .from<Note>('notes')
+        .select('*')
+        .eq('note_date', newTask.note_date)
+        .eq('owner', user.id)
+
+      if (noteRes.error) {
+        res
+          .status(401)
+          .end(
+            `Update failed when fetching note! ${JSON.stringify(noteRes.error)}`
+          )
+        return
+      }
+      const content = noteRes.data[0].content || { type: 'doc', content: [] }
+
+      if (!content.content) content.content = []
+      content.content?.push({
+        type: TASK_LIST_TYPE,
+        content: [
+          {
+            type: TASK_ITEM_TYPE,
+            attrs: { id: newTask.id, note_date: newTask.note_date },
+          },
+        ],
       })
+
+      noteRes = await supabaseServerClient({ req, res })
+        .from<Note>('notes')
+        .upsert({
+          owner: user.id,
+          note_date: newTask.note_date,
+          content,
+          updated_at: new Date().toISOString(),
+        })
+
+      if (noteRes.error) {
+        res
+          .status(401)
+          .end(
+            `Update failed when updating note! ${JSON.stringify(noteRes.error)}`
+          )
+        return
+      }
+    }
 
     if (error) {
       res.status(401).end(`Update failed! ${JSON.stringify(error)}`)
