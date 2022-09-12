@@ -44,3 +44,7 @@
 .react-datepicker__day {
   @apply font-heading;
 }
+
+.input-ghost {
+  @apply border-0;
+}

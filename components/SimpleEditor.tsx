@@ -9,6 +9,7 @@ import { TaskItem } from './tiptap/TaskItem'
 import TaskList from '@tiptap/extension-task-list'
 import { slashCommands, SlashCommandsList } from './tiptap/InlineMenu'
 import { SlashCommands } from './tiptap/SlashCommands'
+import { DependencyList } from 'react'
 
 interface Props {
   content?: JSONContent | null
@@ -29,6 +30,7 @@ interface Props {
       }) => void)
     | undefined
   placeholder?: string
+  deps?: DependencyList
 }
 
 const SimpleEditorComponent = ({
@@ -38,6 +40,7 @@ const SimpleEditorComponent = ({
   onBlur = () => null,
   className = '',
   placeholder = '',
+  deps = [],
 }: Props) => {
   const { user } = useUserContext()
   const editor = useEditor(
@@ -91,7 +94,7 @@ const SimpleEditorComponent = ({
       onFocus,
       onBlur,
     },
-    [content, user]
+    [user, ...deps]
   )
 
   return <EditorContent className={className} editor={editor} />

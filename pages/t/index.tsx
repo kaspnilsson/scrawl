@@ -3,8 +3,16 @@ import useSWR from 'swr'
 import AccordionPanel from '../../components/AccordionPanel'
 import Layout from '../../components/Layout'
 import TaskTable from '../../components/TaskTable'
+import { useUserContext } from '../../contexts/userProfile'
 import { Task } from '../../interfaces/task'
-import { deleteTask, fetcher, postTask } from '../../lib/apiHelpers'
+import {
+  deleteTask,
+  fetcher,
+  makeNoteKeyFromMoment,
+  postTask,
+} from '../../lib/apiHelpers'
+import { generateRandomId } from '../../lib/randomId'
+import moment from '../../lib/moment'
 
 export const getServerSideProps = withPageAuth({
   redirectTo: '/login',
@@ -19,6 +27,7 @@ const NO_PROJECT_LABEL = 'No project'
 
 const TasksIndex = () => {
   const { data, error, mutate } = useSWR<Task[]>('/api/tasks', fetcher)
+  const { user } = useUserContext()
 
   const updateTask = async (t: Task) => {
     await mutate(
@@ -49,6 +58,22 @@ const TasksIndex = () => {
     dataByProject[t.project_name].push(t)
   }
 
+  const createTask = async (t: Partial<Task>, projectName?: string) => {
+    if (!user) return
+    const newTask: Task = {
+      ...t,
+      id: generateRandomId(),
+      project_name: projectName || '',
+      owner: user.id,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      note_date: makeNoteKeyFromMoment(moment()),
+      checked: false,
+    }
+    await mutate([...(data || []), newTask], false)
+    await postTask(newTask.id, newTask)
+  }
+
   return (
     <Layout
       loading={data === undefined}
@@ -74,7 +99,11 @@ const TasksIndex = () => {
             title={<h3>{name || NO_PROJECT_LABEL}</h3>}
             className="!p-0 w-full mb-10"
           >
-            <TaskTable data={dataByProject[name]} updateTask={updateTask} />
+            <TaskTable
+              data={dataByProject[name]}
+              updateTask={updateTask}
+              addTask={(t) => createTask(t, name)}
+            />
           </AccordionPanel>
         ))}
       </div>
