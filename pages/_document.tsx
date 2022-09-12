@@ -36,10 +36,6 @@ export default class MyDocument extends Document {
             content="#f5f5f4"
             media="(prefers-color-scheme: light)"
           />
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
-          ></meta>
           <link rel="shortcut icon" href="/favicon.svg" />
           <link
             href="/iphone5_splash.png"
