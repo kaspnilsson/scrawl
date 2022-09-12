@@ -10,11 +10,6 @@ interface Props {
   selectedProjectName?: string
 }
 
-interface Option {
-  label: string
-  callback: () => void
-}
-
 const ChooseOrCreateProject = ({ onSelectProject }: Props) => {
   const { data, error } = useSWR<Project[]>('/api/projects', fetcher)
   const [showDialog, setShowDialog] = useState(false)
@@ -28,21 +23,23 @@ const ChooseOrCreateProject = ({ onSelectProject }: Props) => {
 
   const dataOptions = (data || []).map((p) => ({
     label: p.name,
-    callback: () => onSelectProject(p),
+    renderLabel: p.name,
+    value: () => onSelectProject(p),
   }))
 
   const createOption = {
     label: '+ Create a new project',
-    callback: () => setShowDialog(true),
+    renderLabel: '+ Create a new project',
+    value: () => setShowDialog(true),
+    disableFiltering: true,
   }
 
   return (
     <>
-      <ComboboxComponent<Option>
+      <ComboboxComponent<() => void>
         loading={dataLoading}
-        onChange={(o) => o?.callback()}
+        onChange={(o) => o()}
         options={[...dataOptions, createOption]}
-        renderOption={(o) => o?.label}
         autoFocus
         placeholder="Choose a project..."
       ></ComboboxComponent>

@@ -1,9 +1,9 @@
+import { TrashIcon } from '@heroicons/react/solid'
 import { NodeViewWrapper, NodeViewContent, Editor } from '@tiptap/react'
 import { Project } from '../../../interfaces/project'
 import { routes } from '../../../lib/routes'
 import ChooseOrCreateProject from '../../ChooseOrCreateProject'
 import Link from '../../Link'
-import ProjectUpdateOverflowMenu from '../../ProjectUpdateOverflowMenu'
 import { ProjectUpdateAttrs } from './ProjectUpdateAttrs'
 
 export interface ProjectUpdateRendererProps {
@@ -11,12 +11,14 @@ export interface ProjectUpdateRendererProps {
   node: {
     attrs: ProjectUpdateAttrs
   }
+  deleteNode: () => void
   updateAttributes: (attr: ProjectUpdateAttrs) => void
 }
 
 const ProjectUpdateWrapper = ({
   node,
   updateAttributes,
+  deleteNode,
 }: ProjectUpdateRendererProps) => {
   const { projectName, noteDate } = node.attrs
 
@@ -25,11 +27,15 @@ const ProjectUpdateWrapper = ({
     updateAttributes({ ...node.attrs, projectName: newName })
   }
 
+  const handleDelete = () => {
+    deleteNode()
+  }
+
   return (
     <NodeViewWrapper>
       <div className="px-4 py-2 my-2 rounded-xl sm:py-4 bg-base-200">
         <div
-          className="flex flex-wrap items-center justify-between gap-1 not-prose"
+          className="flex flex-wrap gap-1 justify-between items-center not-prose"
           spellCheck={false}
         >
           {!projectName && (
@@ -40,9 +46,14 @@ const ProjectUpdateWrapper = ({
               <h3 className="font-heading line-clamp-1">{projectName}</h3>
             </Link>
           )}
-          <div className="flex items-center gap-1">
+          <div className="flex gap-1 items-center">
             <div className="text-sm deemphasized">{noteDate}</div>
-            <ProjectUpdateOverflowMenu attrs={node.attrs} />
+            <button
+              className="btn btn-ghost btn-square btn-xs deemphasized"
+              onClick={handleDelete}
+            >
+              <TrashIcon className="w-4 h-4" />
+            </button>
           </div>
         </div>
         <NodeViewContent className="w-full"></NodeViewContent>

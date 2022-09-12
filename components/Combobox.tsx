@@ -1,13 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
+import { ReactNode, useEffect, useRef, useState } from 'react'
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/solid'
 import { Combobox, Transition } from '@headlessui/react'
 import classNames from 'classnames'
 
+interface Option<T> {
+  label: string
+  value: T
+  renderLabel: string | ReactNode
+  disableFiltering?: boolean
+}
+
 interface Props<T> {
   value?: T
   onChange: (value: T) => void
-  options: T[]
-  renderOption: (t: T) => string
+  options: Option<T>[]
   placeholder?: string
   label?: string
   autoFocus?: boolean
@@ -18,7 +24,6 @@ const ComboboxComponent = <T extends object>({
   value,
   onChange,
   options,
-  renderOption,
   label = '',
   placeholder = '',
   autoFocus = false,
@@ -30,11 +35,11 @@ const ComboboxComponent = <T extends object>({
   const filteredOptions =
     query === ''
       ? options
-      : options.filter((option) => {
-          return renderOption(option)
-            .toLowerCase()
-            .includes(query.toLowerCase())
-        })
+      : options.filter(
+          (option) =>
+            option.disableFiltering ||
+            option.label.toLowerCase().includes(query.toLowerCase())
+        )
 
   useEffect(() => {
     if (autoFocus && ref?.current) ref.current.focus()
@@ -52,11 +57,14 @@ const ComboboxComponent = <T extends object>({
           ref={ref}
           className="w-full input-bordered border-neutral sm:!text-sm input input-sm sm:input-md"
           onChange={(event) => setQuery(event.target.value)}
-          displayValue={(option) => renderOption(option as T)}
+          displayValue={(option: unknown) => {
+            if (!option) return ''
+            return (option as Option<T>).label
+          }}
           autoFocus={autoFocus}
           placeholder={placeholder}
         />
-        <Combobox.Button className="absolute inset-y-0 right-0 flex items-center px-2 rounded-r-md focus:outline-none">
+        <Combobox.Button className="flex absolute inset-y-0 right-0 items-center px-2 rounded-r-md focus:outline-none">
           <ChevronDownIcon
             className="w-5 h-5 text-gray-400"
             aria-hidden="true"
@@ -72,12 +80,12 @@ const ComboboxComponent = <T extends object>({
           leaveTo="transform scale-95 opacity-0"
         >
           <Combobox.Options
-            className="absolute z-20 max-w-xs py-1 mt-1 overflow-auto text-xs rounded-md shadow-lg max-h-60 sm:text-sm bg-base-300 w-fit"
+            className="overflow-auto absolute z-20 py-1 mt-1 max-w-xs max-h-60 text-xs rounded-md shadow-lg sm:text-sm bg-base-300 w-fit"
             static
           >
             {filteredOptions.map((option) => (
               <Combobox.Option
-                key={renderOption(option)}
+                key={option.label}
                 value={option}
                 className={({ active }) =>
                   classNames(
@@ -91,19 +99,15 @@ const ComboboxComponent = <T extends object>({
                     <span
                       className={classNames(
                         'block truncate',
-                        selected && 'font-semibold'
+                        selected && 'font-semibold',
+                        active && 'text-accent'
                       )}
                     >
-                      {renderOption(option)}
+                      {option.renderLabel}
                     </span>
 
                     {selected && (
-                      <span
-                        className={classNames(
-                          'flex absolute inset-y-0 right-0 items-center pr-4',
-                          active ? '' : ''
-                        )}
-                      >
+                      <span className="flex absolute inset-y-0 right-0 items-center pr-4">
                         <CheckIcon className="w-5 h-5" aria-hidden="true" />
                       </span>
                     )}
@@ -114,7 +118,7 @@ const ComboboxComponent = <T extends object>({
             {loading && (
               <Combobox.Option
                 value={null}
-                className="relative min-h-0 py-2 pl-3 cursor-default select-none pr-9 opacity-60 btn loading h-fit btn-ghost"
+                className="relative py-2 pr-9 pl-3 min-h-0 opacity-60 cursor-default select-none btn loading h-fit btn-ghost"
                 disabled
               >
                 Loading
@@ -123,7 +127,7 @@ const ComboboxComponent = <T extends object>({
             {!loading && !filteredOptions && (
               <Combobox.Option
                 value={null}
-                className="relative py-2 pl-3 cursor-default select-none pr-9 opacity-60"
+                className="relative py-2 pr-9 pl-3 opacity-60 cursor-default select-none"
                 disabled
               >
                 None
