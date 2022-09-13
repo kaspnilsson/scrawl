@@ -3,7 +3,7 @@
   "background_color": "#000",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "/n/today",
   "name": "Scrawl",
   "description": "An app to store your brain's overflow",
   "short_name": "Scrawl",
