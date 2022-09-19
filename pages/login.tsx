@@ -7,7 +7,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
-import { useUserContext } from '../contexts/userProfile'
+// import { useUserContext } from '../contexts/userProfile'
 import { useRouter } from 'next/router'
 
 const makeRedirectUrl = (path: string) =>
@@ -26,14 +26,19 @@ export const getServerSideProps: GetServerSideProps = async (
     }
   }
 
-  return { props: {} }
+  return { props: { user: res.user, userFetchError: res.error } }
 }
 
-const Login = () => {
+interface Props {
+  user: unknown
+  userFetchError: unknown
+}
+
+const Login = ({ user, userFetchError }: Props) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user } = useUserContext()
+  // const { user } = useUserContext()
   const router = useRouter()
 
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
@@ -165,18 +170,18 @@ const Login = () => {
             </div>
           )}
         </div>
-        {/* <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
+        <div className="mx-auto mt-4 whitespace-pre-wrap break-all card bg-base-300">
           <div className="p-4 pb-0 font-semibold card-title">
             Debug info for nerds
           </div>
           <div className="p-4 text-xs card-body">
-            <span>res: {JSON.stringify(res, undefined, ' ')}</span>
+            <span>user: {JSON.stringify(user, undefined, ' ')}</span>
             <span className="m-0 divider divider-vertical"></span>
             <span>
               error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
             </span>
           </div>
-        </div> */}
+        </div>
       </div>
     </div>
   )
