@@ -1,5 +1,5 @@
 import { getUser, supabaseClient } from '@supabase/auth-helpers-nextjs'
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import isValidEmail from '../lib/isValidEmail'
 import { ApiError } from '@supabase/gotrue-js'
 import Scrawl from '../components/icons/Scrawl'
@@ -8,7 +8,7 @@ import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
 import { useUserContext } from '../contexts/userProfile'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 const makeRedirectUrl = (path: string) =>
   `${process.env.NEXT_PUBLIC_BASE_APP_URL || PUBLIC_BASE_URL}${path}`
@@ -43,8 +43,8 @@ const Login = ({ userFetchError }: Props) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { user } = useUserContext()
-  const router = useRouter()
+  const userCtx = useUserContext()
+  // const router = useRouter()
 
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
     // setError(JSON.stringify(payload, undefined, ' '))
@@ -80,11 +80,11 @@ const Login = ({ userFetchError }: Props) => {
       })
   }
 
-  useEffect(() => {
-    if (user) {
-      router.replace(routes.today)
-    }
-  }, [router, user])
+  // useEffect(() => {
+  //   if (userCtx) {
+  //     router.replace(routes.today)
+  //   }
+  // }, [router, userCtx])
 
   return (
     <div className="flex flex-col justify-center py-12 min-h-full sm:px-6 lg:px-12 bg-base-100">
@@ -180,7 +180,7 @@ const Login = ({ userFetchError }: Props) => {
             Debug info for nerds
           </div>
           <div className="p-4 text-xs card-body">
-            <span>user: {JSON.stringify(user, undefined, ' ')}</span>
+            <span>userCtx: {JSON.stringify(userCtx, undefined, ' ')}</span>
             <span className="m-0 divider divider-vertical"></span>
             <span>
               error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
