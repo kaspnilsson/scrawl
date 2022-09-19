@@ -180,6 +180,12 @@ const Login = ({ user, userFetchError }: Props) => {
             <span>
               error: {JSON.stringify(userFetchError || 'none', undefined, ' ')}
             </span>
+            <span>
+              redirect base:{' '}
+              {process.env.NEXT_PUBLIC_BASE_APP_URL ||
+                PUBLIC_BASE_URL ||
+                'none'}
+            </span>
           </div>
         </div>
       </div>
