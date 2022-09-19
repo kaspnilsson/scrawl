@@ -7,7 +7,7 @@ import { GetServerSideProps, GetServerSidePropsContext } from 'next'
 import { PUBLIC_BASE_URL, routes } from '../lib/routes'
 import classNames from 'classnames'
 import toast from 'react-hot-toast'
-// import { useUserContext } from '../contexts/userProfile'
+import { useUserContext } from '../contexts/userProfile'
 import { useRouter } from 'next/router'
 
 const makeRedirectUrl = (path: string) =>
@@ -28,22 +28,22 @@ export const getServerSideProps: GetServerSideProps = async (
 
   return {
     props: {
-      user: res.user,
+      // user: res.user,
       userFetchError: res.error || null,
     },
   }
 }
 
 interface Props {
-  user: unknown
+  // user: unknown
   userFetchError: unknown
 }
 
-const Login = ({ user, userFetchError }: Props) => {
+const Login = ({ userFetchError }: Props) => {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  // const { user } = useUserContext()
+  const { user } = useUserContext()
   const router = useRouter()
 
   const handleSignIn = ({ error }: { error: ApiError | null }) => {
