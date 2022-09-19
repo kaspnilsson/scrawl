@@ -23,6 +23,7 @@
 .input-bordered:focus {
   border-color: hsla(var(--bc) / 0.2);
   box-shadow: none;
+  outline: none;
 }
 
 .hover {

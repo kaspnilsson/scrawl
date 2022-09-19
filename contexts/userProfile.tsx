@@ -53,7 +53,8 @@ const UserProfileProvider = ({ children }: { children: ReactNode }) => {
     }
     getUserProfile()
 
-    supabaseClient.auth.onAuthStateChange(() => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      console.log(event, session)
       getUserProfile()
     })
   }, [sessionUser])
